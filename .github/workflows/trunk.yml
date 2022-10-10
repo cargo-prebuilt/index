@@ -30,7 +30,7 @@ jobs:
     outputs:
       crate-version: ${{ steps.check.outputs.version }}
       crate-download: ${{ steps.check.outputs.dl }}
-      create-hash: ${{ steps.check.outputs.hash }}
+      crate-hash: ${{ steps.check.outputs.hash }}
       build: ${{ steps.check.outputs.build }}
     runs-on: ubuntu-latest
     steps:
@@ -46,7 +46,7 @@ jobs:
         id: check
         run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }}
       - name: Release Artifact
-        #        if: ${{ github.event_name != 'pull_request' }}
+#        if: ${{ github.event_name != 'pull_request' }}
         uses: meeDamian/github-release@v2.0.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -77,12 +77,12 @@ jobs:
         run: rustc --version
       - name: Create Directory
         run: mkdir -p build
-      - name: Download and extract crate # Use checksum!!!
+      - name: Download and extract crate
         working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
-          echo "Crate Hash: $CRATE_HASH"
       - name: Build crate
         working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
         run: cargo build --release
@@ -131,12 +131,12 @@ jobs:
         run: rustc --version
       - name: Create Directory
         run: mkdir -p build
-      - name: Download and extract crate # Use checksum!!!
+      - name: Download and extract crate
         working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
-          echo "Crate Hash: $CRATE_HASH"
       - name: Build crate
         working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
         run: cargo build --release
@@ -182,12 +182,12 @@ jobs:
         run: rustc --version
       - name: Create Directory
         run: mkdir -p build
-      - name: Download and extract crate # Use checksum!!!
+      - name: Download and extract crate
         working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
-          echo "Crate Hash: $CRATE_HASH"
       - name: Build crate
         working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
         run: cargo build --release
@@ -233,12 +233,12 @@ jobs:
         run: rustc --version
       - name: Create Directory
         run: mkdir -p build
-      - name: Download and extract crate # Use checksum!!!
+      - name: Download and extract crate
         working-directory: ./build
         run: |
           Invoke-WebRequest -Uri ${{ env.CRATE_DOWNLOAD }} -OutFile download
+          (Get-FileHash ./download).Hash -eq "${{ env.CRATE_HASH }}"
           tar -xf download
-          echo "Crate Hash: $CRATE_HASH"
       - name: Build crate
         working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
         run: cargo build --release
@@ -285,12 +285,12 @@ jobs:
         run: |
           mkdir -p build
           mkdir -p transfer
-      - name: Download and extract crate # Use checksum!!!
+      - name: Download and extract crate
         working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
-          echo "Crate Hash: $CRATE_HASH"
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
         with:
@@ -363,19 +363,15 @@ jobs:
           export MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
       - name: Create Directory
         run: mkdir -p build
-      - name: Download and extract crate # Use checksum!!!
+      - name: Download and extract crate
         working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
-          echo "Crate Hash: $CRATE_HASH"
       - name: Build crate
         working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
         run: cargo build --release
-      - name: DEBUG # REMOVE
-        working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
-        run: |
-          ls target/release
       - name: Collect
         run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-apple-darwin ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
       - name: Artifact
@@ -394,7 +390,4 @@ jobs:
           file_glob: true
           file: aarch64-apple-darwin.*
 
-
   # Nightly
-  
-  # OLD
