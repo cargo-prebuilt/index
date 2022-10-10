@@ -350,7 +350,7 @@ jobs:
           mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
       - name: Build in container
         run: |
-          docker run --rm --pull --platform linux/arm64 \
+          docker run --rm --platform=linux/arm64 \
           -e CRATE=${{ env.crate }} -e BINS=${{ env.bins }} -e LICENSE=${{ env.license }} \
           -v ${{ github.workspace }}/docker/entrypoint-debian.sh:/entrypoint.sh \
           -v ${{ github.workspace }}/cargo-cache/registry:/usr/local/cargo/registry \
@@ -414,7 +414,7 @@ jobs:
           mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
       - name: Build in container
         run: |
-          docker run --rm --pull --platform linux/arm64 \
+          docker run --rm --platform=linux/arm64 \
           -e CRATE=${{ env.crate }} -e BINS=${{ env.bins }} -e LICENSE=${{ env.license }} \
           -v ${{ github.workspace }}/docker/entrypoint-alpine.sh:/entrypoint.sh \
           -v ${{ github.workspace }}/cargo-cache/registry:/usr/local/cargo/registry \
