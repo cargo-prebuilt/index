@@ -1,0 +1,47 @@
+name: trunk
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ .github/workflows/trunk.yml ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+#  schedule:
+#    - cron: '0 6 * * *'
+
+# imgs: &imgs [ rust, node, rustnode ]
+# archs: &archs [ amd64, arm64 ]
+# distros: &distros [ debian-latest, debian-bullseye-slim, debian-buster, debian-buster-slim, ubuntu-latest, ubuntu-focal ] # alpine-latest, alpine-3.15, alpine-3.14,
+# node_versions: &node_versions [ node, --lts ]
+
+env:
+  stable-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/stable-index/
+  nightly-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/nightly-index/
+  crate: trunk
+  repo: https://github.com/thedodd/trunk.git
+  license: LICENSE-APACHE,LICENSE-MIT
+  bins: trunk
+
+jobs:
+  # Stable
+  stable-check:
+    outputs:
+      crate-version: ${{ steps.check.outputs.version }}
+      crate-download: ${{ steps.check.outputs.dl }}
+      build: ${{ steps.check.outputs.build }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.crate }}.cache
+          key: stable-${{ env.crate }}-${{ env.repo }}
+      - name: Check and Configure
+        id: check
+        run: ./check.py ${{ env.stable-index }} ${{ env.crate }}
+
+  # Nightly
+  
+  # OLD
