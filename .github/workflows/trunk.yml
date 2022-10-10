@@ -301,7 +301,13 @@ jobs:
           pull: true
           platforms: linux/arm64
           tags: local:arm64
-          build-args: [ "CRATE=${{ env.crate }}", "BINS=${{ env.bins }}", "LICENSE=${{ env.license }}", "CRATE_VERSION=${{ env.CRATE_VERSION }}", "CRATE_DOWNLOAD=${{ env.CRATE_DOWNLOAD }}", "CRATE_HASH=${{ env.CRATE_HASH }}" ]
+          build-args: |
+            CRATE=${{ env.crate }}
+            BINS=${{ env.bins }}
+            LICENSE=${{ env.license }}
+            CRATE_VERSION=${{ env.CRATE_VERSION }}
+            CRATE_DOWNLOAD=${{ env.CRATE_DOWNLOAD }}
+            CRATE_HASH=${{ env.CRATE_HASH }}
       - name: Transfer files
         run: |
           docker run --rm --platform linux/arm64 \
