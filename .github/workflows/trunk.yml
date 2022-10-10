@@ -229,7 +229,7 @@ jobs:
       - name: Rust Version
         run: rustc --version
       - name: Create Directory
-        run: mkdir -p build
+        run: New-Item -ItemType Directory -Force -Path ./build
       - name: Download and extract crate
         working-directory: ./build
         run: |
