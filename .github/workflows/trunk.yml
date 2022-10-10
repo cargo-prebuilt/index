@@ -262,6 +262,70 @@ jobs:
 
   # TODO: arm64 linux(s) :: The idea is to build in a docker container then run that container with an entrypoint that
   #                      :: automatically moves the bins to the mounted volume.
+  stable-build-aarch64-unknown-linux-musl:
+    needs: [ stable-check ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Swap Space
+        uses: pierotofy/set-swap-space@v1.0
+        with:
+          swap-size-gb: 10
+      - uses: actions/checkout@v3
+      - name: Docker Setup QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Create Directory
+        run: |
+          mkdir -p build
+          mkdir -p transfer
+      - name: Download and extract crate # Use checksum!!!
+        working-directory: ./build
+        run: |
+          wget $CRATE_DOWNLOAD
+          tar -xf download
+          echo "Crate Hash: $CRATE_HASH"
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: ./docker/Dockerfile.alpine
+          load: true
+          no-cache: true
+          pull: true
+          platforms: linux/arm64
+          tags: local:arm64
+          build-args: [ "CRATE=${{ env.crate }}", "BINS=${{ env.bins }}", "LICENSE=${{ env.license }}", "CRATE_VERSION=${{ env.CRATE_VERSION }}", "CRATE_DOWNLOAD=${{ env.CRATE_DOWNLOAD }}", "CRATE_HASH=${{ env.CRATE_HASH }}" ]
+      - name: Transfer files
+        run: |
+          docker run --rm --platform linux/arm64 \
+          -v ${{ github.workspace }}/transfer:/transfer \
+          local:arm64
+      - name: Move to workspace root
+        run: |
+          mv transfer/aarch64-unknown-linux-musl.zip .
+          mv transfer/aarch64-unknown-linux-musl.sha256 .
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: aarch64-unknown-linux-musl
+          path: |
+            aarch64-unknown-linux-musl.zip
+            aarch64-unknown-linux-musl.sha256
+      - name: Release Artifact
+#        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          overwrite: true
+          file_glob: true
+          file: aarch64-unknown-linux-musl.*
 
   stable-build-aarch64-apple-darwin:
     needs: [ stable-check ]
@@ -307,7 +371,7 @@ jobs:
         run: |
           ls target/release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-apple-darwin ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release/aarch64-apple-darwin
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-apple-darwin ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:

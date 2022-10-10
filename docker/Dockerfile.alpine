@@ -1,0 +1,27 @@
+ARG CRATE
+ARG BINS
+ARG LICENSE
+ARG CRATE_VERSION
+ARG CRATE_DOWNLOAD
+ARG CRATE_HASH
+
+FROM rust:alpine as builder
+
+WORKDIR /builder
+COPY . .
+
+RUN apk add --no-cache build-base python3
+
+WORKDIR /builder/build/${CRATE}-${CRATE_VERSION}
+RUN cargo build --release
+
+WORKDIR /builder
+RUN ./collect.py ${BINS} ${LICENSE} aarch64-unknown-linux-musl ./build/${CRATE}-${CRATE_VERSION} ./build/${CRATE}-${CRATE_VERSION}/target/release
+
+FROM alpine:latest
+
+WORKDIR /store
+COPY --from=builder /builder/aarch64-unknown-linux-musl.zip .
+COPY --from=builder /builder/aarch64-unknown-linux-musl.sha256 .
+
+ENTRYPOINT "cp /store/* /transfer"
