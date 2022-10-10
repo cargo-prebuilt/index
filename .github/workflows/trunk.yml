@@ -346,10 +346,11 @@ jobs:
           context: .
           file: ./docker/Dockerfile.debian
           load: true
-          no-cache: true
           pull: true
           platforms: linux/arm64
-          tags: local:arm64
+          tags: local/aarch64-unknown-linux-gnu:latest
+          cache-from: type=registry,ref=local/aarch64-unknown-linux-gnu:latest
+          cache-to: type=inline
           build-args: |
             CRATE=${{ env.crate }}
             BINS=${{ env.bins }}
@@ -417,10 +418,11 @@ jobs:
           context: .
           file: ./docker/Dockerfile.alpine
           load: true
-          no-cache: true
           pull: true
           platforms: linux/arm64
-          tags: local:arm64
+          tags: local/aarch64-unknown-linux-musl:latest
+          cache-from: type=registry,ref=local/aarch64-unknown-linux-musl:latest
+          cache-to: type=inline
           build-args: |
             CRATE=${{ env.crate }}
             BINS=${{ env.bins }}
