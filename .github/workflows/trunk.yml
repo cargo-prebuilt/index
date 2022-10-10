@@ -10,11 +10,6 @@ on:
 #  schedule:
 #    - cron: '0 6 * * *'
 
-# imgs: &imgs [ rust, node, rustnode ]
-# archs: &archs [ amd64, arm64 ]
-# distros: &distros [ debian-latest, debian-bullseye-slim, debian-buster, debian-buster-slim, ubuntu-latest, ubuntu-focal ] # alpine-latest, alpine-3.15, alpine-3.14,
-# node_versions: &node_versions [ node, --lts ]
-
 env:
   stable-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/stable-index/
   nightly-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/nightly-index/
@@ -299,7 +294,7 @@ jobs:
           context: .
           file: ./docker/Dockerfile.alpine
           load: true
-          no-cache: true
+#          no-cache: true
           pull: true
           platforms: linux/arm64
           tags: local:arm64
@@ -317,8 +312,8 @@ jobs:
           local:arm64
       - name: Move to workspace root
         run: |
-          mv transfer/aarch64-unknown-linux-musl.zip .
-          mv transfer/aarch64-unknown-linux-musl.sha256 .
+          mv ./transfer/aarch64-unknown-linux-musl.zip .
+          mv ./transfer/aarch64-unknown-linux-musl.sha256 .
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
