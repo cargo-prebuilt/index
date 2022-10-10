@@ -53,7 +53,7 @@ jobs:
           tag: ${{ env.crate }}-${{ steps.check.outputs.version }}
           allow_override: true
 
-  stable-build-x64_86-linux-gnu:
+  stable-build-x86_64-linux-gnu:
     needs: [ stable-check ]
     if: ${{ needs.stable-check.outputs.build == 'true' }}
     env:
@@ -70,7 +70,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             build/target
-          key: ${{ runner.os }}-x64_86-linux-gnu-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-x86_64-linux-gnu-${{ hashFiles('**/Cargo.lock') }}
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -87,14 +87,14 @@ jobs:
         working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
         run: cargo build --release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} x64_86-linux-gnu ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-linux-gnu ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: x64_86-linux-gnu
+          name: x86_64-linux-gnu
           path: |
-            x64_86-linux-gnu.zip
-            x64_86-linux-gnu.sha256
+            x86_64-linux-gnu.zip
+            x86_64-linux-gnu.sha256
       - name: Release Artifact
 #        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
@@ -102,9 +102,9 @@ jobs:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
           overwrite: true
           file_glob: true
-          file: x64_86-linux-gnu.*
+          file: x86_64-linux-gnu.*
 
-  stable-build-x64_86-apple-darwin:
+  stable-build-x86_64-apple-darwin:
     needs: [ stable-check ]
     if: ${{ needs.stable-check.outputs.build == 'true' }}
     env:
@@ -121,7 +121,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             build/target
-          key: ${{ runner.os }}-x64_86-apple-darwin-${{ hashFiles('**/Cargo.lock') }}
+          key: ${{ runner.os }}-x86_64-apple-darwin-${{ hashFiles('**/Cargo.lock') }}
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -138,14 +138,14 @@ jobs:
         working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
         run: cargo build --release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} x64_86-apple-darwin ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-apple-darwin ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: x64_86-apple-darwin
+          name: x86_64-apple-darwin
           path: |
-            x64_86-apple-darwin.zip
-            x64_86-apple-darwin.sha256
+            x86_64-apple-darwin.zip
+            x86_64-apple-darwin.sha256
       - name: Release Artifact
         #        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
@@ -153,7 +153,58 @@ jobs:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
           overwrite: true
           file_glob: true
-          file: x64_86-apple-darwin.*
+          file: x86_64-apple-darwin.*
+
+  stable-build-x86_64-pc-windows-msvc:
+    needs: [ stable-check ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            build/target
+          key: ${{ runner.os }}-x86_64-pc-windows-msvc-${{ hashFiles('**/Cargo.lock') }}
+      - name: Update Rust
+        run: rustup update
+      - name: Rust Version
+        run: rustc --version
+      - name: Create Directory
+        run: mkdir -p build
+      - name: Download and extract crate # Use checksum!!!
+        working-directory: ./build
+        run: |
+          wget $CRATE_DOWNLOAD
+          tar -xf download
+          echo "Crate Hash: $CRATE_HASH"
+      - name: Build crate
+        working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
+        run: cargo build --release
+      - name: Collect
+        run: python3 collect.py ${{ env.win_bins }} ${{ env.license }} x86_64-pc-windows-msvc ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: x86_64-pc-windows-msvc
+          path: |
+            x86_64-pc-windows-msvc.zip
+            x86_64-pc-windows-msvc.sha256
+      - name: Release Artifact
+        #        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          overwrite: true
+          file_glob: true
+          file: x86_64-pc-windows-msvc.*
 
   # Nightly
   
