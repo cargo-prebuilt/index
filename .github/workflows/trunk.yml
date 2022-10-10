@@ -282,19 +282,19 @@ jobs:
         run: |
           mkdir -p build
           mkdir -p transfer
-      - name: Download and extract crate
-        working-directory: ./build
-        run: |
-          wget $CRATE_DOWNLOAD
-          echo "$CRATE_HASH download" | sha256sum -c
-          tar -xf download
+#      - name: Download and extract crate
+#        working-directory: ./build
+#        run: |
+#          wget $CRATE_DOWNLOAD
+#          echo "$CRATE_HASH download" | sha256sum -c
+#          tar -xf download
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
         with:
           context: .
           file: ./docker/Dockerfile.alpine
           load: true
-#          no-cache: true
+          no-cache: true
           pull: true
           platforms: linux/arm64
           tags: local:arm64
