@@ -13,11 +13,11 @@ COPY . .
 
 RUN apk add --no-cache build-base python3
 
-WORKDIR /builder/build/${CRATE}-${CRATE_VERSION}
+WORKDIR /builder/build
 RUN cargo build --release
 
 WORKDIR /builder
-RUN ./collect.py ${BINS} ${LICENSE} aarch64-unknown-linux-musl ./build/${CRATE}-${CRATE_VERSION} ./build/${CRATE}-${CRATE_VERSION}/target/release
+RUN ./collect.py ${BINS} ${LICENSE} aarch64-unknown-linux-musl ./build ./build/target/release
 
 FROM alpine:latest
 

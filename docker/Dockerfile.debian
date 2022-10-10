@@ -9,11 +9,11 @@ ARG CRATE_HASH
 WORKDIR /builder
 COPY . .
 
-WORKDIR /builder/build/${CRATE}-${CRATE_VERSION}
+WORKDIR /builder/build
 RUN cargo build --release
 
 WORKDIR /builder
-RUN ./collect.py ${BINS} ${LICENSE} aarch64-unknown-linux-gnu ./build/${CRATE}-${CRATE_VERSION} ./build/${CRATE}-${CRATE_VERSION}/target/release
+RUN ./collect.py ${BINS} ${LICENSE} aarch64-unknown-linux-gnu ./build ./build/target/release
 
 FROM alpine:latest
 

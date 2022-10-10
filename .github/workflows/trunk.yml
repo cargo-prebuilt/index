@@ -127,16 +127,16 @@ jobs:
       - name: Create Directory
         run: mkdir -p build
       - name: Download and extract crate
-        working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
           echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
       - name: Build crate
-        working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
+        working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-unknown-linux-gnu ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-unknown-linux-gnu ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -181,16 +181,16 @@ jobs:
       - name: Create Directory
         run: mkdir -p build
       - name: Download and extract crate
-        working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
           echo "$CRATE_HASH  download" | sha256sum -c
           tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
       - name: Build crate
-        working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
+        working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-unknown-linux-musl ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-unknown-linux-musl ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -234,16 +234,16 @@ jobs:
       - name: Create Directory
         run: mkdir -p build
       - name: Download and extract crate
-        working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
           echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
       - name: Build crate
-        working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
+        working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-apple-darwin ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-apple-darwin ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -285,16 +285,16 @@ jobs:
       - name: Create Directory
         run: New-Item -ItemType Directory -Force -Path ./build
       - name: Download and extract crate
-        working-directory: ./build
         run: |
           Invoke-WebRequest -Uri ${{ env.CRATE_DOWNLOAD }} -OutFile download
           (Get-FileHash ./download).Hash -eq "${{ env.CRATE_HASH }}"
           tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
       - name: Build crate
-        working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
+        working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: python3 collect.py ${{ env.win_bins }} ${{ env.license }} x86_64-pc-windows-msvc ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
+        run: python3 collect.py ${{ env.win_bins }} ${{ env.license }} x86_64-pc-windows-msvc ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -326,6 +326,12 @@ jobs:
         with:
           swap-size-gb: 10
       - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            cargo-cache
+            build/target
+          key: ${{ runner.os }}-aarch64-unknown-linux-gnu
       - name: Docker Setup QEMU
         uses: docker/setup-qemu-action@v2
       - name: Docker Setup Buildx
@@ -334,23 +340,25 @@ jobs:
         run: |
           mkdir -p build
           mkdir -p transfer
+          mkdir -p cargo-cache
+          mkdir -p cargo-cache/git
+          mkdir -p cargo-cache/registry
       - name: Download and extract crate
-        working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
           echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
         with:
           context: .
           file: ./docker/Dockerfile.debian
           load: true
+          no-cache: true
           pull: true
           platforms: linux/arm64
           tags: local/aarch64-unknown-linux-gnu:latest
-          cache-from: type=registry,ref=local/aarch64-unknown-linux-gnu:latest
-          cache-to: type=inline
           build-args: |
             CRATE=${{ env.crate }}
             BINS=${{ env.bins }}
@@ -361,8 +369,10 @@ jobs:
       - name: Transfer files
         run: |
           docker run --rm --platform linux/arm64 \
+          -v ${{ github.workspace }}/cargo-cache/registry:/usr/local/cargo/registry \
+          -v ${{ github.workspace }}/cargo-cache/git:/usr/local/cargo/git \
           -v ${{ github.workspace }}/transfer:/transfer \
-          local:arm64
+          local/aarch64-unknown-linux-gnu:latest
       - name: Move to workspace root
         run: |
           mv ./transfer/aarch64-unknown-linux-gnu.zip .
@@ -375,7 +385,7 @@ jobs:
             aarch64-unknown-linux-gnu.zip
             aarch64-unknown-linux-gnu.sha256
       - name: Release Artifact
-        #        if: ${{ github.event_name != 'pull_request' }}
+#        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
@@ -398,6 +408,12 @@ jobs:
         with:
           swap-size-gb: 10
       - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            cargo-cache
+            build/target
+          key: ${{ runner.os }}-aarch64-unknown-linux-musl
       - name: Docker Setup QEMU
         uses: docker/setup-qemu-action@v2
       - name: Docker Setup Buildx
@@ -406,23 +422,25 @@ jobs:
         run: |
           mkdir -p build
           mkdir -p transfer
+          mkdir -p cargo-cache
+          mkdir -p cargo-cache/git
+          mkdir -p cargo-cache/registry
       - name: Download and extract crate
-        working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
           echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
       - name: Build and push Docker images
         uses: docker/build-push-action@v3
         with:
           context: .
           file: ./docker/Dockerfile.alpine
           load: true
+          no-cache: true
           pull: true
           platforms: linux/arm64
           tags: local/aarch64-unknown-linux-musl:latest
-          cache-from: type=registry,ref=local/aarch64-unknown-linux-musl:latest
-          cache-to: type=inline
           build-args: |
             CRATE=${{ env.crate }}
             BINS=${{ env.bins }}
@@ -433,8 +451,10 @@ jobs:
       - name: Transfer files
         run: |
           docker run --rm --platform linux/arm64 \
+          -v ${{ github.workspace }}/cargo-cache/registry:/usr/local/cargo/registry \
+          -v ${{ github.workspace }}/cargo-cache/git:/usr/local/cargo/git \
           -v ${{ github.workspace }}/transfer:/transfer \
-          local:arm64
+          local/aarch64-unknown-linux-musl:latest
       - name: Move to workspace root
         run: |
           mv ./transfer/aarch64-unknown-linux-musl.zip .
@@ -488,16 +508,16 @@ jobs:
       - name: Create Directory
         run: mkdir -p build
       - name: Download and extract crate
-        working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
           echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
       - name: Build crate
-        working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
+        working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-apple-darwin ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-apple-darwin ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
