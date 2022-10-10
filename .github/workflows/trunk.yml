@@ -91,10 +91,10 @@ jobs:
           tar -xf download
           echo $CRATE_HASH
       - name: Build crate
-        working-directory: ./build/${{ env.crate }}-$CRATE_VERSION
+        working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
         run: cargo build --release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} x64_86-linux-gnu ./build/${{ env.crate }}-$CRATE_VERSION ./build/${{ env.crate }}-$CRATE_VERSION/target/release
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} x64_86-linux-gnu ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
