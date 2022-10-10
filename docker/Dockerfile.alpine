@@ -25,4 +25,4 @@ RUN mkdir -p /store
 COPY --from=builder /builder/aarch64-unknown-linux-musl.zip /store
 COPY --from=builder /builder/aarch64-unknown-linux-musl.sha256 /store
 
-ENTRYPOINT "ls /store && ls /transfer && cp /store/* /transfer"
+ENTRYPOINT ["cp", "/store/*", "/transfer"]
