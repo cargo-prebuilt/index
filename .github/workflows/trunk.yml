@@ -49,8 +49,8 @@ jobs:
         uses: meeDamian/github-release@v2.0.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
-          draft: true
+          tag: ${{ env.crate }}-${{ steps.check.outputs.version }}
+          draft: true # Remove
           allow_override: true
 
   stable-build-x64_86-linux-gnu:
@@ -82,7 +82,7 @@ jobs:
         run: |
           wget $CRATE_DOWNLOAD
           tar -xf download
-          echo $CRATE_HASH
+          echo "$CRATE_HASH download" | sha256sum --check
       - name: Build crate
         working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
         run: cargo build --release
@@ -101,6 +101,8 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          gzip: false
+          allow_override: true
           files: >
             x64_86-linux-gnu.zip
             x64_86-linux-gnu.sha256
