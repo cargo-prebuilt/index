@@ -151,7 +151,7 @@ jobs:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
           overwrite: true
           file_glob: true
-          file: aarch64-unknown-linux-gnu.*
+          file: x86_64-unknown-linux-gnu.*
 
   stable-build-x86_64-unknown-linux-musl:
     needs: [ stable-check ]
