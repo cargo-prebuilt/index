@@ -182,6 +182,7 @@ jobs:
       - name: Download and extract crate # Use checksum!!!
         working-directory: ./build
         run: |
+          Invoke-WebRequest -Uri ${{ env.CRATE_DOWNLOAD }} -OutFile download
           wget $CRATE_DOWNLOAD
           tar -xf download
           echo "Crate Hash: $CRATE_HASH"
