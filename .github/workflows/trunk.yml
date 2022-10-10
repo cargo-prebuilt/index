@@ -124,7 +124,7 @@ jobs:
             build/target
           key: ${{ runner.os }}-x86_64-unknown-linux-musl-stable
       - name: Add pkgs
-        run: apk add --no-cache build-base
+        run: apk add --no-cache build-base python3
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -302,12 +302,12 @@ jobs:
       - name: Build crate
         working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
         run: cargo build --release
-      - name: DEBUG
+      - name: DEBUG # REMOVE
         working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
         run: |
-          ls target
+          ls target/release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-apple-darwin ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/aarch64-apple-darwin/release
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-apple-darwin ./build/${{ env.crate }}-${{ env.CRATE_VERSION }} ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}/target/release/aarch64-apple-darwin
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
