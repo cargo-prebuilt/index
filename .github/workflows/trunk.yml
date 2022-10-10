@@ -46,7 +46,7 @@ jobs:
         run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }}
       - name: Release Artifact
         #        if: ${{ github.event_name != 'pull_request' }}
-        uses: meeDamian/github-release@v2
+        uses: meeDamian/github-release@v2.0.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
@@ -97,7 +97,7 @@ jobs:
             x64_86-linux-gnu.sha256
       - name: Release Artifact
 #        if: ${{ github.event_name != 'pull_request' }}
-        uses: meeDamian/github-release@v2
+        uses: meeDamian/github-release@v2.0.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
