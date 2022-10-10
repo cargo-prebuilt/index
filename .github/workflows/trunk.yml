@@ -22,6 +22,7 @@ env:
   repo: https://github.com/thedodd/trunk.git
   license: LICENSE-APACHE,LICENSE-MIT
   bins: trunk
+  win_bins: trunk.exe
 
 jobs:
   # Stable
@@ -46,12 +47,11 @@ jobs:
         run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }}
       - name: Release Artifact
         #        if: ${{ github.event_name != 'pull_request' }}
-        uses: meeDamian/github-release@v2.0.3
+        uses: ncipollo/release-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.YOUR_GITHUB_TOKEN }}
           tag: ${{ env.crate }}-${{ steps.check.outputs.version }}
-          draft: true # Remove
-          allow_override: true
+          allowUpdates: true
 
   stable-build-x64_86-linux-gnu:
     needs: [ stable-check ]
@@ -97,15 +97,12 @@ jobs:
             x64_86-linux-gnu.sha256
       - name: Release Artifact
 #        if: ${{ github.event_name != 'pull_request' }}
-        uses: meeDamian/github-release@v2.0.3
+        uses: ncipollo/release-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.YOUR_GITHUB_TOKEN }}
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
-          gzip: false
-          allow_override: true
-          files: >
-            x64_86-linux-gnu.zip
-            x64_86-linux-gnu.sha256
+          allowUpdates: true
+          artifacts: "x64_86-linux-gnu.zip,x64_86-linux-gnu.sha256"
 
   stable-build-x64_86-apple-darwin:
     needs: [ stable-check ]
@@ -151,17 +148,12 @@ jobs:
             x64_86-apple-darwin.sha256
       - name: Release Artifact
         #        if: ${{ github.event_name != 'pull_request' }}
-        uses: meeDamian/github-release@v2.0.3
+        uses: ncipollo/release-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.YOUR_GITHUB_TOKEN }}
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
-          gzip: false
-          allow_override: true
-          files: >
-            x64_86-apple-darwin.zip
-            x64_86-apple-darwin.sha256
-
-
+          allowUpdates: true
+          artifacts: "x64_86-apple-darwin.zip,x64_86-apple-darwin.sha256"
 
   # Nightly
   
