@@ -119,7 +119,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             build/target
-          key: ${{ runner.os }}-x86_64-unknown-linux-gnu-stable
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-unknown-linux-gnu-stable
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -173,7 +173,7 @@ jobs:
             /usr/local/cargo/registry
             /usr/local/cargo/git
             build/target
-          key: ${{ runner.os }}-x86_64-unknown-linux-musl-stable
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-unknown-linux-musl-stable
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -224,7 +224,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             build/target
-          key: ${{ runner.os }}-x86_64-apple-darwin-stable
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-apple-darwin-stable
       - name: Get pkgs
         run: brew install coreutils
       - name: Update Rust
@@ -277,7 +277,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             build/target
-          key: ${{ runner.os }}-x86_64-pc-windows-msvc-stable
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-pc-windows-msvc-stable
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -331,7 +331,7 @@ jobs:
           path: |
             cargo-cache
             build/target
-          key: ${{ runner.os }}-aarch64-unknown-linux-gnu
+          key: ${{ runner.os }}-${{ env.crate }}-stable-aarch64-unknown-linux-gnu
       - name: Docker Setup QEMU
         uses: docker/setup-qemu-action@v2
       - name: Docker Setup Buildx
@@ -358,6 +358,8 @@ jobs:
           -v ${{ github.workspace }}:/builder \
           rust:latest \
           /entrypoint.sh
+      - name: Permission fix
+        run: sudo chown -R 777 cargo-cache
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -394,7 +396,7 @@ jobs:
           path: |
             cargo-cache
             build/target
-          key: ${{ runner.os }}-aarch64-unknown-linux-musl
+          key: ${{ runner.os }}-${{ env.crate }}-stable-aarch64-unknown-linux-musl
       - name: Docker Setup QEMU
         uses: docker/setup-qemu-action@v2
       - name: Docker Setup Buildx
@@ -422,6 +424,8 @@ jobs:
           -v ${{ github.workspace }}:/builder \
           rust:alpine \
           /entrypoint.sh
+      - name: Permission fix
+        run: sudo chown -R 777 cargo-cache
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -455,7 +459,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             build/target
-          key: ${{ runner.os }}-aarch64-apple-darwin-stable
+          key: ${{ runner.os }}-${{ env.crate }}-stable-aarch64-apple-darwin-stable
       - name: Get pkgs
         run: brew install coreutils
       - name: Update Rust
