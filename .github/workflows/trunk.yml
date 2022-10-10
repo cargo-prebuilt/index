@@ -135,7 +135,7 @@ jobs:
         working-directory: ./build
         run: |
           wget $CRATE_DOWNLOAD
-          echo "$CRATE_HASH download" | sha256sum -c
+          echo "$CRATE_HASH  download" | sha256sum -c
           tar -xf download
       - name: Build crate
         working-directory: ./build/${{ env.crate }}-${{ env.CRATE_VERSION }}
@@ -176,6 +176,8 @@ jobs:
             ~/.cargo/git
             build/target
           key: ${{ runner.os }}-x86_64-apple-darwin-stable
+      - name: Get pkgs
+        run: brew install coreutils
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -351,6 +353,8 @@ jobs:
             ~/.cargo/git
             build/target
           key: ${{ runner.os }}-aarch64-apple-darwin-stable
+      - name: Get pkgs
+        run: brew install coreutils
       - name: Update Rust
         run: rustup update
       - name: Rust Version

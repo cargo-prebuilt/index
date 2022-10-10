@@ -6,6 +6,8 @@ ARG CRATE_VERSION
 ARG CRATE_DOWNLOAD
 ARG CRATE_HASH
 
+ENV CFLAGS='-mno-outline-atomics'
+
 WORKDIR /builder
 COPY . .
 
