@@ -47,11 +47,11 @@ jobs:
         run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }}
       - name: Release Artifact
         #        if: ${{ github.event_name != 'pull_request' }}
-        uses: ncipollo/release-action@v1
+        uses: meeDamian/github-release@v2.0.3
         with:
-          token: ${{ secrets.YOUR_GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.crate }}-${{ steps.check.outputs.version }}
-          allowUpdates: true
+          allow_override: true
 
   stable-build-x64_86-linux-gnu:
     needs: [ stable-check ]
@@ -97,12 +97,12 @@ jobs:
             x64_86-linux-gnu.sha256
       - name: Release Artifact
 #        if: ${{ github.event_name != 'pull_request' }}
-        uses: ncipollo/release-action@v1
+        uses: svenstaro/upload-release-action@2.3.0
         with:
-          token: ${{ secrets.YOUR_GITHUB_TOKEN }}
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
-          allowUpdates: true
-          artifacts: "x64_86-linux-gnu.zip,x64_86-linux-gnu.sha256"
+          overwrite: true
+          file_glob: true
+          file: x64_86-linux-gnu.*
 
   stable-build-x64_86-apple-darwin:
     needs: [ stable-check ]
@@ -148,12 +148,12 @@ jobs:
             x64_86-apple-darwin.sha256
       - name: Release Artifact
         #        if: ${{ github.event_name != 'pull_request' }}
-        uses: ncipollo/release-action@v1
+        uses: svenstaro/upload-release-action@2.3.0
         with:
-          token: ${{ secrets.YOUR_GITHUB_TOKEN }}
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
-          allowUpdates: true
-          artifacts: "x64_86-apple-darwin.zip,x64_86-apple-darwin.sha256"
+          overwrite: true
+          file_glob: true
+          file: x64_86-apple-darwin.*
 
   # Nightly
   
