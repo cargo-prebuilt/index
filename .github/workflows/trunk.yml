@@ -339,7 +339,6 @@ jobs:
       - name: Create Directory
         run: |
           mkdir -p build
-          mkdir -p transfer
           mkdir -p cargo-cache
           mkdir -p cargo-cache/git
           mkdir -p cargo-cache/registry
@@ -349,34 +348,16 @@ jobs:
           echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
           mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./docker/Dockerfile.debian
-          load: true
-          no-cache: true
-          pull: true
-          platforms: linux/arm64
-          tags: local/aarch64-unknown-linux-gnu:latest
-          build-args: |
-            CRATE=${{ env.crate }}
-            BINS=${{ env.bins }}
-            LICENSE=${{ env.license }}
-            CRATE_VERSION=${{ env.CRATE_VERSION }}
-            CRATE_DOWNLOAD=${{ env.CRATE_DOWNLOAD }}
-            CRATE_HASH=${{ env.CRATE_HASH }}
-      - name: Transfer files
+      - name: Build in container
         run: |
-          docker run --rm --platform linux/arm64 \
+          docker run --rm --pull --platform linux/arm64 \
+          -e CRATE=${{ env.crate }} -e BINS=${{ env.bins }} -e LICENSE=${{ env.license }} \
+          -v ${{ github.workspace }}/docker/entrypoint-debian.sh:/entrypoint.sh
           -v ${{ github.workspace }}/cargo-cache/registry:/usr/local/cargo/registry \
           -v ${{ github.workspace }}/cargo-cache/git:/usr/local/cargo/git \
-          -v ${{ github.workspace }}/transfer:/transfer \
-          local/aarch64-unknown-linux-gnu:latest
-      - name: Move to workspace root
-        run: |
-          mv ./transfer/aarch64-unknown-linux-gnu.zip .
-          mv ./transfer/aarch64-unknown-linux-gnu.sha256 .
+          -v ${{ github.workspace }}:/builder \
+          rust:latest \
+          /entrypoint.sh
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -431,34 +412,16 @@ jobs:
           echo "$CRATE_HASH download" | sha256sum -c
           tar -xf download
           mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v3
-        with:
-          context: .
-          file: ./docker/Dockerfile.alpine
-          load: true
-          no-cache: true
-          pull: true
-          platforms: linux/arm64
-          tags: local/aarch64-unknown-linux-musl:latest
-          build-args: |
-            CRATE=${{ env.crate }}
-            BINS=${{ env.bins }}
-            LICENSE=${{ env.license }}
-            CRATE_VERSION=${{ env.CRATE_VERSION }}
-            CRATE_DOWNLOAD=${{ env.CRATE_DOWNLOAD }}
-            CRATE_HASH=${{ env.CRATE_HASH }}
-      - name: Transfer files
+      - name: Build in container
         run: |
-          docker run --rm --platform linux/arm64 \
+          docker run --rm --pull --platform linux/arm64 \
+          -e CRATE=${{ env.crate }} -e BINS=${{ env.bins }} -e LICENSE=${{ env.license }} \
+          -v ${{ github.workspace }}/docker/entrypoint-alpine.sh:/entrypoint.sh
           -v ${{ github.workspace }}/cargo-cache/registry:/usr/local/cargo/registry \
           -v ${{ github.workspace }}/cargo-cache/git:/usr/local/cargo/git \
-          -v ${{ github.workspace }}/transfer:/transfer \
-          local/aarch64-unknown-linux-musl:latest
-      - name: Move to workspace root
-        run: |
-          mv ./transfer/aarch64-unknown-linux-musl.zip .
-          mv ./transfer/aarch64-unknown-linux-musl.sha256 .
+          -v ${{ github.workspace }}:/builder \
+          rust:alpine \
+          /entrypoint.sh
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
