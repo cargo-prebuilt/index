@@ -48,6 +48,58 @@ jobs:
           tag: ${{ env.crate }}-${{ steps.check.outputs.version }}
           allow_override: true
 
+  stable-end:
+    needs: [ stable-check, stable-build-x86_64-unknown-linux-gnu, stable-build-x86_64-unknown-linux-musl, stable-build-x86_64-apple-darwin, stable-build-x86_64-pc-windows-msvc, stable-build-aarch64-unknown-linux-gnu, stable-build-aarch64-unknown-linux-musl, stable-build-aarch64-apple-darwin ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get
+        shell: python
+        working-directory: ${{ matrix.type }}
+        run: |
+          import urllib.request
+          # Index
+          res = urllib.request.urlopen("https://github.com/crow-rest/binary-cargo-tools/releases/download/stable-index/${{ env.crate }}")
+          body = res.read().decode("utf-8").strip()
+          with open("${{ env.crate }}", "w") as file:
+              file.write(body)
+              file.close()
+          with open("${{ env.crate }}", "a") as file:
+              file.write("${{ env.CRATE_VERSION }} https://github.com/crow-rest/binary-cargo-tools/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/index")
+              file.close()
+          # Index File
+          with open("index", "w") as file:
+              for t in []:
+                  file.write(t + " https://github.com/crow-rest/binary-cargo-tools/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/" + t + ".zip https://github.com/crow-rest/binary-cargo-tools/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/" + t + ".sha256")
+              file.close()
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: index
+          path: |
+            index
+            trunk
+      - name: Release index
+#        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          overwrite: true
+          file: index
+      - name: Release to main index
+#        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: stable-index
+          overwrite: true
+          file: ${{ env.crate }}
+
   stable-build-x86_64-unknown-linux-gnu:
     needs: [ stable-check ]
     if: ${{ needs.stable-check.outputs.build == 'true' }}
