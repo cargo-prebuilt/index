@@ -4,7 +4,7 @@ import sys, zipfile, hashlib
 
 
 def main(bins, licenses, target, path, build_path):
-    with zipfile.ZipFile(target + ".zip", "w") as archive:
+    with zipfile.ZipFile(target + ".zip", "w", strict_timestamps=False) as archive:
         for b in bins.split(","):
             archive.write(build_path + "/" + b, b)
         for l in licenses.split(","):

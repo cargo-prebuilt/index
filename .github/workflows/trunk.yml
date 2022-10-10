@@ -36,6 +36,7 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ahmadnassri/action-workflow-queue@v1
       - uses: actions/cache@v3
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           path: |
             ${{ env.crate }}.cache
@@ -43,22 +44,14 @@ jobs:
       - name: Check and Configure
         id: check
         run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }}
-
-  stable-test:
-    needs: [ stable-check ]
-    env:
-      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
-      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
-      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
-      BUILD: ${{ needs.stable-check.outputs.build }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Test Echo
-        run: |
-          echo $CRATE_VERSION
-          echo $CRATE_DOWNLOAD
-          echo $CRATE_HASH
-          echo $BUILD
+      - name: Release Artifact
+        #        if: ${{ github.event_name != 'pull_request' }}
+        uses: meeDamian/github-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          draft: true
+          allow_override: true
 
   stable-build-x64_86-linux-gnu:
     needs: [ stable-check ]
@@ -103,7 +96,15 @@ jobs:
             x64_86-linux-gnu.zip
             x64_86-linux-gnu.sha256
       - name: Release Artifact
-        run: echo "Cannot release yet"
+#        if: ${{ github.event_name != 'pull_request' }}
+        uses: meeDamian/github-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          files: >
+            x64_86-linux-gnu.zip
+            x64_86-linux-gnu.sha256
+
 
 
   # Nightly
