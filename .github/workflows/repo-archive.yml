@@ -1,0 +1,45 @@
+name: Archive Index
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 6'
+
+jobs:
+  archive:
+    strategy:
+      max-parallel: 1
+      matrix:
+        type: [ stable, nightly ]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: archive
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Clean
+        working-directory: ${{ matrix.type }}
+        run: rm -rf *
+      - name: Archive
+        shell: python
+        working-directory: ${{ matrix.type }}
+        run: |
+          import urllib.request
+          res = urllib.request.urlopen("https://github.com/crow-rest/binary-cargo-tools/releases/download/${{ matrix.type }}-index/index")
+          body = res.read().decode("utf-8")
+          with open("index", "w") as file:
+              file.write(body)
+              file.close()
+          crates = body.strip().split("\n")
+          for crate in crates:
+              res = urllib.request.urlopen("https://github.com/crow-rest/binary-cargo-tools/releases/download/${{ matrix.type }}-index/" + crate)
+              body = res.read().decode("utf-8")
+              with open(crate, "w") as file:
+                  file.write(body)
+                  file.close()
+      - name: Commit & Push changes
+        uses: Andro999b/push@v1.3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: archive
