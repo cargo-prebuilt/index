@@ -365,6 +365,8 @@ jobs:
           -v ${{ github.workspace }}:/builder \
           rust:latest \
           /entrypoint.sh
+      - name: Collect
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-unknown-linux-gnu ./build ./build/target/release
       - name: Permission fix
         run: sudo chown -R $USER cargo-cache
       - name: Artifact
@@ -432,6 +434,8 @@ jobs:
           -v ${{ github.workspace }}:/builder \
           rust:alpine \
           /entrypoint.sh
+      - name: Collect
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-unknown-linux-musl ./build ./build/target/release
       - name: Permission fix
         run: sudo chown -R $USER cargo-cache
       - name: Artifact
