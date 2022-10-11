@@ -7,8 +7,8 @@ on:
   pull_request:
     branches: [ main ]
   workflow_dispatch:
-#  schedule:
-#    - cron: '0 6 * * *'
+  schedule:
+    - cron: '0 6 * * *'
 
 env:
   stable-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/stable-index/
@@ -42,7 +42,7 @@ jobs:
         id: check
         run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }}
       - name: Release Artifact
-#        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: meeDamian/github-release@v2.0.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -89,7 +89,7 @@ jobs:
             index
             trunk
       - name: Release index
-#        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
@@ -97,14 +97,14 @@ jobs:
           prerelease: true
           file: index
       - name: Release to main index
-#        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: stable-index
           overwrite: true
           file: ${{ env.crate }}
       - name: Prerelease to Release
-#        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: meeDamian/github-release@v2.0.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -155,7 +155,7 @@ jobs:
             x86_64-unknown-linux-gnu.zip
             x86_64-unknown-linux-gnu.sha256
       - name: Release Artifact
-#        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
@@ -210,7 +210,7 @@ jobs:
             x86_64-unknown-linux-musl.zip
             x86_64-unknown-linux-musl.sha256
       - name: Release Artifact
-#        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
@@ -264,7 +264,7 @@ jobs:
             x86_64-apple-darwin.zip
             x86_64-apple-darwin.sha256
       - name: Release Artifact
-#        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
@@ -316,7 +316,7 @@ jobs:
             x86_64-pc-windows-msvc.zip
             x86_64-pc-windows-msvc.sha256
       - name: Release Artifact
-#        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
@@ -382,7 +382,7 @@ jobs:
             aarch64-unknown-linux-gnu.zip
             aarch64-unknown-linux-gnu.sha256
       - name: Release Artifact
-#        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
@@ -449,7 +449,7 @@ jobs:
             aarch64-unknown-linux-musl.zip
             aarch64-unknown-linux-musl.sha256
       - name: Release Artifact
-#        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
@@ -509,7 +509,7 @@ jobs:
             aarch64-apple-darwin.zip
             aarch64-apple-darwin.sha256
       - name: Release Artifact
-#        if: ${{ github.event_name != 'pull_request' }}
+        if: ${{ github.event_name != 'pull_request' }}
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
