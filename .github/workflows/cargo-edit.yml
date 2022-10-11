@@ -1,23 +1,23 @@
-name: cargo-generate
+name: cargo-edit
 
 on:
   push:
     branches: [ main ]
-    paths: [ .github/workflows/cargo-generate.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
+    paths: [ .github/workflows/cargo-edit.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
   pull_request:
     branches: [ main ]
-    paths: [ .github/workflows/cargo-generate.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
+    paths: [ .github/workflows/cargo-edit.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
   workflow_dispatch:
   schedule:
-    - cron: '5 6 * * *'
+    - cron: '10 6 * * *'
 
 env:
   stable-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/stable-index/
-  crate: cargo-generate
-  repo: https://github.com/cargo-generate/cargo-generate.git
-  license: LICENSE-APACHE,LICENSE-MIT
-  bins: cargo-generate
-  win_bins: cargo-generate.exe
+  crate: cargo-edit
+  repo: https://github.com/killercup/cargo-edit.git
+  license: LICENSE
+  bins: cargo-add,cargo-rm,cargo-set-version,cargo-upgrade
+  win_bins: cargo-add.exe,cargo-rm.exe,cargo-set-version.exe,cargo-upgrade.exe
 
 jobs:
   # Stable
