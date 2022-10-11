@@ -13,9 +13,7 @@ Some crate.io binaries built for different platforms.
 
 ## Binaries
 
-- [cargo-edit](https://github.com/killercup/cargo-edit)
-- [cargo-generate](https://github.com/cargo-generate/cargo-generate)
-- [trunk](https://github.com/thedodd/trunk)
+%%BINARIES%%
 
 ## API
 

@@ -1,0 +1,3 @@
+cargo-edit https://github.com/killercup/cargo-edit LICENSE cargo-add,cargo-rm,cargo-set-version,cargo-upgrade
+cargo-generate https://github.com/cargo-generate/cargo-generate LICENSE-APACHE,LICENSE-MIT cargo-generate
+trunk https://github.com/thedodd/trunk LICENSE-APACHE,LICENSE-MIT trunk

@@ -9,12 +9,11 @@ on:
     paths: [ .github/workflows/cargo-generate.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
   workflow_dispatch:
   schedule:
-    - cron: '5 6 * * *'
+    - cron: '0 6 * * *'
 
 env:
   stable-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/stable-index/
   crate: cargo-generate
-  repo: https://github.com/cargo-generate/cargo-generate.git
   license: LICENSE-APACHE,LICENSE-MIT
   bins: cargo-generate
   win_bins: cargo-generate.exe
@@ -38,7 +37,7 @@ jobs:
         with:
           path: |
             ${{ env.crate }}.cache
-          key: stable-${{ env.crate }}-${{ env.repo }}-${{ secrets.CACHE_VERSION }}
+          key: stable-${{ env.crate }}-${{ secrets.CACHE_VERSION }}
       - name: Check and Configure
         id: check
         run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }} ${{ github.event_name == 'pull_request' }}
@@ -48,6 +47,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.crate }}-${{ steps.check.outputs.version }}
+          name: ${{ env.crate }}-${{ steps.check.outputs.version }}
           prerelease: true
           allow_override: true
 
