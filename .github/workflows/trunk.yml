@@ -12,7 +12,6 @@ on:
 
 env:
   stable-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/stable-index/
-#  nightly-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/nightly-index/
   crate: trunk
   repo: https://github.com/thedodd/trunk.git
   license: LICENSE-APACHE,LICENSE-MIT
@@ -109,7 +108,7 @@ jobs:
         uses: meeDamian/github-release@v2.0.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.crate }}-${{ steps.check.outputs.version }}
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
           prerelease: false
           allow_override: true
 
@@ -518,5 +517,3 @@ jobs:
           prerelease: true
           file_glob: true
           file: aarch64-apple-darwin.*
-
-  # Nightly
