@@ -178,7 +178,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Add pkgs
-        run: apk add --no-cache build-base python3 tar
+        run: apk add --no-cache build-base python3 tar perl
       - uses: actions/cache@v3
         with:
           path: |
