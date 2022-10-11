@@ -3,10 +3,10 @@ name: trunk
 on:
   push:
     branches: [ main ]
-    paths: [ .github/workflows/trunk.yml ]
+    paths: [ .github/workflows/trunk.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
   pull_request:
     branches: [ main ]
-    paths: [ .github/workflows/trunk.yml ]
+    paths: [ .github/workflows/trunk.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
   workflow_dispatch:
   schedule:
     - cron: '0 6 * * *'

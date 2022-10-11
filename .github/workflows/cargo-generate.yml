@@ -3,10 +3,10 @@ name: cargo-generate
 on:
   push:
     branches: [ main ]
-    paths: [ .github/workflows/cargo-generate.yml ]
+    paths: [ .github/workflows/cargo-generate.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
   pull_request:
     branches: [ main ]
-    paths: [ .github/workflows/cargo-generate.yml ]
+    paths: [ .github/workflows/cargo-generate.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
   workflow_dispatch:
   schedule:
     - cron: '5 6 * * *'
