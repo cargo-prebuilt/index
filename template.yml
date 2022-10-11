@@ -47,6 +47,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: ${{ env.crate }}-${{ steps.check.outputs.version }}
+          name: ${{ env.crate }}-${{ steps.check.outputs.version }}
           prerelease: true
           allow_override: true
 
