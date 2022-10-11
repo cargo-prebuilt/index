@@ -359,7 +359,7 @@ jobs:
           rust:latest \
           /entrypoint.sh
       - name: Permission fix
-        run: sudo chown -R 777 cargo-cache
+        run: sudo chown -R $USER cargo-cache
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -425,7 +425,7 @@ jobs:
           rust:alpine \
           /entrypoint.sh
       - name: Permission fix
-        run: sudo chown -R 777 cargo-cache
+        run: sudo chown -R $USER cargo-cache
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
