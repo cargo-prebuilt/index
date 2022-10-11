@@ -19,11 +19,11 @@ jobs:
           persist-credentials: false
           fetch-depth: 0
       - name: Clean
-        working-directory: ${{ matrix.type }}
+        working-directory: ./${{ matrix.type }}
         run: rm -rf *
       - name: Archive
         shell: python
-        working-directory: ${{ matrix.type }}
+        working-directory: ./${{ matrix.type }}
         run: |
           import urllib.request
           res = urllib.request.urlopen("https://github.com/crow-rest/binary-cargo-tools/releases/download/${{ matrix.type }}-index/index")
