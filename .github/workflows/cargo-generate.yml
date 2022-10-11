@@ -12,7 +12,7 @@ on:
     - cron: '0 6 * * *'
 
 env:
-  stable-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/stable-index/
+  stable-index: https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/
   crate: cargo-generate
   license: LICENSE-APACHE,LICENSE-MIT
   bins: cargo-generate
@@ -69,18 +69,18 @@ jobs:
           import urllib.request
           targets = ["x86_64-unknown-linux-gnu", "x86_64-unknown-linux-musl", "x86_64-apple-darwin", "x86_64-pc-windows-msvc", "aarch64-unknown-linux-gnu", "aarch64-unknown-linux-musl", "aarch64-apple-darwin"]
           # Index
-          res = urllib.request.urlopen("https://github.com/crow-rest/binary-cargo-tools/releases/download/stable-index/${{ env.crate }}")
+          res = urllib.request.urlopen("${{ env.stable.index }}${{ env.crate }}")
           body = res.read().decode("utf-8").strip()
           with open("${{ env.crate }}", "w") as file:
               file.write(body + "\n")
               file.close()
           with open("${{ env.crate }}", "a") as file:
-              file.write("${{ env.CRATE_VERSION }} https://github.com/crow-rest/binary-cargo-tools/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/index")
+              file.write("${{ env.CRATE_VERSION }} https://github.com/crow-rest/cargo-prebuilt-index/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/index")
               file.close()
           # Index File
           with open("index", "w") as file:
               for t in targets:
-                  file.write(t + " https://github.com/crow-rest/binary-cargo-tools/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/" + t + ".zip https://github.com/crow-rest/binary-cargo-tools/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/" + t + ".sha256\n")
+                  file.write(t + " https://github.com/crow-rest/cargo-prebuilt-index/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/" + t + ".zip https://github.com/crow-rest/cargo-prebuilt-index/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/" + t + ".sha256\n")
               file.close()
       - name: Artifact
         uses: actions/upload-artifact@v3
