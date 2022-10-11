@@ -104,14 +104,6 @@ jobs:
           tag: stable-index
           overwrite: true
           file: ${{ env.crate }}
-      - name: Prerelease to Release
-        if: ${{ github.event_name != 'pull_request' }}
-        uses: meeDamian/github-release@v2.0.3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
-          prerelease: false
-          allow_override: true
 
   stable-build-x86_64-unknown-linux-gnu:
     needs: [ stable-check ]
