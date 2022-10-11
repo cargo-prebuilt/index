@@ -18,7 +18,6 @@ def main(index):
         for c in crates:
             data = c.strip().split(" ")
             action = action_template.replace("%%CRATE%%", data[0])
-            action = action.replace("%%REPO%%", data[1])
             action = action.replace("%%LICENSE%%", data[2])
             action = action.replace("%%BINS%%", data[3])
             action = action.replace("%%WIN_BINS%%", ",".join(map(lambda x: x + ".exe", data[3].split(","))))

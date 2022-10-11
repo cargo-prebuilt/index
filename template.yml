@@ -14,7 +14,6 @@ on:
 env:
   stable-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/stable-index/
   crate: %%CRATE%%
-  repo: %%REPO%%
   license: %%LICENSE%%
   bins: %%BINS%%
   win_bins: %%WIN_BINS%%
@@ -38,7 +37,7 @@ jobs:
         with:
           path: |
             ${{ env.crate }}.cache
-          key: stable-${{ env.crate }}-${{ env.repo }}-${{ secrets.CACHE_VERSION }}
+          key: stable-${{ env.crate }}-${{ secrets.CACHE_VERSION }}
       - name: Check and Configure
         id: check
         run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }} ${{ github.event_name == 'pull_request' }}
