@@ -2,7 +2,7 @@
 
 export CFLAGS='-mno-outline-atomics'
 
-apk add --no-cache build-base python3
+apk add --no-cache build-base python3 perl
 
 cd /builder/build
 cargo build --release
