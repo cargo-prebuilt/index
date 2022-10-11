@@ -41,7 +41,7 @@ jobs:
           key: stable-${{ env.crate }}-${{ env.repo }}-${{ secrets.CACHE_VERSION }}
       - name: Check and Configure
         id: check
-        run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }}
+        run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }} ${{ github.event_name == 'pull_request' }}
       - name: Release Artifact
         if: ${{ github.event_name != 'pull_request' }}
         uses: meeDamian/github-release@v2.0.3
