@@ -58,6 +58,7 @@ def main(mode, index, crate):
             if v == "":
                 cached = -1
             else:
+                v = v.split(" ")
                 semver = v[0].split(".")
                 cached = 100 * int(semver[0]) + 10 * int(semver[1]) + int(semver[2])
         else:
