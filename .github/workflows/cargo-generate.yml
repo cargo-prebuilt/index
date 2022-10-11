@@ -1,23 +1,23 @@
-name: trunk
+name: cargo-generate
 
 on:
   push:
     branches: [ main ]
-    paths: [ .github/workflows/trunk.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
+    paths: [ .github/workflows/cargo-generate.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
   pull_request:
     branches: [ main ]
-    paths: [ .github/workflows/trunk.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
+    paths: [ .github/workflows/cargo-generate.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
   workflow_dispatch:
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '5 6 * * *'
 
 env:
   stable-index: https://github.com/crow-rest/binary-cargo-tools/releases/download/stable-index/
-  crate: trunk
-  repo: https://github.com/thedodd/trunk.git
+  crate: cargo-generate
+  repo: https://github.com/cargo-generate/cargo-generate.git
   license: LICENSE-APACHE,LICENSE-MIT
-  bins: trunk
-  win_bins: trunk.exe
+  bins: cargo-generate
+  win_bins: cargo-generate.exe
 
 jobs:
   # Stable

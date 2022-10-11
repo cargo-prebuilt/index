@@ -3,6 +3,7 @@ Some cargo tools built for different platforms.
 
 ## Tools
 
+- [cargo-generate](https://github.com/cargo-generate/cargo-generate)
 - [trunk](https://github.com/thedodd/trunk)
 
 ## "API"

@@ -31,7 +31,7 @@ def getNewestCrate(versions):
     return latest
 
 
-def main(mode, index, crate):
+def main(mode, index, crate, pull_request):
     if mode != "stable" and mode != "nightly":
         print("first arg must be stable or nightly")
         sys.exit(1)
@@ -77,7 +77,7 @@ def main(mode, index, crate):
             print("Something when wrong with getting the highest version.")
             sys.exit(1)
 
-        if latest[0] > cached:
+        if pull_request == "true" or latest[0] > cached:
             with open(crate + ".cache", "w") as file:
                 file.write(str(latest[0]))
             print("::set-output name=build::true")
@@ -108,4 +108,4 @@ def main(mode, index, crate):
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3])
+    main(argv[1], argv[2], argv[3], argv[4])
