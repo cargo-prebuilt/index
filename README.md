@@ -13,6 +13,7 @@ Some crate.io binaries built for different platforms.
 
 ## Binaries
 
+- [bacon](https://github.com/Canop/bacon)
 - [cargo-edit](https://github.com/killercup/cargo-edit)
 - [cargo-generate](https://github.com/cargo-generate/cargo-generate)
 - [trunk](https://github.com/thedodd/trunk)
