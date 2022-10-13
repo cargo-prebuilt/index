@@ -16,7 +16,9 @@ Some crate.io binaries built for different platforms.
 - [bacon](https://github.com/Canop/bacon)
 - [cargo-edit](https://github.com/killercup/cargo-edit)
 - [cargo-generate](https://github.com/cargo-generate/cargo-generate)
+- [just](https://github.com/casey/just)
 - [trunk](https://github.com/thedodd/trunk)
+- [wasm-pack](https://github.com/rustwasm/wasm-pack)
 
 ## API
 

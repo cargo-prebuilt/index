@@ -1,4 +1,6 @@
 bacon https://github.com/Canop/bacon LICENSE bacon
 cargo-edit https://github.com/killercup/cargo-edit LICENSE cargo-add,cargo-rm,cargo-set-version,cargo-upgrade
 cargo-generate https://github.com/cargo-generate/cargo-generate LICENSE-APACHE,LICENSE-MIT cargo-generate
+just https://github.com/casey/just LICENSE just
 trunk https://github.com/thedodd/trunk LICENSE-APACHE,LICENSE-MIT trunk
+wasm-pack https://github.com/rustwasm/wasm-pack LICENSE-APACHE,LICENSE-MIT wasm-pack
