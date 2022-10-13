@@ -14,8 +14,11 @@ Some crate.io binaries built for different platforms.
 ## Binaries
 
 - [bacon](https://github.com/Canop/bacon)
+- [cargo-audit](https://github.com/rustsec/rustsec/tree/main/cargo-audit)
+- [cargo-build-deps](https://github.com/nacardin/cargo-build-deps)
 - [cargo-edit](https://github.com/killercup/cargo-edit)
 - [cargo-generate](https://github.com/cargo-generate/cargo-generate)
+- [cargo-outdated](https://github.com/kbknapp/cargo-outdated)
 - [just](https://github.com/casey/just)
 - [trunk](https://github.com/thedodd/trunk)
 - [wasm-pack](https://github.com/rustwasm/wasm-pack)

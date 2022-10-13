@@ -1,0 +1,516 @@
+name: cargo-outdated
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ .github/workflows/cargo-outdated.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
+  pull_request:
+    branches: [ main ]
+    paths: [ .github/workflows/cargo-outdated.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'
+
+env:
+  stable-index: https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/
+  crate: cargo-outdated
+  license: LICENSE-MIT
+  bins: cargo-outdated
+  win_bins: cargo-outdated.exe
+
+jobs:
+  # Stable
+  stable-check:
+    outputs:
+      crate-version: ${{ steps.check.outputs.version }}
+      crate-download: ${{ steps.check.outputs.dl }}
+      crate-hash: ${{ steps.check.outputs.hash }}
+      build: ${{ steps.check.outputs.build }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ahmadnassri/action-workflow-queue@v1
+        with:
+          timeout: 10800000
+      - uses: actions/cache@v3
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          path: |
+            ${{ env.crate }}.cache
+          key: stable-${{ env.crate }}-${{ secrets.CACHE_VERSION }}
+      - name: Check and Configure
+        id: check
+        run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }} ${{ github.event_name == 'pull_request' }}
+      - name: Release Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: meeDamian/github-release@v2.0.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.crate }}-${{ steps.check.outputs.version }}
+          name: ${{ env.crate }}-${{ steps.check.outputs.version }}
+          prerelease: true
+          allow_override: true
+
+  stable-push-index:
+    needs: [ stable-check, stable-build-x86_64-unknown-linux-gnu, stable-build-x86_64-unknown-linux-musl, stable-build-x86_64-apple-darwin, stable-build-x86_64-pc-windows-msvc, stable-build-aarch64-unknown-linux-gnu, stable-build-aarch64-unknown-linux-musl, stable-build-aarch64-apple-darwin ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get
+        shell: python
+        working-directory: ${{ matrix.type }}
+        run: |
+          import urllib.request
+          targets = ["x86_64-unknown-linux-gnu", "x86_64-unknown-linux-musl", "x86_64-apple-darwin", "x86_64-pc-windows-msvc", "aarch64-unknown-linux-gnu", "aarch64-unknown-linux-musl", "aarch64-apple-darwin"]
+          # Index
+          res = urllib.request.urlopen("${{ env.stable-index }}${{ env.crate }}")
+          body = res.read().decode("utf-8").strip()
+          with open("${{ env.crate }}", "w") as file:
+              file.write(body + "\n")
+              file.close()
+          with open("${{ env.crate }}", "a") as file:
+              file.write("${{ env.CRATE_VERSION }} https://github.com/crow-rest/cargo-prebuilt-index/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/index")
+              file.close()
+          # Index File
+          with open("index", "w") as file:
+              for t in targets:
+                  file.write(t + " https://github.com/crow-rest/cargo-prebuilt-index/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/" + t + ".zip https://github.com/crow-rest/cargo-prebuilt-index/releases/download/${{ env.crate }}-${{ env.CRATE_VERSION }}/" + t + ".sha256\n")
+              file.close()
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: index
+          path: |
+            index
+            trunk
+      - name: Release index
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          overwrite: true
+          prerelease: true
+          file: index
+      - name: Release to main index
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: stable-index
+          overwrite: true
+          file: ${{ env.crate }}
+
+  stable-build-x86_64-unknown-linux-gnu:
+    needs: [ stable-check ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            build/target
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-unknown-linux-gnu-stable
+      - name: Update Rust
+        run: rustup update
+      - name: Rust Version
+        run: rustc --version
+      - name: Create Directory
+        run: mkdir -p build
+      - name: Download and extract crate
+        run: |
+          wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH download" | sha256sum -c
+          tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
+      - name: Build crate
+        working-directory: ./build
+        run: cargo build --release
+      - name: Collect
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-unknown-linux-gnu ./build ./build/target/release
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: x86_64-unknown-linux-gnu
+          path: |
+            x86_64-unknown-linux-gnu.zip
+            x86_64-unknown-linux-gnu.sha256
+      - name: Release Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: x86_64-unknown-linux-gnu.*
+
+  stable-build-x86_64-unknown-linux-musl:
+    needs: [ stable-check ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: ubuntu-latest
+    container: rust:alpine
+    steps:
+      - uses: actions/checkout@v3
+      - name: Add pkgs
+        run: apk add --no-cache build-base python3 tar perl openssl-dev
+      - uses: actions/cache@v3
+        with:
+          path: |
+            /usr/local/cargo/registry
+            /usr/local/cargo/git
+            build/target
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-unknown-linux-musl-stable
+      - name: Update Rust
+        run: rustup update
+      - name: Rust Version
+        run: rustc --version
+      - name: Create Directory
+        run: mkdir -p build
+      - name: Download and extract crate
+        run: |
+          wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH  download" | sha256sum -c
+          tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
+      - name: Build crate
+        working-directory: ./build
+        run: cargo build --release
+      - name: Collect
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-unknown-linux-musl ./build ./build/target/release
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: x86_64-unknown-linux-musl
+          path: |
+            x86_64-unknown-linux-musl.zip
+            x86_64-unknown-linux-musl.sha256
+      - name: Release Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: x86_64-unknown-linux-musl.*
+
+  stable-build-x86_64-apple-darwin:
+    needs: [ stable-check ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            build/target
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-apple-darwin-stable
+      - name: Get pkgs
+        run: brew install coreutils
+      - name: Update Rust
+        run: rustup update
+      - name: Rust Version
+        run: rustc --version
+      - name: Create Directory
+        run: mkdir -p build
+      - name: Download and extract crate
+        run: |
+          wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH download" | sha256sum -c
+          tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
+      - name: Build crate
+        working-directory: ./build
+        run: cargo build --release
+      - name: Collect
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-apple-darwin ./build ./build/target/release
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: x86_64-apple-darwin
+          path: |
+            x86_64-apple-darwin.zip
+            x86_64-apple-darwin.sha256
+      - name: Release Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: x86_64-apple-darwin.*
+
+  stable-build-x86_64-pc-windows-msvc:
+    needs: [ stable-check ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            build/target
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-pc-windows-msvc-stable
+      - name: Update Rust
+        run: rustup update
+      - name: Rust Version
+        run: rustc --version
+      - name: Create Directory
+        run: New-Item -ItemType Directory -Force -Path ./build
+      - name: Download and extract crate
+        run: |
+          Invoke-WebRequest -Uri ${{ env.CRATE_DOWNLOAD }} -OutFile download
+          (Get-FileHash ./download).Hash -eq "${{ env.CRATE_HASH }}"
+          tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
+      - name: Build crate
+        working-directory: ./build
+        run: cargo build --release
+      - name: Collect
+        run: python3 collect.py ${{ env.win_bins }} ${{ env.license }} x86_64-pc-windows-msvc ./build ./build/target/release
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: x86_64-pc-windows-msvc
+          path: |
+            x86_64-pc-windows-msvc.zip
+            x86_64-pc-windows-msvc.sha256
+      - name: Release Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: x86_64-pc-windows-msvc.*
+
+  stable-build-aarch64-unknown-linux-gnu:
+    needs: [ stable-check ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Swap Space
+        uses: pierotofy/set-swap-space@v1.0
+        with:
+          swap-size-gb: 10
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            cargo-cache
+            build/target
+          key: ${{ runner.os }}-${{ env.crate }}-stable-aarch64-unknown-linux-gnu
+      - name: Docker Setup QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Create Directory
+        run: |
+          mkdir -p build
+          mkdir -p cargo-cache
+          mkdir -p cargo-cache/git
+          mkdir -p cargo-cache/registry
+      - name: Download and extract crate
+        run: |
+          wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH download" | sha256sum -c
+          tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
+      - name: Build in container
+        run: |
+          docker run --rm --platform=linux/arm64 \
+          -e CRATE=${{ env.crate }} -e BINS=${{ env.bins }} -e LICENSE=${{ env.license }} \
+          -v ${{ github.workspace }}/docker/entrypoint-debian.sh:/entrypoint.sh \
+          -v ${{ github.workspace }}/cargo-cache/registry:/usr/local/cargo/registry \
+          -v ${{ github.workspace }}/cargo-cache/git:/usr/local/cargo/git \
+          -v ${{ github.workspace }}:/builder \
+          rust:latest \
+          /entrypoint.sh
+      - name: Collect
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-unknown-linux-gnu ./build ./build/target/release
+      - name: Permission fix
+        run: sudo chown -R $USER cargo-cache
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: aarch64-unknown-linux-gnu
+          path: |
+            aarch64-unknown-linux-gnu.zip
+            aarch64-unknown-linux-gnu.sha256
+      - name: Release Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: aarch64-unknown-linux-gnu.*
+
+  stable-build-aarch64-unknown-linux-musl:
+    needs: [ stable-check ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Swap Space
+        uses: pierotofy/set-swap-space@v1.0
+        with:
+          swap-size-gb: 10
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            cargo-cache
+            build/target
+          key: ${{ runner.os }}-${{ env.crate }}-stable-aarch64-unknown-linux-musl
+      - name: Docker Setup QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Create Directory
+        run: |
+          mkdir -p build
+          mkdir -p transfer
+          mkdir -p cargo-cache
+          mkdir -p cargo-cache/git
+          mkdir -p cargo-cache/registry
+      - name: Download and extract crate
+        run: |
+          wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH download" | sha256sum -c
+          tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
+      - name: Build in container
+        run: |
+          docker run --rm --platform=linux/arm64 \
+          -e CRATE=${{ env.crate }} -e BINS=${{ env.bins }} -e LICENSE=${{ env.license }} \
+          -v ${{ github.workspace }}/docker/entrypoint-alpine.sh:/entrypoint.sh \
+          -v ${{ github.workspace }}/cargo-cache/registry:/usr/local/cargo/registry \
+          -v ${{ github.workspace }}/cargo-cache/git:/usr/local/cargo/git \
+          -v ${{ github.workspace }}:/builder \
+          rust:alpine \
+          /entrypoint.sh
+      - name: Collect
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-unknown-linux-musl ./build ./build/target/release
+      - name: Permission fix
+        run: sudo chown -R $USER cargo-cache
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: aarch64-unknown-linux-musl
+          path: |
+            aarch64-unknown-linux-musl.zip
+            aarch64-unknown-linux-musl.sha256
+      - name: Release Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: aarch64-unknown-linux-musl.*
+
+  stable-build-aarch64-apple-darwin:
+    needs: [ stable-check ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            build/target
+          key: ${{ runner.os }}-${{ env.crate }}-stable-aarch64-apple-darwin-stable
+      - name: Get pkgs
+        run: brew install coreutils
+      - name: Update Rust
+        run: rustup update
+      - name: Rust Version
+        run: rustc --version
+      - name: Add Rust target
+        run: rustup target add aarch64-apple-darwin
+      - name: MacOS SDK
+        run: |
+          export SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
+          export MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
+      - name: Create Directory
+        run: mkdir -p build
+      - name: Download and extract crate
+        run: |
+          wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH download" | sha256sum -c
+          tar -xf download
+          mv ${{ env.crate }}-${{ env.CRATE_VERSION }}/* build
+      - name: Build crate
+        working-directory: ./build
+        run: cargo build --release
+      - name: Collect
+        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-apple-darwin ./build ./build/target/release
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: aarch64-apple-darwin
+          path: |
+            aarch64-apple-darwin.zip
+            aarch64-apple-darwin.sha256
+      - name: Release Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.crate }}-${{ env.CRATE_VERSION }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: aarch64-apple-darwin.*
