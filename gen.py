@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import sys
+import sys, os
 
 
 def main(index):
@@ -12,6 +12,9 @@ def main(index):
 
         with open("crate-list", "r") as file:
             info = file.read().strip()
+        os.makedirs("index", exist_ok=True)
+        with open("index/index", "w"):
+            pass
 
         crates = info.split("\n")
         readme = []
@@ -25,6 +28,11 @@ def main(index):
                 file.write(action)
 
             readme.append("- [" + data[0] + "](" + data[1] + ")")
+
+            with open("index/index", "a") as file:
+                file.write(data[0] + "\n")
+            with open("index/" + data[0], "w") as file:
+                file.write("#META " + data[0] + " " + data[1])
 
         readme = readme_template.replace("%%BINARIES%%", "\n".join(readme))
         with open("README.md", "w") as file:
