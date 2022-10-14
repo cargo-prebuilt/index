@@ -1,2 +1,9 @@
+bacon
+cargo-audit
+cargo-build-deps
+cargo-edit
 cargo-generate
+cargo-outdated
+just
 trunk
+wasm-pack
