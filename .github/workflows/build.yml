@@ -78,7 +78,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./scripts/collect.py x86_64-unknown-linux-gnu ./build ./build/target/release
+        run: ./scripts/collect.py ${{ inputs.crate }} x86_64-unknown-linux-gnu ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
