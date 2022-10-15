@@ -15,9 +15,9 @@ jobs:
   test:
     strategy:
       matrix:
-        crates: [ bacon ]
+        crates: [ bacon, just, trunk, cargo-outdated, cargo-build-deps ]
     uses: ./.github/workflows/build.yml
     with:
-      crate: bacon
+      crate: ${{ matrix.crates }}
       license: LICENSE
-      bins: bacon
+      bins: ${{ matrix.crates }}
