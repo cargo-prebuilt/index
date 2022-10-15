@@ -1,19 +1,19 @@
-name: %%CRATE%%
+name: tauri-cli
 
 on:
   push:
     branches: [ main ]
-    paths: [ .github/workflows/%%CRATE%%.yml, docker/**, scripts/** ]
+    paths: [ .github/workflows/tauri-cli.yml, docker/**, scripts/** ]
   pull_request:
     branches: [ main ]
-    paths: [ .github/workflows/%%CRATE%%.yml, docker/**, scripts/**  ]
+    paths: [ .github/workflows/tauri-cli.yml, docker/**, scripts/**  ]
   workflow_dispatch:
   schedule:
-    - cron: '%%TIME%% 6 * * *'
+    - cron: '10 6 * * *'
 
 env:
   stable-index: https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/
-  crate: %%CRATE%%
+  crate: tauri-cli
 
 jobs:
   # Stable

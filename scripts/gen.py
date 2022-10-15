@@ -21,7 +21,6 @@ def main(index):
         counter = 0
         for c in info:
             action = action_template.replace("%%CRATE%%", c)
-            action = action.replace("%%BINS%%", info[c]["bins"])
             action = action.replace("%%TIME%%", str(counter % 60))
             with open("./.github/workflows/" + c + ".yml", "w") as file:
                 file.write(action)

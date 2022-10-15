@@ -64,6 +64,27 @@
       "bins": [
         "wasm-pack"
       ]
+    },
+
+    "cargo-wasi": {
+      "github": "https://github.com/bytecodealliance/cargo-wasi",
+      "bins": [
+        "cargo-wasi"
+      ]
+    },
+
+    "tauri-cli": {
+      "github": "https://github.com/tauri-apps/tauri",
+      "bins": [
+        "cargo-tauri"
+      ]
+    },
+
+    "wasmtime-cli": {
+      "github": "https://github.com/bytecodealliance/wasmtime",
+      "bins": [
+        "wasmtime"
+      ]
     }
   }
 }
