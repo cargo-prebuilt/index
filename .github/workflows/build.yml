@@ -1,0 +1,105 @@
+name: Build Crate
+
+on:
+  workflow_call:
+    inputs:
+      crate:
+        type: string
+        required: true
+      license:
+        type: string
+        required: true
+      bins:
+        type: string
+        required: true
+      win_bins:
+        type: string
+        required: true
+
+env:
+  stable-index: https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/
+
+jobs:
+  # Stable
+  stable-check:
+    outputs:
+      crate-version: ${{ steps.check.outputs.version }}
+      crate-download: ${{ steps.check.outputs.dl }}
+      crate-hash: ${{ steps.check.outputs.hash }}
+      build: ${{ steps.check.outputs.build }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ahmadnassri/action-workflow-queue@v1
+        with:
+          timeout: 10800000
+      - uses: actions/cache@v3
+        if: ${{ github.event_name != 'pull_request' }}
+        with:
+          path: |
+            ${{ env.INPUT_CRATE }}.cache
+          key: stable-${{ env.INPUT_CRATE }}-${{ secrets.CACHE_VERSION }}
+      - name: Check and Configure
+        id: check
+        run: ./check.py stable ${{ env.stable-index }} ${{ env.INPUT_CRATE }} ${{ github.event_name == 'pull_request' }}
+      - name: Release Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: meeDamian/github-release@v2.0.3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ env.INPUT_CRATE }}-${{ steps.check.outputs.version }}
+          name: ${{ env.INPUT_CRATE }}-${{ steps.check.outputs.version }}
+          prerelease: true
+          allow_override: true
+
+  stable-build-x86_64-unknown-linux-gnu:
+    needs: [ stable-check ]
+    if: ${{ needs.stable-check.outputs.build == 'true' }}
+    env:
+      CRATE_VERSION: ${{ needs.stable-check.outputs.crate-version }}
+      CRATE_DOWNLOAD: ${{ needs.stable-check.outputs.crate-download }}
+      CRATE_HASH: ${{ needs.stable-check.outputs.crate-hash }}
+      BUILD: ${{ needs.stable-check.outputs.build }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            build/target
+          key: ${{ runner.os }}-${{ env.INPUT_CRATE }}-stable-x86_64-unknown-linux-gnu-stable
+      - name: Update Rust
+        run: rustup update
+      - name: Rust Version
+        run: rustc --version
+      - name: Create Directory
+        run: mkdir -p build
+      - name: Download and extract crate
+        run: |
+          wget $CRATE_DOWNLOAD
+          echo "$CRATE_HASH download" | sha256sum -c
+          tar -xf download
+          mv ${{ env.INPUT_CRATE }}-${{ env.INPUT_CRATE_VERSION }}/* build
+      - name: Build crate
+        working-directory: ./build
+        run: cargo build --release
+      - name: Collect
+        run: ./collect.py ${{ env.INPUT_BINS }} ${{ env.INPUT_LICENSE }} x86_64-unknown-linux-gnu ./build ./build/target/release
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: x86_64-unknown-linux-gnu
+          path: |
+            x86_64-unknown-linux-gnu.zip
+            x86_64-unknown-linux-gnu.sha256
+      - name: Release Artifact
+        if: ${{ github.event_name != 'pull_request' }}
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: ${{ env.INPUT_CRATE }}-${{ env.INPUT_CRATE_VERSION }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: x86_64-unknown-linux-gnu.*
