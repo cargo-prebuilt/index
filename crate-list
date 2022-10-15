@@ -4,6 +4,9 @@ cargo-build-deps https://github.com/nacardin/cargo-build-deps LICENSE-APACHE,LIC
 cargo-edit https://github.com/killercup/cargo-edit LICENSE cargo-add,cargo-rm,cargo-set-version,cargo-upgrade
 cargo-generate https://github.com/cargo-generate/cargo-generate LICENSE-APACHE,LICENSE-MIT cargo-generate
 cargo-outdated https://github.com/kbknapp/cargo-outdated LICENSE-MIT cargo-outdated
+cargo-wasi https://github.com/bytecodealliance/cargo-wasi LICENSE cargo-wasi
 just https://github.com/casey/just LICENSE just
+tauri-cli https://github.com/tauri-apps/tauri LICENSE_APACHE-2.0,LICENSE_MIT cargo-tauri
 trunk https://github.com/thedodd/trunk LICENSE-APACHE,LICENSE-MIT trunk
+wasmtime-cli https://github.com/bytecodealliance/wasmtime LICENSE wasmtime
 wasm-pack https://github.com/rustwasm/wasm-pack LICENSE-APACHE,LICENSE-MIT wasm-pack

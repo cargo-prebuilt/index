@@ -19,8 +19,11 @@ Some crate.io binaries built for different platforms.
 - [cargo-edit](https://github.com/killercup/cargo-edit)
 - [cargo-generate](https://github.com/cargo-generate/cargo-generate)
 - [cargo-outdated](https://github.com/kbknapp/cargo-outdated)
+- [cargo-wasi](https://github.com/bytecodealliance/cargo-wasi)
 - [just](https://github.com/casey/just)
+- [tauri-cli](https://github.com/tauri-apps/tauri)
 - [trunk](https://github.com/thedodd/trunk)
+- [wasmtime-cli](https://github.com/bytecodealliance/wasmtime)
 - [wasm-pack](https://github.com/rustwasm/wasm-pack)
 
 ## API
