@@ -2,11 +2,67 @@
   "crates": {
     "bacon": {
       "github": "https://github.com/Canop/bacon",
-      "license": [
-        "LICENSE"
-      ],
       "bins": [
         "bacon"
+      ]
+    },
+
+    "cargo-audit": {
+      "github": "https://github.com/rustsec/rustsec/tree/main/cargo-audit",
+      "bins": [
+        "cargo-audit"
+      ]
+    },
+
+    "cargo-build-deps": {
+      "github": "https://github.com/nacardin/cargo-build-deps",
+      "bins": [
+        "cargo-build-deps"
+      ]
+    },
+
+    "cargo-edit": {
+      "github": "https://github.com/killercup/cargo-edit",
+      "bins": [
+        "cargo-add",
+        "cargo-rm",
+        "cargo-set-version",
+        "cargo-upgrade"
+      ]
+    },
+
+    "cargo-generate": {
+      "github": "https://github.com/cargo-generate/cargo-generate",
+      "bins": [
+        "cargo-generate"
+      ]
+    },
+
+    "cargo-outdated": {
+      "github": "https://github.com/kbknapp/cargo-outdated",
+      "bins": [
+        "cargo-outdated"
+      ]
+    },
+
+    "trunk":{
+      "github": "https://github.com/thedodd/trunk",
+      "bins": [
+        "trunk"
+      ]
+    },
+
+    "just": {
+      "github": "https://github.com/casey/just",
+      "bins": [
+        "just"
+      ]
+    },
+
+    "wasm-pack": {
+      "github": "https://github.com/rustwasm/wasm-pack",
+      "bins": [
+        "wasm-pack"
       ]
     }
   }

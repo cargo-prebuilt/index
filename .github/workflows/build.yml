@@ -70,8 +70,8 @@ jobs:
         run: mkdir -p build
       - name: Download and extract crate
         run: |
-          wget $CRATE_DOWNLOAD
-          echo "$CRATE_HASH download" | sha256sum -c
+          wget ${{ env.CRATE_DOWNLOAD }}
+          echo "${{ env.CRATE_HASH }} download" | sha256sum -c
           tar -xf download
           mv ${{ inputs.crate }}-${{ env.CRATE_VERSION }}/* build
       - name: Build crate

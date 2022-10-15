@@ -15,7 +15,7 @@ jobs:
   test:
     strategy:
       matrix:
-        crates: [ bacon, cargo-audit, cargo-build-deps, cargo-edit, cargo-generate, cargo-outdated, trunk, just, wasm-pack ]
+        crates: [ %%CRATES%% ]
     uses: ./.github/workflows/build.yml
     with:
       crate: ${{ matrix.crates }}
