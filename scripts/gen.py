@@ -5,8 +5,8 @@ import sys, os, json
 
 def main(index):
     if index == "stable":
-        with open("./check.template.yml", "r") as file:
-            check_template = file.read()
+        with open("./stable.template.yml", "r") as file:
+            action_template = file.read()
         with open("./README.template.md", "r") as file:
             readme_template = file.read()
 
@@ -17,10 +17,15 @@ def main(index):
         with open("./index/index", "w"):
             pass
 
-        check = []
         readme = []
+        counter = 0
         for c in info:
-            check.append(c)
+            action = action_template.replace("%%CRATE%%", c)
+            action = action.replace("%%BINS%%", info[c]["bins"])
+            action = action.replace("%%TIME%%", str(counter % 60))
+            with open("./.github/workflows/" + c + ".yml", "w") as file:
+                file.write(action)
+
             readme.append("- [" + c + "](" + info[c]["github"] + ")")
 
             with open("./index/index", "a") as file:
@@ -28,9 +33,7 @@ def main(index):
             with open("./index/" + c, "w") as file:
                 file.write("#META " + c + " " + info[c]["github"])
 
-        check = check_template.replace("%%CRATES%%", ", ".join(check))
-        with open("./.github/workflows/check.yml", "w") as file:
-            file.write(check)
+            counter += 1
 
         readme.sort()
         readme = readme_template.replace("%%BINARIES%%", "\n".join(readme))
