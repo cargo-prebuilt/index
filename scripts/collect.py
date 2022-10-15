@@ -4,7 +4,7 @@ import sys, json, glob, zipfile, hashlib
 
 
 def main(crate_id, target, path, build_path):
-    with open("../crates.json", "r") as file:
+    with open("./crates.json", "r") as file:
         crates = json.loads(file.read())
 
     crate = crates["crates"][crate_id]

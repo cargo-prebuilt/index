@@ -33,7 +33,7 @@ jobs:
           key: stable-${{ inputs.crate }}-${{ secrets.CACHE_VERSION }}
       - name: Check and Configure
         id: check
-        run: ./check.py stable ${{ env.stable-index }} ${{ inputs.crate }} ${{ github.event_name == 'pull_request' }}
+        run: ./scripts/check.py stable ${{ env.stable-index }} ${{ inputs.crate }} ${{ github.event_name == 'pull_request' }}
       - name: Release Artifact
         if: ${{ github.event_name != 'pull_request' }}
         uses: meeDamian/github-release@v2.0.3
@@ -78,7 +78,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./collect.py x86_64-unknown-linux-gnu ./build ./build/target/release
+        run: ./scripts/collect.py x86_64-unknown-linux-gnu ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
