@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import sys, os, json, glob, zipfile, hashlib
+import sys, os, json, zipfile, hashlib
 
 
 def main(crate_id, target, path, build_path):
@@ -11,7 +11,7 @@ def main(crate_id, target, path, build_path):
 
     with zipfile.ZipFile(target + ".zip", "w", strict_timestamps=False) as archive:
         for b in crate["bins"]:
-            archive.write(build_path + "/" + b, "bins/" + b + (".exe" if target.__contains__("windows") else ""))
+            archive.write(build_path + "/" + b, "bins/" + b + (".exe" if "windows" in target else ""))
         for _, _, files in os.walk(path):
             for l in files:
                 if l.startswith("LICENSE"):
