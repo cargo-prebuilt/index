@@ -7,8 +7,8 @@ def main(bins, licenses, target, path, build_path):
     with zipfile.ZipFile(target + ".zip", "w", strict_timestamps=False) as archive:
         for b in bins.split(","):
             archive.write(build_path + "/" + b, b)
-        for l in licenses.split(","):
-            archive.write(path + "/" + l, l)
+        # for l in licenses.split(","):
+        #     archive.write(path + "/" + l, l)
 
     file_hash = None
     with open(target + ".zip", "rb") as file:
