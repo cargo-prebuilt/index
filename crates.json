@@ -1,0 +1,13 @@
+{
+  "crates": {
+    "bacon": {
+      "github": "https://github.com/Canop/bacon",
+      "license": [
+        "LICENSE"
+      ],
+      "bins": [
+        "bacon"
+      ]
+    }
+  }
+}

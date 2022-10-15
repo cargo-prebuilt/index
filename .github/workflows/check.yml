@@ -3,7 +3,7 @@ name: Check
 on:
   push:
     branches: [ main ]
-    paths: [ .github/workflows/** ]
+    paths: [ .github/workflows/**, docker/**, scripts/**, crates.json ]
   pull_request:
     branches: [ main ]
     paths: [ .github/workflows/** ]
@@ -15,9 +15,7 @@ jobs:
   test:
     strategy:
       matrix:
-        crates: [ bacon, just, trunk, cargo-outdated, cargo-build-deps ]
+        crates: [ bacon ]
     uses: ./.github/workflows/build.yml
     with:
       crate: ${{ matrix.crates }}
-      license: LICENSE
-      bins: ${{ matrix.crates }}
