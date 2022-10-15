@@ -136,7 +136,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./scripts/collect.py x86_64-unknown-linux-gnu ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} x86_64-unknown-linux-gnu ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -191,7 +191,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./scripts/collect.py x86_64-unknown-linux-musl ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} x86_64-unknown-linux-musl ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -245,7 +245,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./scripts/collect.py x86_64-apple-darwin ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} x86_64-apple-darwin ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -297,7 +297,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: python3 ./scripts/collect.py x86_64-pc-windows-msvc ./build ./build/target/release
+        run: python3  ./scripts/collect.py ${{ env.crate }} x86_64-pc-windows-msvc ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -363,7 +363,7 @@ jobs:
           rust:latest \
           /entrypoint.sh
       - name: Collect
-        run: ./scripts/collect.py aarch64-unknown-linux-gnu ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} aarch64-unknown-linux-gnu ./build ./build/target/release
       - name: Permission fix
         run: sudo chown -R $USER cargo-cache
       - name: Artifact
@@ -432,7 +432,7 @@ jobs:
           rust:alpine \
           /entrypoint.sh
       - name: Collect
-        run: ./scripts/collect.py aarch64-unknown-linux-musl ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} aarch64-unknown-linux-musl ./build ./build/target/release
       - name: Permission fix
         run: sudo chown -R $USER cargo-cache
       - name: Artifact
@@ -494,7 +494,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./scripts/collect.py aarch64-apple-darwin ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} aarch64-apple-darwin ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
