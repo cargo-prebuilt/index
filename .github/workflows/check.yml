@@ -21,4 +21,3 @@ jobs:
       crate: bacon
       license: LICENSE
       bins: bacon
-      win_bins: bacon.exe
