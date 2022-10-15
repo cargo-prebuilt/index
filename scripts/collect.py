@@ -12,7 +12,7 @@ def main(crate_id, target, path, build_path):
     with zipfile.ZipFile(target + ".zip", "w", strict_timestamps=False) as archive:
         for b in crate["bins"]:
             archive.write(build_path + "/" + b, "bins/" + b + (".exe" if target.__contains__("windows") else ""))
-        for l in glob.glob("LICENSE*", path):
+        for l in glob.glob("LICENSE*", root_dir=path):
             archive.write(path + "/" + l, "license" + l)
 
     file_hash = None
