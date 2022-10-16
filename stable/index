@@ -4,6 +4,10 @@ cargo-build-deps
 cargo-edit
 cargo-generate
 cargo-outdated
-just
 trunk
+just
 wasm-pack
+cargo-wasi
+tauri-cli
+wasmtime-cli
+cargo-prebuilt

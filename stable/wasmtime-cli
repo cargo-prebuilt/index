@@ -1,0 +1,2 @@
+#META wasmtime-cli https://github.com/bytecodealliance/wasmtime
+0.40.1 https://github.com/crow-rest/cargo-prebuilt-index/releases/download/wasmtime-cli-0.40.1/index
