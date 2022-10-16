@@ -15,7 +15,7 @@ def main(crate_id, target, path, build_path):
 
     with zipfile.ZipFile(target + ".zip", "w", strict_timestamps=False) as archive:
         for b in crate["bins"]:
-            archive.write(build_path + "/" + b, "bins/" + b + end)
+            archive.write(build_path + "/" + b + end, "bins/" + b + end)
         for _, _, files in os.walk(path):
             for l in files:
                 if l.startswith("LICENSE"):
