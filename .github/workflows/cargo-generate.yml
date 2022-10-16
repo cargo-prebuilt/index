@@ -3,20 +3,17 @@ name: cargo-generate
 on:
   push:
     branches: [ main ]
-    paths: [ .github/workflows/cargo-generate.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
+    paths: [ .github/workflows/cargo-generate.yml, docker/**, scripts/** ]
   pull_request:
     branches: [ main ]
-    paths: [ .github/workflows/cargo-generate.yml, check.py, collect.py, docker/entrypoint-alpine.sh, docker/entrypoint-debian.sh ]
+    paths: [ .github/workflows/cargo-generate.yml, docker/**, scripts/**  ]
   workflow_dispatch:
   schedule:
-    - cron: '0 6 * * *'
+    - cron: '4 6 * * *'
 
 env:
   stable-index: https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/
   crate: cargo-generate
-  license: LICENSE-APACHE,LICENSE-MIT
-  bins: cargo-generate
-  win_bins: cargo-generate.exe
 
 jobs:
   # Stable
@@ -40,7 +37,7 @@ jobs:
           key: stable-${{ env.crate }}-${{ secrets.CACHE_VERSION }}
       - name: Check and Configure
         id: check
-        run: ./check.py stable ${{ env.stable-index }} ${{ env.crate }} ${{ github.event_name == 'pull_request' }}
+        run: ./scripts/check.py stable ${{ env.stable-index }} ${{ env.crate }} ${{ github.event_name == 'pull_request' }}
       - name: Release Artifact
         if: ${{ github.event_name != 'pull_request' }}
         uses: meeDamian/github-release@v2.0.3
@@ -62,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Get
+      - name: Set crate and version index
         shell: python
         working-directory: ${{ matrix.type }}
         run: |
@@ -122,7 +119,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             build/target
-          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-unknown-linux-gnu-stable
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-unknown-linux-gnu
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -139,7 +136,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-unknown-linux-gnu ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} x86_64-unknown-linux-gnu ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -177,7 +174,7 @@ jobs:
             /usr/local/cargo/registry
             /usr/local/cargo/git
             build/target
-          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-unknown-linux-musl-stable
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-unknown-linux-musl
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -194,7 +191,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-unknown-linux-musl ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} x86_64-unknown-linux-musl ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -229,7 +226,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             build/target
-          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-apple-darwin-stable
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-apple-darwin
       - name: Get pkgs
         run: brew install coreutils
       - name: Update Rust
@@ -248,7 +245,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} x86_64-apple-darwin ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} x86_64-apple-darwin ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -283,7 +280,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             build/target
-          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-pc-windows-msvc-stable
+          key: ${{ runner.os }}-${{ env.crate }}-stable-x86_64-pc-windows-msvc
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -300,7 +297,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: python3 collect.py ${{ env.win_bins }} ${{ env.license }} x86_64-pc-windows-msvc ./build ./build/target/release
+        run: python3  ./scripts/collect.py ${{ env.crate }} x86_64-pc-windows-msvc ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -366,7 +363,7 @@ jobs:
           rust:latest \
           /entrypoint.sh
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-unknown-linux-gnu ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} aarch64-unknown-linux-gnu ./build ./build/target/release
       - name: Permission fix
         run: sudo chown -R $USER cargo-cache
       - name: Artifact
@@ -435,7 +432,7 @@ jobs:
           rust:alpine \
           /entrypoint.sh
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-unknown-linux-musl ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} aarch64-unknown-linux-musl ./build ./build/target/release
       - name: Permission fix
         run: sudo chown -R $USER cargo-cache
       - name: Artifact
@@ -472,7 +469,7 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             build/target
-          key: ${{ runner.os }}-${{ env.crate }}-stable-aarch64-apple-darwin-stable
+          key: ${{ runner.os }}-${{ env.crate }}-stable-aarch64-apple-darwin
       - name: Get pkgs
         run: brew install coreutils
       - name: Update Rust
@@ -497,7 +494,7 @@ jobs:
         working-directory: ./build
         run: cargo build --release
       - name: Collect
-        run: ./collect.py ${{ env.bins }} ${{ env.license }} aarch64-apple-darwin ./build ./build/target/release
+        run:  ./scripts/collect.py ${{ env.crate }} aarch64-apple-darwin ./build ./build/target/release
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:

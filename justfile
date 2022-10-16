@@ -1,4 +1,4 @@
 default: gen
 
 gen:
-    ./gen.py stable
+    ./scripts/gen.py stable
