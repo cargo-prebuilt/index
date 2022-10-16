@@ -9,7 +9,9 @@ def main(crate_id, target, path, build_path):
 
     crate = crates["crates"][crate_id]
 
-    end = ".exe" if "windows" in target else ""
+    end = ""
+    if "windows" in target:
+        end = ".exe"
 
     with zipfile.ZipFile(target + ".zip", "w", strict_timestamps=False) as archive:
         for b in crate["bins"]:
