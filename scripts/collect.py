@@ -9,9 +9,11 @@ def main(crate_id, target, path, build_path):
 
     crate = crates["crates"][crate_id]
 
+    end = ".exe" if "windows" in target else ""
+
     with zipfile.ZipFile(target + ".zip", "w", strict_timestamps=False) as archive:
         for b in crate["bins"]:
-            archive.write(build_path + "/" + b, "bins/" + b + (".exe" if "windows" in target else ""))
+            archive.write(build_path + "/" + b, "bins/" + b + end)
         for _, _, files in os.walk(path):
             for l in files:
                 if l.startswith("LICENSE"):
