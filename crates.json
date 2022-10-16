@@ -85,6 +85,13 @@
       "bins": [
         "wasmtime"
       ]
+    },
+
+    "cargo-prebuilt": {
+      "github": "https://github.com/crow-rest/cargo-prebuilt",
+      "bins": [
+        "cargo-prebuilt"
+      ]
     }
   }
 }
