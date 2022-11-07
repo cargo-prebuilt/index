@@ -39,13 +39,9 @@ def main(mode):
         crates = crates["crates"]
 
     if mode == "stable":
-        # res = urllib.request.urlopen("https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable"
-        #                              "-index/index.json")
-        # body = json.loads(res.read().decode("utf-8")) if res and res.status == 200 else sys.exit(2)
-
-        with open("./index.json.tmp", "r") as file:
-            body = json.loads(file.read())
-
+        res = urllib.request.urlopen("https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable"
+                                     "-index/index.json")
+        body = json.loads(res.read().decode("utf-8")) if res and res.status == 200 else sys.exit(2)
         latest = body["latest"]
 
         toUpdate = []
