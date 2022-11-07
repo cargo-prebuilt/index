@@ -1,5 +1,15 @@
 {
   "crates": {
+    "cargo-edit": {
+      "github": "https://github.com/killercup/cargo-edit",
+      "bins": [
+        "cargo-add",
+        "cargo-rm",
+        "cargo-set-version",
+        "cargo-upgrade"
+      ]
+    },
+
     "just": {
       "github": "https://github.com/casey/just",
       "bins": [
