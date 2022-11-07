@@ -260,6 +260,8 @@ jobs:
       - name: Build crate
         working-directory: ./build
         run: cross build --release
+      - name: Test
+        run: ls ./build/target
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
