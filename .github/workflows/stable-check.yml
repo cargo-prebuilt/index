@@ -26,7 +26,7 @@ jobs:
           echo "crates=matrix::{\"include\": [{\"crate\": \"just\", \"version\": \"1.8.0\", \"dl\": \"https://crates.io/api/v1/crates/just/1.8.0/download\", \"checksum\": \"776095037d059fad434b295646bd927aa665c81fb3a4cfbba2a8ec0e14d6fe95\", \"bins\": \"just\"}]}" >> $GITHUB_OUTPUT
       - name: Check for updates
         id: check
-        run: ./scripts/check.py stable >> $GITHUB_OUTPUT
+        run: echo $(./scripts/check.py stable) >> $GITHUB_OUTPUT
 
   dispatch:
     strategy:
