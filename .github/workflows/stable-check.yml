@@ -41,9 +41,8 @@ jobs:
       - name: Print generated workflow file
         run: cat .github/workflows/stable.yml
       - name: Run action
-        uses: test-room-7/action-update-file@v1
+        uses: antaljanosbenjamin/single-commit-publish@v1
         with:
-          branch: trigger/stable
-          file-path: .github/workflows/stable.yml
-          commit-msg: Build ${{ matrix.crate }} ${{ matrix.version }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          branch: trigger/stable
+          files-and-dirs: '.github/workflows/stable.yml'
