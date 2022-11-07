@@ -1,3 +1,5 @@
+## Due to memory problems when building in docker containers this project is currently on hold.
+
 # cargo-prebuilt-index
 Some crate.io binaries built for different platforms.
 
