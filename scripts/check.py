@@ -61,7 +61,9 @@ def main(mode):
             if version != latestCrate[0]:
                 toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], ",".join(crates[crate]["bins"])))
 
-        x = {}
+        x = {
+            "include": []
+        }
         model = {
             "crate": None,
             "version": None,
@@ -79,7 +81,10 @@ def main(mode):
 
             x["include"].append(copy.deepcopy(model))
 
-        print(json.dumps(x))
+        if len(x["include"]) == 0:
+            print("{}")
+        else:
+            print(json.dumps(x))
     elif mode == "nightly":
         sys.exit(100)
     else:
