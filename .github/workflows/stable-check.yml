@@ -23,12 +23,13 @@ jobs:
           timeout: 10800000
       - name: Check for updates
         id: check
-        run: echo $(./scripts/check.py stable) >> $GITHUB_OUTPUT
+        run: echo "crates=matrix::$(./scripts/check.py stable)" >> $GITHUB_OUTPUT
       - name: test
         run: echo ${{ steps.check.outputs.crates }}
 
   dispatch:
     strategy:
+      max-parallel: 1
       matrix: ${{ fromJson(needs.check.outputs.crates) }}
     runs-on: ubuntu-latest
     needs: [check]
