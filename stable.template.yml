@@ -277,4 +277,17 @@ jobs:
           file_glob: true
           file: ${{ matrix.target }}.*
 
-# TODO: Index!
+  push-index:
+    runs-on: ubuntu-latest
+    needs: [setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, x86_64-pc-windows-msvc, aarch64-apple-darwin, cross]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Create index file
+        run: echo "${{ env.version }}" > ${{ env.crate }}
+      - name: Push to index
+        uses: svenstaro/upload-release-action@2.3.0
+        with:
+          tag: stable-index
+          overwrite: true
+          file: ${{ env.crate }}
+
