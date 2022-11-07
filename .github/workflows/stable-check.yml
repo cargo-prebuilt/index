@@ -39,3 +39,10 @@ jobs:
         run: ./scripts/gen.py stable ${{ matrix.crate }} ${{ matrix.version }} ${{ matrix.dl }} ${{ matrix.checksum }} ${{ matrix.bins }}
       - name: test
         run: cat ./.github/workflows/stable.yml
+      - name: Run action
+        uses: test-room-7/action-update-file@v1
+        with:
+          branch: trigger/stable
+          file-path: ./.github/workflows/stable.yml
+          commit-msg: Build ${{ matrix.crate }} ${{ matrix.version }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
