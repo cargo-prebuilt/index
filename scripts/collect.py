@@ -22,7 +22,7 @@ def main(target, build_path, bins):
                 st = os.stat(path)
                 os.chmod(path, st.st_mode | stat.S_IEXEC)
             # Add to archive
-            archive.add(path, target + ".tar.gz")
+            archive.add(path, b + ending)
 
     file_hash = None
     with open(target + ".tar.gz", "rb") as file:
