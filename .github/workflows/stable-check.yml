@@ -12,6 +12,7 @@ on:
     - cron: '0 6 * * *'
 
 permissions:
+  actions: write
   contents: write
 
 jobs:
