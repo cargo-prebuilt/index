@@ -11,11 +11,6 @@ on:
   schedule:
     - cron: '0 6 * * *'
 
-permissions:
-  actions: write
-  contents: write
-  deployments: write
-
 jobs:
   check:
     outputs:
@@ -45,6 +40,6 @@ jobs:
       - name: Run action
         uses: antaljanosbenjamin/single-commit-publish@v1.0.1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.API_TOKEN }}
           branch: trigger/stable
           files-and-dirs: '.github/workflows/stable.yml'
