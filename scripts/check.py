@@ -80,7 +80,7 @@ def main(mode):
 
             x["include"].append(copy.deepcopy(model))
 
-        print(json.dumps(x).replace("\"", "\\\""))
+        print(json.dumps(x))
     elif mode == "nightly":
         # TODO
         sys.exit(100)
