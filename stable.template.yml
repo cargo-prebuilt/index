@@ -259,9 +259,7 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
-        run: cross build --release
-      - name: Test
-        run: ls ./build/target
+        run: cross build --release --target ${{ matrix.target }}
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
