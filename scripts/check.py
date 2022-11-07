@@ -61,8 +61,6 @@ def main(mode):
             if version != latest:
                 toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], ",".join(crates[crate]["bins"])))
 
-        print(toUpdate)
-
         x = {
             "include": []
         }
