@@ -61,9 +61,7 @@ def main(mode):
             if version != latestCrate[0]:
                 toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], ",".join(crates[crate]["bins"])))
 
-        x = {
-            "include": []
-        }
+        x = {}
         model = {
             "crate": None,
             "version": None,

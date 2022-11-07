@@ -26,6 +26,7 @@ jobs:
         run: echo "crates=$(./scripts/check.py stable)" >> $GITHUB_OUTPUT
 
   dispatch:
+    if: ${{ needs.check.outputs.crates != '{}'}}
     strategy:
       max-parallel: 1
       matrix: ${{ fromJson(needs.check.outputs.crates) }}
