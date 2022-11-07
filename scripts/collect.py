@@ -1,28 +1,31 @@
 #!/usr/bin/python3
 
-import sys, os, json, zipfile, hashlib
+import hashlib
+import os
+import stat
+import sys
+import tarfile
 
 
-def main(crate_id, target, path, build_path):
-    with open("./crates.json", "r") as file:
-        crates = json.loads(file.read())
+def main(target, build_path, bins):
+    bins = bins.split(",")
 
-    crate = crates["crates"][crate_id]
-
-    end = ""
+    ending = ""
     if "windows" in target:
-        end = ".exe"
+        ending = ".exe"
 
-    with zipfile.ZipFile(target + ".zip", "w", strict_timestamps=False) as archive:
-        for b in crate["bins"]:
-            archive.write(build_path + "/" + b + end, "bins/" + b + end)
-        for _, _, files in os.walk(path):
-            for l in files:
-                if l.startswith("LICENSE"):
-                    archive.write(path + "/" + l, "licenses/" + l)
+    with tarfile.open(target + ".tar.gz", "w:gz") as archive:
+        for b in bins:
+            path = build_path + "/" + b + ending
+            # Permission Fix
+            if "windows" not in target:
+                st = os.stat(path)
+                os.chmod(path, st.st_mode | stat.S_IEXEC)
+            # Add to archive
+            archive.add(path)
 
     file_hash = None
-    with open(target + ".zip", "rb") as file:
+    with open(target + ".tar.gz", "rb") as file:
         file = file.read()
         file_hash = hashlib.sha256(file).hexdigest()
 
@@ -36,4 +39,4 @@ def main(crate_id, target, path, build_path):
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3], argv[4])
+    main(argv[1], argv[2], argv[3])

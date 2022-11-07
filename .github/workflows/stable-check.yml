@@ -1,0 +1,34 @@
+name: Check for updates
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ .github/workflows/stable-check.yml, scripts/**, crates.json ]
+  pull_request:
+    branches: [ main ]
+    paths: [ .github/workflows/stable-check.yml, scripts/**, crates.json ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * *'
+
+jobs:
+  check:
+    outputs:
+      crates: ${{ steps.check.outputs.crates }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ahmadnassri/action-workflow-queue@v1
+        with:
+          timeout: 10800000
+      - name: Check for updates
+        id: check
+        run: ./scripts/check.py stable >> $GITHUB_OUTPUT
+
+  dispatch:
+    strategy:
+      matrix: ${{ fromJson(needs.check.outputs.crates) }}
+    runs-on: ubuntu-latest
+    needs: [check]
+    steps:
+      - uses: actions/checkout@v3
