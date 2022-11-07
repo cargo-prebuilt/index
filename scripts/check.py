@@ -82,7 +82,7 @@ def main(mode):
 
             x["include"].append(copy.deepcopy(model))
 
-        print("crates=\"" + json.dumps(x) + "\"")
+        print("crates=matrix::" + json.dumps(x).replace("\"", "\\\""))
     elif mode == "nightly":
         # TODO
         sys.exit(100)
