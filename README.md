@@ -1,5 +1,3 @@
-## Due to memory problems when building in docker containers this project is currently being restructured.
-
 # cargo-prebuilt-index
 Some crate.io binaries built for different platforms.
 
@@ -15,11 +13,14 @@ Cross:
 - x86_64-unknown-linux-musl
 - aarch64-unknown-linux-gnu
 - aarch64-unknown-linux-musl
+- riscv64gc-unknown-linux-gnu
+- powerpc64-unknown-linux-gnu
+- powerpc64le-unknown-linux-gnu
 
 ## Binaries
 
 ## API (Will Change)
 
-- Index is a list of ids split by newlines. (https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/index)
-- Each binary has it own index that stores the version info in a list split by newlines. [VERSION INDEX_LINK]
-- Following the INDEX_LINK gets you a newline split list of targets. [TARGET BINARY_ZIP BINARY_SHA256]
+- Index holds the latest version built. (https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/CRATE)
+- Builds are put under a prerelease named CRATE-VERSION.
+- The binary is in TARGET.tar.gz and the hash is in TARGET.sha256.
