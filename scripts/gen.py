@@ -14,7 +14,7 @@ def main(mode, crate, version, dl, checksum, bins):
         action = action.replace("%%CHECKSUM%%", checksum)
         action = action.replace("%%BINS%%", bins)
 
-        with open("./.github/workflows/stable.yml", "w") as file:
+        with open("./.github/workflows/stable" + crate + ".yml", "w") as file:
             file.write(action)
     elif mode == "nightly":
         print("nightly not supported yet")
