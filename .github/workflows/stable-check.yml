@@ -41,7 +41,7 @@ jobs:
       - name: Print generated workflow file
         run: cat .github/workflows/stable.yml
       - name: Run action
-        uses: antaljanosbenjamin/single-commit-publish@v1
+        uses: antaljanosbenjamin/single-commit-publish@v1.0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           branch: trigger/stable
