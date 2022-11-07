@@ -42,4 +42,4 @@ jobs:
         with:
           github-token: ${{ secrets.API_TOKEN }}
           branch: trigger/stable
-          files-and-dirs: '.github/workflows/stable.yml'
+          files-and-dirs: '.github/workflows/stable.yml scripts/collect.py'
