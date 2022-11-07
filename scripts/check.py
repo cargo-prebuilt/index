@@ -46,7 +46,6 @@ def main(mode):
 
         toUpdate = []
         for crate in crates:
-            print(crate)
             version = latest[crate] if crate in latest else "0.0.0"
 
             # Get from crates.io
