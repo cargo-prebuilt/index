@@ -24,6 +24,8 @@ jobs:
       - name: Check for updates
         id: check
         run: echo $(./scripts/check.py stable) >> $GITHUB_OUTPUT
+      - name: test
+        run: echo ${{ steps.check.outputs.crates }}
 
   dispatch:
     strategy:
