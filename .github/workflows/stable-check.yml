@@ -37,7 +37,7 @@ jobs:
       - name: Generate workflow
         run: ./scripts/gen.py stable ${{ matrix.crate }} ${{ matrix.version }} ${{ matrix.dl }} ${{ matrix.checksum }} ${{ matrix.bins }}
       - name: Print generated workflow file
-        run: cat .github/workflows/stable.yml
+        run: cat .github/workflows/stable-${{ matrix.crate }}.yml
       - name: Run action
         uses: antaljanosbenjamin/single-commit-publish@v1.0.1
         with:
