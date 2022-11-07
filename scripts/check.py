@@ -70,7 +70,8 @@ def main(mode):
             "crate": None,
             "version": None,
             "dl": None,
-            "checksum": None
+            "checksum": None,
+            "bins": None
         }
 
         for c in toUpdate:
