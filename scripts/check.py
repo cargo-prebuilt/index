@@ -5,6 +5,7 @@ import json
 import sys
 import urllib.request
 
+stable_index = "https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/"
 crates_io_url = "https://crates.io"
 crates_io_api = crates_io_url + "/api/v1/crates/{CRATE}/versions"
 github_api = "https://api.github.com/repos/{REPO}/commits/main"
@@ -39,14 +40,14 @@ def main(mode):
         crates = crates["crates"]
 
     if mode == "stable":
-        res = urllib.request.urlopen("https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable"
-                                     "-index/index.json")
-        body = json.loads(res.read().decode("utf-8")) if res and res.status == 200 else sys.exit(2)
-        latest = body["latest"]
-
         toUpdate = []
         for crate in crates:
-            version = latest[crate] if crate in latest else "0.0.0"
+            version = ""
+            try:
+                res = urllib.request.urlopen(stable_index + crate)
+                version = (res.read().decode("utf-8").strip())
+            except urllib.error.HTTPError:
+                pass
 
             # Get from crates.io
             res = urllib.request.urlopen(crates_io_api.replace("{CRATE}", crate))
@@ -57,7 +58,7 @@ def main(mode):
                 versions.append((v["num"], v["yanked"], crates_io_url + v["dl_path"], v["checksum"]))
             latestCrate = getNewestCrate(versions)
 
-            if version != latest:
+            if version != latestCrate[0]:
                 toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], ",".join(crates[crate]["bins"])))
 
         x = {
