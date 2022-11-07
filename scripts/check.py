@@ -83,7 +83,6 @@ def main(mode):
 
         print(json.dumps(x))
     elif mode == "nightly":
-        # TODO
         sys.exit(100)
     else:
         sys.exit(1)
