@@ -1,2 +1,1 @@
-#META cargo-audit https://github.com/rustsec/rustsec/tree/main/cargo-audit
-0.17.2 https://github.com/crow-rest/cargo-prebuilt-index/releases/download/cargo-audit-0.17.2/index
+0.17.3
