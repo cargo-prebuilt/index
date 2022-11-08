@@ -16,6 +16,8 @@ extra_targets = [
 
 
 def main(mode, pull_request, crate, version, dl, checksum, bins, flags, unsupported):
+    pull_request = True if pull_request == "true" else False
+
     if mode == "stable":
         with open("./stable.template.yml", "r") as file:
             action_template = file.read()
