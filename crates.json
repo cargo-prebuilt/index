@@ -1,5 +1,5 @@
 {
-  "allowlist": "cargo-prebuilt,jql",
+  "allowlist": "cargo-update,cargo-deb,cargo-mpirun",
   "crates": {
     "bacon": {
       "flags": "",
@@ -118,6 +118,34 @@
       "github": "https://github.com/yamafaktory/jql",
       "bins": [
         "jql"
+      ]
+    },
+
+    "cargo-update": {
+      "flags": "--features vendored-openssl",
+      "unsupported": "",
+      "github": "https://github.com/nabijaczleweli/cargo-update",
+      "bins": [
+        "cargo-install-update",
+        "cargo-install-update-config"
+      ]
+    },
+
+    "cargo-deb": {
+      "flags": "",
+      "unsupported": "",
+      "github": "https://github.com/kornelski/cargo-deb",
+      "bins": [
+        "cargo-deb"
+      ]
+    },
+
+    "cargo-mpirun": {
+      "flags": "",
+      "unsupported": "",
+      "github": "https://github.com/AndrewGaspar/cargo-mpirun",
+      "bins": [
+        "cargo-mpirun"
       ]
     }
   }
