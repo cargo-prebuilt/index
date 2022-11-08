@@ -4,12 +4,14 @@ import sys
 
 
 extra_targets = [
-    "x86_64-unknown-linux-musl",
+    "x86_64-unknown-linux-musl",  # Must support
     "aarch64-unknown-linux-gnu",
     "aarch64-unknown-linux-musl",
-    "riscv64gc-unknown-linux-gnu",
+
+    "riscv64gc-unknown-linux-gnu", # Optional Support
     "powerpc64-unknown-linux-gnu",
     "powerpc64le-unknown-linux-gnu",
+    "s390x-unknown-linux-gnu"
 ]
 
 

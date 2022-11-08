@@ -3,19 +3,21 @@ Some crate.io binaries built for different platforms.
 
 ## Platforms Supported (Targets)
 
-Native:
+All prebuilt crates are required support these targets:
 - x86_64-unknown-linux-gnu
 - x86_64-apple-darwin
 - x86_64-pc-windows-msvc
 - aarch64-apple-darwin
 
-Cross:
 - x86_64-unknown-linux-musl
 - aarch64-unknown-linux-gnu
 - aarch64-unknown-linux-musl
+
+Prebuilt crates optionally support these targets:
 - riscv64gc-unknown-linux-gnu
 - powerpc64-unknown-linux-gnu
 - powerpc64le-unknown-linux-gnu
+- s390x-unknown-linux-gnu
 
 ## Binaries
 
