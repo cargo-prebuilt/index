@@ -26,13 +26,12 @@ def main(mode, crate, version, dl, checksum, bins, flags, unsupported):
         action = action.replace("%%FLAGS%%", flags)
 
         targets = ""
-        unsupported = unsupported.split(",")
         for possible in extra_targets:
             if possible not in unsupported:
                 if len(targets) != 0:
                     targets += ","
                 targets += possible
-        action = action.replace("%%TARGETS%%", flags)
+        action = action.replace("%%TARGETS%%", targets)
 
         with open("./.github/workflows/stable-" + crate + ".yml", "w") as file:
             file.write(action)
