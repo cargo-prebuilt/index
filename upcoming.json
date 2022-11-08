@@ -8,16 +8,6 @@
       "bins": [
         "cargo-wasi"
       ]
-    },
-
-    "cargo-prebuilt": {
-      "_comment": "Currently breaks, will go through with major refactoring soon.",
-      "flags": "",
-      "unsupported": "",
-      "github": "https://github.com/crow-rest/cargo-prebuilt",
-      "bins": [
-        "cargo-prebuilt"
-      ]
     }
   }
 }

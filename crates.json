@@ -1,10 +1,10 @@
 {
-  "allowlist": "none",
+  "allowlist": "cargo-clone",
   "crates": {
     "bacon": {
       "flags": "",
       "unsupported": "",
-      "github": "https://github.com/Canop/bacon",
+      "git": "https://github.com/Canop/bacon",
       "bins": [
         "bacon"
       ]
@@ -13,7 +13,7 @@
     "cargo-audit": {
       "flags": "--features vendored-openssl",
       "unsupported": "",
-      "github": "https://github.com/rustsec/rustsec/tree/main/cargo-audit",
+      "git": "https://github.com/rustsec/rustsec/tree/main/cargo-audit",
       "bins": [
         "cargo-audit"
       ]
@@ -22,7 +22,7 @@
     "cargo-build-deps": {
       "flags": "",
       "unsupported": "",
-      "github": "https://github.com/nacardin/cargo-build-deps",
+      "git": "https://github.com/nacardin/cargo-build-deps",
       "bins": [
         "cargo-build-deps"
       ]
@@ -31,7 +31,7 @@
     "cargo-edit": {
       "flags": "--features vendored-openssl",
       "unsupported": "",
-      "github": "https://github.com/killercup/cargo-edit",
+      "git": "https://github.com/killercup/cargo-edit",
       "bins": [
         "cargo-add",
         "cargo-rm",
@@ -43,7 +43,7 @@
     "cargo-generate": {
       "flags": "--features vendored-openssl",
       "unsupported": "",
-      "github": "https://github.com/cargo-generate/cargo-generate",
+      "git": "https://github.com/cargo-generate/cargo-generate",
       "bins": [
         "cargo-generate"
       ]
@@ -52,7 +52,7 @@
     "cargo-outdated": {
       "flags": "--features vendored-openssl",
       "unsupported": "",
-      "github": "https://github.com/kbknapp/cargo-outdated",
+      "git": "https://github.com/kbknapp/cargo-outdated",
       "bins": [
         "cargo-outdated"
       ]
@@ -61,7 +61,7 @@
     "trunk":{
       "flags": "",
       "unsupported": "riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu",
-      "github": "https://github.com/thedodd/trunk",
+      "git": "https://github.com/thedodd/trunk",
       "bins": [
         "trunk"
       ]
@@ -70,7 +70,7 @@
     "just": {
       "flags": "",
       "unsupported": "",
-      "github": "https://github.com/casey/just",
+      "git": "https://github.com/casey/just",
       "bins": [
         "just"
       ]
@@ -79,7 +79,7 @@
     "wasm-pack": {
       "flags": "",
       "unsupported": "",
-      "github": "https://github.com/rustwasm/wasm-pack",
+      "git": "https://github.com/rustwasm/wasm-pack",
       "bins": [
         "wasm-pack"
       ]
@@ -88,7 +88,7 @@
     "tauri-cli": {
       "flags": "",
       "unsupported": "riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu",
-      "github": "https://github.com/tauri-apps/tauri",
+      "git": "https://github.com/tauri-apps/tauri",
       "bins": [
         "cargo-tauri"
       ]
@@ -97,9 +97,73 @@
     "wasmtime-cli": {
       "flags": "",
       "unsupported": "powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu",
-      "github": "https://github.com/bytecodealliance/wasmtime",
+      "git": "https://github.com/bytecodealliance/wasmtime",
       "bins": [
         "wasmtime"
+      ]
+    },
+
+    "cargo-prebuilt": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/crow-rest/cargo-prebuilt",
+      "bins": [
+        "cargo-prebuilt"
+      ]
+    },
+
+    "jql": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/yamafaktory/jql",
+      "bins": [
+        "jql"
+      ]
+    },
+
+    "cargo-update": {
+      "flags": "--features vendored-openssl",
+      "unsupported": "",
+      "git": "https://github.com/nabijaczleweli/cargo-update",
+      "bins": [
+        "cargo-install-update",
+        "cargo-install-update-config"
+      ]
+    },
+
+    "cargo-deb": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/kornelski/cargo-deb",
+      "bins": [
+        "cargo-deb"
+      ]
+    },
+
+    "cargo-mpirun": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/AndrewGaspar/cargo-mpirun",
+      "bins": [
+        "cargo-mpirun"
+      ]
+    },
+
+    "cargo-clone": {
+      "flags": "--features vendored-openssl",
+      "unsupported": "",
+      "git": "https://github.com/JanLikar/cargo-clone",
+      "bins": [
+        "cargo-clone"
+      ]
+    },
+
+    "cargo-depgraph": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://git.sr.ht/~jplatte/cargo-depgraph",
+      "bins": [
+        "cargo-depgraph"
       ]
     }
   }
