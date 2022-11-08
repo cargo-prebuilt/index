@@ -1,44 +1,44 @@
 #!/usr/bin/python3
 
-import sys, os, json
+import sys
 
 
-def main(index):
-    if index == "stable":
+extra_targets = [
+    "x86_64-unknown-linux-musl",  # Must support
+    "aarch64-unknown-linux-gnu",
+    "aarch64-unknown-linux-musl",
+
+    "riscv64gc-unknown-linux-gnu",  # Optional Support
+    "powerpc64-unknown-linux-gnu",
+    "powerpc64le-unknown-linux-gnu",
+    "s390x-unknown-linux-gnu"
+]
+
+
+def main(mode, pull_request, crate, version, dl, checksum, bins, flags, unsupported):
+    if mode == "stable":
         with open("./stable.template.yml", "r") as file:
             action_template = file.read()
-        with open("./README.template.md", "r") as file:
-            readme_template = file.read()
 
-        with open("./crates.json", "r") as file:
-            info = json.loads(file.read())
-            info = info["crates"]
-        os.makedirs("./index", exist_ok=True)
-        with open("./index/index", "w"):
-            pass
+        action = action_template.replace("%%CRATE%%", crate)
+        action = action.replace("%%VERSION%%", version)
+        action = action.replace("%%DOWNLOAD%%", dl)
+        action = action.replace("%%CHECKSUM%%", checksum)
+        action = action.replace("%%BINS%%", bins)
+        action = action.replace("%%FLAGS%%", flags)
+        action = action.replace("%%IF%%", str(not pull_request))
 
-        readme = []
-        counter = 0
-        for c in info:
-            action = action_template.replace("%%CRATE%%", c)
-            action = action.replace("%%TIME%%", str(counter % 60))
-            with open("./.github/workflows/" + c + ".yml", "w") as file:
-                file.write(action)
+        targets = ""
+        for possible in extra_targets:
+            if possible not in unsupported:
+                if len(targets) != 0:
+                    targets += ","
+                targets += possible
+        action = action.replace("%%TARGETS%%", targets)
 
-            readme.append("- [" + c + "](" + info[c]["github"] + ")")
-
-            with open("./index/index", "a") as file:
-                file.write(c + "\n")
-            with open("./index/" + c, "w") as file:
-                file.write("#META " + c + " " + info[c]["github"])
-
-            counter += 1
-
-        readme.sort()
-        readme = readme_template.replace("%%BINARIES%%", "\n".join(readme))
-        with open("./README.md", "w") as file:
-            file.write(readme)
-    elif index == "nightly":
+        with open("./.github/workflows/stable-" + crate + ".yml", "w") as file:
+            file.write(action)
+    elif mode == "nightly":
         print("nightly not supported yet")
         sys.exit(1)
     else:
@@ -47,4 +47,4 @@ def main(index):
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1])
+    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9])

@@ -22,22 +22,11 @@ jobs:
         working-directory: ./${{ matrix.type }}
         run: rm -rf *
       - name: Archive
-        shell: python
-        working-directory: ./${{ matrix.type }}
-        run: |
-          import urllib.request
-          res = urllib.request.urlopen("https://github.com/crow-rest/binary-cargo-tools/releases/download/${{ matrix.type }}-index/index")
-          body = res.read().decode("utf-8")
-          with open("index", "w") as file:
-              file.write(body)
-              file.close()
-          crates = body.strip().split("\n")
-          for crate in crates:
-              res = urllib.request.urlopen("https://github.com/crow-rest/binary-cargo-tools/releases/download/${{ matrix.type }}-index/" + crate)
-              body = res.read().decode("utf-8")
-              with open(crate, "w") as file:
-                  file.write(body)
-                  file.close()
+        uses: robinraju/release-downloader@v1.6
+        with:
+          tag: "${{ matrix.type }}-index"
+          fileName: "*"
+          out-file-path: "./${{ matrix.type }}"
       - name: Commit & Push changes
         uses: Andro999b/push@v1.3
         with:
