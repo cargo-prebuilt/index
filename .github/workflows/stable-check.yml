@@ -43,4 +43,4 @@ jobs:
         with:
           github-token: ${{ secrets.API_TOKEN }}
           branch: trigger/stable
-          files-and-dirs: '.github/workflows/stable-${{ matrix.crate }}.yml scripts/collect.py'
+          files-and-dirs: '.github/workflows/stable-${{ matrix.crate }}.yml scripts/collect.py Cross.toml'
