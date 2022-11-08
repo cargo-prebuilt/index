@@ -1,5 +1,8 @@
 # cargo-prebuilt-index
+
 Some crate.io binaries built for different platforms.
+
+This is the index, if you are looking for the cli tools it is [here](https://github.com/crow-rest/cargo-prebuilt).
 
 ## Platforms Supported (Targets)
 
@@ -28,7 +31,6 @@ Prebuilt crates optionally support these targets:
 - [cargo-generate](https://github.com/cargo-generate/cargo-generate)
 - [cargo-outdated](https://github.com/kbknapp/cargo-outdated)
 - [cargo-prebuilt](https://github.com/crow-rest/cargo-prebuilt)
-- [cargo-wasi](https://github.com/bytecodealliance/cargo-wasi)
 - [just](https://github.com/casey/just)
 - [tauri-cli](https://github.com/tauri-apps/tauri)
 - [trunk](https://github.com/thedodd/trunk)
@@ -39,4 +41,4 @@ Prebuilt crates optionally support these targets:
 
 - Index holds the latest version built. (https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/CRATE)
 - Builds are put under a prerelease named CRATE-VERSION.
-- The binary is in TARGET.tar.gz and the hash is in TARGET.sha256.
+- The binary is in TARGET.tar.gz file and the hash is in TARGET.sha256 file.

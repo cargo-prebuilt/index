@@ -1,4 +1,5 @@
 {
+  "allowlist": "just",
   "crates": {
     "bacon": {
       "flags": "",

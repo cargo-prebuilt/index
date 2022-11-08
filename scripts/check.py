@@ -36,8 +36,8 @@ def getNewestCrate(versions):
 
 def main(mode, pull_request):
     with open("./crates.json", "r") as file:
-        crates = json.loads(file.read())
-        crates = crates["crates"]
+        crates_json = json.loads(file.read())
+        crates = crates_json["crates"]
 
     if mode == "stable":
         toUpdate = []
@@ -61,7 +61,8 @@ def main(mode, pull_request):
                 versions.append((v["num"], v["yanked"], crates_io_url + v["dl_path"], v["checksum"]))
             latestCrate = getNewestCrate(versions)
 
-            if version != latestCrate[0]:
+            if version != latestCrate[0] and \
+                    (not pull_request or (crates_json["allowlist"] == "" or crate in crates_json["allowlist"])):
                 toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], ",".join(crates[crate]["bins"]),
                                  crates[crate]["flags"], crates[crate]["unsupported"]))
 
