@@ -3,7 +3,7 @@
 import sys
 
 
-def main(mode, crate, version, dl, checksum, bins):
+def main(mode, crate, version, dl, checksum, bins, flags):
     if mode == "stable":
         with open("./stable.template.yml", "r") as file:
             action_template = file.read()
@@ -13,6 +13,7 @@ def main(mode, crate, version, dl, checksum, bins):
         action = action.replace("%%DOWNLOAD%%", dl)
         action = action.replace("%%CHECKSUM%%", checksum)
         action = action.replace("%%BINS%%", bins)
+        action = action.replace("%%FLAGS%%", flags)
 
         with open("./.github/workflows/stable-" + crate + ".yml", "w") as file:
             file.write(action)
@@ -25,4 +26,4 @@ def main(mode, crate, version, dl, checksum, bins):
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6])
+    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7])

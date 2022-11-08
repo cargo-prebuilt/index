@@ -1,6 +1,7 @@
 {
   "crates": {
     "cargo-edit": {
+      "flags": "--features vendored-openssl",
       "github": "https://github.com/killercup/cargo-edit",
       "bins": [
         "cargo-add",
@@ -11,6 +12,7 @@
     },
 
     "just": {
+      "flags": "",
       "github": "https://github.com/casey/just",
       "bins": [
         "just"

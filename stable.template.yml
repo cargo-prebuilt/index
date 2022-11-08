@@ -56,7 +56,7 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
-        run: cargo build --release
+        run: cargo build --release %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py x86_64-unknown-linux-gnu ./build/target/release ${{ env.bins }}
       - name: Artifact
@@ -103,7 +103,7 @@ jobs:
             mv ${{ env.crate }}-${{ env.version }}/* build
         - name: Build crate
           working-directory: ./build
-          run: cargo build --release
+          run: cargo build --release %%FLAGS%%
         - name: Collect
           run:  ./scripts/collect.py x86_64-apple-darwin ./build/target/release ${{ env.bins }}
         - name: Artifact
@@ -148,7 +148,7 @@ jobs:
             mv ${{ env.crate }}-${{ env.version }}/* build
         - name: Build crate
           working-directory: ./build
-          run: cargo build --release
+          run: cargo build --release %%FLAGS%%
         - name: Collect
           run: python3  ./scripts/collect.py x86_64-pc-windows-msvc ./build/target/release ${{ env.bins }}
         - name: Artifact
@@ -201,7 +201,7 @@ jobs:
             mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
-        run: cargo build --release
+        run: cargo build --release %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py aarch64-apple-darwin ./build/target/release ${{ env.bins }}
       - name: Artifact
@@ -260,7 +260,7 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
-        run: cross build --release --target ${{ matrix.target }}
+        run: cross build --release --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
