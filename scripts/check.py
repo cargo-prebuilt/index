@@ -61,11 +61,6 @@ def main(mode, pull_request):
                 versions.append((v["num"], v["yanked"], crates_io_url + v["dl_path"], v["checksum"]))
             latestCrate = getNewestCrate(versions)
 
-            print(crate)
-            print(version != latestCrate[0])
-            print(not pull_request)
-            print(allow == "" or crate in allow)
-
             if (not pull_request and version != latestCrate[0]) or (pull_request and (allow == "" or crate in allow)):
                 toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], ",".join(crates[crate]["bins"]),
                                  crates[crate]["flags"], crates[crate]["unsupported"]))
