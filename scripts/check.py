@@ -35,9 +35,12 @@ def getNewestCrate(versions):
 
 
 def main(mode, pull_request):
+    pull_request = True if pull_request == "true" else False
+
     with open("./crates.json", "r") as file:
         crates_json = json.loads(file.read())
         crates = crates_json["crates"]
+        allow = crates_json["allowlist"]
 
     if mode == "stable":
         toUpdate = []
@@ -49,9 +52,6 @@ def main(mode, pull_request):
             except urllib.error.HTTPError:
                 pass
 
-            if pull_request:
-                version = ""
-
             # Get from crates.io
             res = urllib.request.urlopen(crates_io_api.replace("{CRATE}", crate))
             api = json.loads(res.read().decode("utf-8")) if res and res.status == 200 else sys.exit(3)
@@ -61,11 +61,14 @@ def main(mode, pull_request):
                 versions.append((v["num"], v["yanked"], crates_io_url + v["dl_path"], v["checksum"]))
             latestCrate = getNewestCrate(versions)
 
-            if version != latestCrate[0]:
-                if (not pull_request) or (crates_json["allowlist"] == "" or crate in crates_json["allowlist"]):
-                    toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3],
-                                     ",".join(crates[crate]["bins"]),crates[crate]["flags"],
-                                     crates[crate]["unsupported"]))
+            print(crate)
+            print(version != latestCrate[0])
+            print(not pull_request)
+            print(allow == "" or crate in allow)
+
+            if (not pull_request and version != latestCrate[0]) or (pull_request and (allow == "" or crate in allow)):
+                toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], ",".join(crates[crate]["bins"]),
+                                 crates[crate]["flags"], crates[crate]["unsupported"]))
 
         x = {
             "include": []
@@ -103,4 +106,4 @@ def main(mode, pull_request):
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv)
+    main(argv[1], argv[2])
