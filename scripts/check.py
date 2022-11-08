@@ -34,7 +34,7 @@ def getNewestCrate(versions):
     return latest
 
 
-def main(mode):
+def main(mode, pull_request):
     with open("./crates.json", "r") as file:
         crates = json.loads(file.read())
         crates = crates["crates"]
@@ -48,6 +48,9 @@ def main(mode):
                 version = (res.read().decode("utf-8").strip())
             except urllib.error.HTTPError:
                 pass
+
+            if pull_request:
+                version = ""
 
             # Get from crates.io
             res = urllib.request.urlopen(crates_io_api.replace("{CRATE}", crate))
@@ -98,4 +101,4 @@ def main(mode):
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1])
+    main(argv[1], argv)

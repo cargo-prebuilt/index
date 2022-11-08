@@ -23,7 +23,7 @@ jobs:
           timeout: 10800000
       - name: Check for updates
         id: check
-        run: echo "crates=$(./scripts/check.py stable)" >> $GITHUB_OUTPUT
+        run: echo "crates=$(./scripts/check.py stable ${{ github.event_name == 'pull_request' }})" >> $GITHUB_OUTPUT
 
   dispatch:
     if: ${{ needs.check.outputs.crates != '{}'}}
@@ -35,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Generate workflow
-        run: ./scripts/gen.py stable ${{ matrix.crate }} ${{ matrix.version }} ${{ matrix.dl }} ${{ matrix.checksum }} ${{ matrix.bins }} "${{ matrix.flags }}" "${{ matrix.unsupported }}"
+        run: ./scripts/gen.py stable ${{ github.event_name == 'pull_request' }} ${{ matrix.crate }} ${{ matrix.version }} ${{ matrix.dl }} ${{ matrix.checksum }} ${{ matrix.bins }} "${{ matrix.flags }}" "${{ matrix.unsupported }}"
       - name: Print generated workflow file
         run: cat .github/workflows/stable-${{ matrix.crate }}.yml
       - name: Run action

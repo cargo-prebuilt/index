@@ -22,6 +22,7 @@ jobs:
         with:
           timeout: 10800000
       - name: Create Release
+        if: %%IF%%
         uses: meeDamian/github-release@v2.0.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -67,6 +68,7 @@ jobs:
             x86_64-unknown-linux-gnu.tar.gz
             x86_64-unknown-linux-gnu.sha256
       - name: Release Artifact
+        if: %%IF%%
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
@@ -114,6 +116,7 @@ jobs:
               x86_64-apple-darwin.tar.gz
               x86_64-apple-darwin.sha256
         - name: Release Artifact
+          if: %%IF%%
           uses: svenstaro/upload-release-action@2.3.0
           with:
             tag: ${{ env.crate }}-${{ env.version }}
@@ -159,6 +162,7 @@ jobs:
               x86_64-pc-windows-msvc.tar.gz
               x86_64-pc-windows-msvc.sha256
         - name: Release Artifact
+          if: %%IF%%
           uses: svenstaro/upload-release-action@2.3.0
           with:
             tag: ${{ env.crate }}-${{ env.version }}
@@ -212,6 +216,7 @@ jobs:
             aarch64-apple-darwin.tar.gz
             aarch64-apple-darwin.sha256
       - name: Release Artifact
+        if: %%IF%%
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
@@ -265,6 +270,7 @@ jobs:
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
       - name: Release Artifact
+        if: %%IF%%
         uses: svenstaro/upload-release-action@2.3.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
@@ -274,6 +280,7 @@ jobs:
           file: ${{ matrix.target }}.*
 
   push-index:
+    if: %%IF%%
     runs-on: ubuntu-latest
     needs: [setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, x86_64-pc-windows-msvc, aarch64-apple-darwin, cross]
     steps:

@@ -15,7 +15,7 @@ extra_targets = [
 ]
 
 
-def main(mode, crate, version, dl, checksum, bins, flags, unsupported):
+def main(mode, pull_request, crate, version, dl, checksum, bins, flags, unsupported):
     if mode == "stable":
         with open("./stable.template.yml", "r") as file:
             action_template = file.read()
@@ -26,6 +26,7 @@ def main(mode, crate, version, dl, checksum, bins, flags, unsupported):
         action = action.replace("%%CHECKSUM%%", checksum)
         action = action.replace("%%BINS%%", bins)
         action = action.replace("%%FLAGS%%", flags)
+        action = action.replace("%%IF%%", str(not pull_request))
 
         targets = ""
         for possible in extra_targets:
@@ -46,4 +47,4 @@ def main(mode, crate, version, dl, checksum, bins, flags, unsupported):
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8])
+    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9])
