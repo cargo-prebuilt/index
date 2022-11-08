@@ -61,10 +61,11 @@ def main(mode, pull_request):
                 versions.append((v["num"], v["yanked"], crates_io_url + v["dl_path"], v["checksum"]))
             latestCrate = getNewestCrate(versions)
 
-            if version != latestCrate[0] and \
-                    (not pull_request or (crates_json["allowlist"] == "" or crate in crates_json["allowlist"])):
-                toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], ",".join(crates[crate]["bins"]),
-                                 crates[crate]["flags"], crates[crate]["unsupported"]))
+            if version != latestCrate[0]:
+                if (not pull_request) or (crates_json["allowlist"] == "" or crate in crates_json["allowlist"]):
+                    toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3],
+                                     ",".join(crates[crate]["bins"]),crates[crate]["flags"],
+                                     crates[crate]["unsupported"]))
 
         x = {
             "include": []
