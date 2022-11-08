@@ -35,7 +35,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Generate workflow
-        run: ./scripts/gen.py stable ${{ matrix.crate }} ${{ matrix.version }} ${{ matrix.dl }} ${{ matrix.checksum }} ${{ matrix.bins }} "${{ matrix.flags }}" ${{ matrix.unsupported }}
+        run: ./scripts/gen.py stable ${{ matrix.crate }} ${{ matrix.version }} ${{ matrix.dl }} ${{ matrix.checksum }} ${{ matrix.bins }} "${{ matrix.flags }}" "${{ matrix.unsupported }}"
       - name: Print generated workflow file
         run: cat .github/workflows/stable-${{ matrix.crate }}.yml
       - name: Run action
