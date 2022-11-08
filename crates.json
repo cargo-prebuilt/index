@@ -1,5 +1,5 @@
 {
-  "allowlist": "cargo-clone,cargo-depgraph",
+  "allowlist": "cargo-clone",
   "crates": {
     "bacon": {
       "flags": "",
@@ -150,7 +150,7 @@
     },
 
     "cargo-clone": {
-      "flags": "",
+      "flags": "--features vendored-openssl",
       "unsupported": "",
       "git": "https://github.com/JanLikar/cargo-clone",
       "bins": [
