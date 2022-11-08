@@ -1,5 +1,29 @@
 {
   "crates": {
+    "bacon": {
+      "flags": "",
+      "github": "https://github.com/Canop/bacon",
+      "bins": [
+        "bacon"
+      ]
+    },
+
+    "cargo-audit": {
+      "flags": "",
+      "github": "https://github.com/rustsec/rustsec/tree/main/cargo-audit",
+      "bins": [
+        "cargo-audit"
+      ]
+    },
+
+    "cargo-build-deps": {
+      "flags": "",
+      "github": "https://github.com/nacardin/cargo-build-deps",
+      "bins": [
+        "cargo-build-deps"
+      ]
+    },
+
     "cargo-edit": {
       "flags": "--features vendored-openssl",
       "github": "https://github.com/killercup/cargo-edit",
@@ -8,6 +32,30 @@
         "cargo-rm",
         "cargo-set-version",
         "cargo-upgrade"
+      ]
+    },
+
+    "cargo-generate": {
+      "flags": "--features vendored-openssl",
+      "github": "https://github.com/cargo-generate/cargo-generate",
+      "bins": [
+        "cargo-generate"
+      ]
+    },
+
+    "cargo-outdated": {
+      "flags": "",
+      "github": "https://github.com/kbknapp/cargo-outdated",
+      "bins": [
+        "cargo-outdated"
+      ]
+    },
+
+    "trunk":{
+      "flags": "",
+      "github": "https://github.com/thedodd/trunk",
+      "bins": [
+        "trunk"
       ]
     },
 
