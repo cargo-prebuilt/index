@@ -60,7 +60,7 @@ def main(mode):
 
             if version != latestCrate[0]:
                 toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], ",".join(crates[crate]["bins"]),
-                                 crates[crate]["flags"]))
+                                 crates[crate]["flags"], crates[crate]["unsupported"]))
 
         x = {
             "include": []
@@ -71,7 +71,8 @@ def main(mode):
             "dl": None,
             "checksum": None,
             "bins": None,
-            "flags": None
+            "flags": None,
+            "unsupported": None
         }
 
         for c in toUpdate:
@@ -81,6 +82,7 @@ def main(mode):
             model["checksum"] = c[3]
             model["bins"] = c[4]
             model["flags"] = c[5]
+            model["unsupported"] = c[6]
 
             x["include"].append(copy.deepcopy(model))
 

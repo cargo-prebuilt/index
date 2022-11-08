@@ -223,13 +223,7 @@ jobs:
   cross:
     strategy:
       matrix:
-        target:
-          - x86_64-unknown-linux-musl
-          - aarch64-unknown-linux-gnu
-          - aarch64-unknown-linux-musl
-          - riscv64gc-unknown-linux-gnu
-          - powerpc64-unknown-linux-gnu
-          - powerpc64le-unknown-linux-gnu
+        target: [%%TARGETS%%]
     runs-on: ubuntu-latest
     needs: [setup]
     env:
