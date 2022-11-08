@@ -59,7 +59,7 @@
 
     "trunk":{
       "flags": "",
-      "unsupported": "powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu",
+      "unsupported": "riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu",
       "github": "https://github.com/thedodd/trunk",
       "bins": [
         "trunk"
@@ -86,7 +86,7 @@
 
     "tauri-cli": {
       "flags": "",
-      "unsupported": "powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu",
+      "unsupported": "riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu",
       "github": "https://github.com/tauri-apps/tauri",
       "bins": [
         "cargo-tauri"
@@ -95,7 +95,7 @@
 
     "wasmtime-cli": {
       "flags": "",
-      "unsupported": "powerpc64-unknown-linux-gnu",
+      "unsupported": "powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu",
       "github": "https://github.com/bytecodealliance/wasmtime",
       "bins": [
         "wasmtime"
