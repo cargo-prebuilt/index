@@ -33,6 +33,7 @@ Prebuilt crates optionally support these targets:
 - [cargo-generate](https://github.com/cargo-generate/cargo-generate)
 - [cargo-outdated](https://github.com/kbknapp/cargo-outdated)
 - [cargo-prebuilt](https://github.com/crow-rest/cargo-prebuilt)
+- [jql](https://github.com/yamafaktory/jql)
 - [just](https://github.com/casey/just)
 - [tauri-cli](https://github.com/tauri-apps/tauri)
 - [trunk](https://github.com/thedodd/trunk)

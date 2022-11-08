@@ -1,5 +1,5 @@
 {
-  "allowlist": "none",
+  "allowlist": "cargo-prebuilt,jql",
   "crates": {
     "bacon": {
       "flags": "",
@@ -100,6 +100,24 @@
       "github": "https://github.com/bytecodealliance/wasmtime",
       "bins": [
         "wasmtime"
+      ]
+    },
+
+    "cargo-prebuilt": {
+      "flags": "",
+      "unsupported": "",
+      "github": "https://github.com/crow-rest/cargo-prebuilt",
+      "bins": [
+        "cargo-prebuilt"
+      ]
+    },
+
+    "jql": {
+      "flags": "",
+      "unsupported": "",
+      "github": "https://github.com/yamafaktory/jql",
+      "bins": [
+        "jql"
       ]
     }
   }
