@@ -14,6 +14,10 @@ assignees: ''
 - GitHub URL: 
 - License: 
 
+**Requested index to add to:**
+- [] Stable
+- [] Nightly
+
 **Targets Tested on**
 Required:
 - [] x86_64-unknown-linux-gnu
