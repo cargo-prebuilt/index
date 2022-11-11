@@ -3,11 +3,13 @@
 import copy
 import json
 import sys
+import time
 import urllib.request
 
 stable_index = "https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/"
 crates_io_url = "https://crates.io"
 crates_io_api = crates_io_url + "/api/v1/crates/{CRATE}/versions"
+crates_io_cdn = "https://static.crates.io/crates/{CRATE}/{CRATE}-{VERSION}.crate"
 github_api = "https://api.github.com/repos/{REPO}/commits/main"
 
 
@@ -53,12 +55,21 @@ def main(mode, pull_request):
                 pass
 
             # Get from crates.io
-            res = urllib.request.urlopen(crates_io_api.replace("{CRATE}", crate))
+            req = urllib.request.Request(
+                crates_io_api.replace("{CRATE}", crate),
+                data=None,
+                headers={
+                    "User-Agent": "cargo-prebuilt_bot (github.com/crow-rest/cargo-prebuilt-index)"
+                }
+            )
+            res = urllib.request.urlopen(req)
             api = json.loads(res.read().decode("utf-8")) if res and res.status == 200 else sys.exit(3)
+            time.sleep(1)
 
             versions = []
             for v in api["versions"]:
-                versions.append((v["num"], v["yanked"], crates_io_url + v["dl_path"], v["checksum"]))
+                versions.append((v["num"], v["yanked"],
+                                 crates_io_cdn.replace("{CRATE}", crate).replace("{VERSION}", v["num"]), v["checksum"]))
             latestCrate = getNewestCrate(versions)
 
             if (not pull_request and version != latestCrate[0]) or (pull_request and (allow == "" or crate in allow)):

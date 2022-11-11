@@ -2,9 +2,11 @@
 
 Some crate.io binaries built for different platforms.
 
-This is the index, if you are looking for the cli tools it is [here](https://github.com/crow-rest/cargo-prebuilt).
+This is the index, if you are looking for the cli tool it is [here](https://github.com/crow-rest/cargo-prebuilt).
 
 Request a crate to be added [here](https://github.com/crow-rest/cargo-prebuilt-index/issues/new?assignees=&labels=add-crate%2C+under-consideration&template=request-crate.md&title=).
+
+<sub>Only the latest versions of crates are guaranteed to be in the index.</sub>
 
 ## Platforms Supported (Targets)
 

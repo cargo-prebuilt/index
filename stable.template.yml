@@ -21,6 +21,16 @@ jobs:
       - uses: ahmadnassri/action-workflow-queue@v1
         with:
           timeout: 10800000
+      - name: Download crate and check hash
+        run: |
+          wget ${{ env.dl }}
+          echo "${{ env.checksum }} ${{ env.crate }}-${{ env.version }}.crate" | sha256sum -c
+          mv ${{ env.crate }}-${{ env.version }}.crate download
+      - name: Cache crate download
+        uses: actions/upload-artifact@v3
+        with:
+          name: crate-download
+          path: download
       - name: Create Release
         if: %%IF%%
         uses: meeDamian/github-release@v2.0.3
@@ -43,15 +53,18 @@ jobs:
             ~/.cargo/git
             build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-unknown-linux-gnu
+      - name: Download crate
+        uses: actions/download-artifact@v3
+        with:
+          name: crate-download
       - name: Update Rust
         run: rustup update
       - name: Rust Version
         run: rustc --version
       - name: Create Directory
         run: mkdir -p build
-      - name: Download and extract crate
+      - name: Extract crate
         run: |
-          wget ${{ env.dl }}
           echo "${{ env.checksum }} download" | sha256sum -c
           tar -xf download
           mv ${{ env.crate }}-${{ env.version }}/* build
@@ -89,6 +102,10 @@ jobs:
               ~/.cargo/git
               build/target
             key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-apple-darwin
+        - name: Download crate
+          uses: actions/download-artifact@v3
+          with:
+            name: crate-download
         - name: Get pkgs
           run: brew install coreutils
         - name: Update Rust
@@ -97,9 +114,8 @@ jobs:
           run: rustc --version
         - name: Create Directory
           run: mkdir -p build
-        - name: Download and extract crate
+        - name: Extract crate
           run: |
-            wget ${{ env.dl }}
             echo "${{ env.checksum }} download" | sha256sum -c
             tar -xf download
             mv ${{ env.crate }}-${{ env.version }}/* build
@@ -137,15 +153,18 @@ jobs:
               ~/.cargo/git
               build/target
             key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-pc-windows-msvc
+        - name: Download crate
+          uses: actions/download-artifact@v3
+          with:
+            name: crate-download
         - name: Update Rust
           run: rustup update
         - name: Rust Version
           run: rustc --version
         - name: Create Directory
           run: New-Item -ItemType Directory -Force -Path ./build
-        - name: Download and extract crate
+        - name: Extract crate
           run: |
-            Invoke-WebRequest -Uri ${{ env.dl }} -OutFile download
             (Get-FileHash ./download).Hash -eq "${{ env.checksum }}"
             tar -xf download
             mv ${{ env.crate }}-${{ env.version }}/* build
@@ -183,6 +202,10 @@ jobs:
             ~/.cargo/git
             build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-aarch64-apple-darwin
+      - name: Download crate
+        uses: actions/download-artifact@v3
+        with:
+          name: crate-download
       - name: Get pkgs
         run: brew install coreutils
       - name: Update Rust
@@ -197,9 +220,8 @@ jobs:
           export MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
       - name: Create Directory
         run: mkdir -p build
-      - name: Download and extract crate
+      - name: Extract crate
         run: |
-            wget ${{ env.dl }}
             echo "${{ env.checksum }} download" | sha256sum -c
             tar -xf download
             mv ${{ env.crate }}-${{ env.version }}/* build
@@ -242,6 +264,10 @@ jobs:
             ~/.cargo/git
             build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+      - name: Download crate
+        uses: actions/download-artifact@v3
+        with:
+          name: crate-download
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -251,9 +277,8 @@ jobs:
           tool: cross
       - name: Create Directory
         run: mkdir -p build
-      - name: Download and extract crate
+      - name: Extract crate
         run: |
-          wget ${{ env.dl }}
           echo "${{ env.checksum }} download" | sha256sum -c
           tar -xf download
           mv ${{ env.crate }}-${{ env.version }}/* build
@@ -293,4 +318,3 @@ jobs:
           tag: stable-index
           overwrite: true
           file: ${{ env.crate }}
-
