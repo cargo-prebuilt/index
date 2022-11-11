@@ -26,7 +26,7 @@ Prebuilt crates optionally support these targets:
 - powerpc64le-unknown-linux-gnu
 - s390x-unknown-linux-gnu
 
-## Binaries
+## Crates
 
 - [bacon](https://github.com/Canop/bacon)
 - [cargo-audit](https://github.com/rustsec/rustsec/tree/main/cargo-audit)

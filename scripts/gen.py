@@ -11,7 +11,10 @@ extra_targets = [
     "riscv64gc-unknown-linux-gnu",  # Optional Support
     "powerpc64-unknown-linux-gnu",
     "powerpc64le-unknown-linux-gnu",
-    "s390x-unknown-linux-gnu"
+    "s390x-unknown-linux-gnu",
+
+    "x86_64-unknown-freebsd",  # TODO
+    "sparc64-unknown-linux-gnu",
 ]
 
 
