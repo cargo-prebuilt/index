@@ -318,4 +318,3 @@ jobs:
           tag: stable-index
           overwrite: true
           file: ${{ env.crate }}
-

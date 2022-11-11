@@ -1,5 +1,5 @@
 {
-  "allowlist": "bacon,just,wasm-pack,cargo-clone",
+  "allowlist": "just",
   "crates": {
     "bacon": {
       "flags": "",
