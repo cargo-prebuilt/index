@@ -15,6 +15,10 @@ extra_targets = [
 
     "x86_64-unknown-freebsd",  # TODO
     "sparc64-unknown-linux-gnu",
+    "mips64-unknown-linux-gnuabi64",
+    "mips64-unknown-linux-muslabi64",
+    "mips64el-unknown-linux-gnuabi64",
+    "mips64el-unknown-linux-muslabi64",
 ]
 
 
