@@ -14,6 +14,9 @@ extra_targets = [
     "s390x-unknown-linux-gnu",
 
     "x86_64-unknown-freebsd",  # TODO
+    "x86_64-unknown-netbsd",
+    "x86_64-unknown-illumos",
+    "x86_64-sun-solaris",
     "sparc64-unknown-linux-gnu",
     "mips64-unknown-linux-gnuabi64",
     "mips64-unknown-linux-muslabi64",
@@ -22,7 +25,6 @@ extra_targets = [
 
     "i686-unknown-linux-gnu",  # TODO: 32-bit
     "i686-unknown-linux-musl",
-    "i686-pc-windows-gnu",
     "i686-unknown-freebsd",
     "armv7-unknown-linux-gnueabihf",
     "armv7-unknown-linux-musleabihf",
@@ -31,6 +33,7 @@ extra_targets = [
     "mipsel-unknown-linux-gnu",
     "mipsel-unknown-linux-musl",
     "powerpc-unknown-linux-gnu",
+    "sparcv9-sun-solaris",
 ]
 
 
