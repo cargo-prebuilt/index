@@ -178,9 +178,9 @@ jobs:
             mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
-        run: cargo build --target=aarch64-apple-darwin --release %%FLAGS%%
+        run: cargo build --target aarch64-apple-darwin --release %%FLAGS%%
       - name: Collect
-        run: ./scripts/collect.py aarch64-apple-darwin ./build/target/release ${{ env.bins }}
+        run: ./scripts/collect.py aarch64-apple-darwin ./build/target/aarch64-apple-darwin/release ${{ env.bins }}
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -278,9 +278,9 @@ jobs:
             mv ${{ env.crate }}-${{ env.version }}/* build
         - name: Build crate
           working-directory: ./build
-          run: cargo build --target=i686-pc-windows-msvc --release %%FLAGS%%
+          run: cargo build --target i686-pc-windows-msvc --release %%FLAGS%%
         - name: Collect
-          run: python3  ./scripts/collect.py i686-pc-windows-msvc ./build/target/release ${{ env.bins }}
+          run: python3  ./scripts/collect.py i686-pc-windows-msvc ./build/target/i686-pc-windows-msvc/release ${{ env.bins }}
         - name: Artifact
           uses: actions/upload-artifact@v3
           with:
@@ -358,7 +358,7 @@ jobs:
   push-index:
     if: %%IF%%
     runs-on: ubuntu-latest
-    needs: [setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, x86_64-pc-windows-msvc, aarch64-apple-darwin, cross]
+    needs: [setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, aarch64-apple-darwin, x86_64-pc-windows-msvc, i686-pc-windows-msvc, cross]
     steps:
       - uses: actions/checkout@v3
       - name: Create index file
