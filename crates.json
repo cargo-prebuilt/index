@@ -1,5 +1,5 @@
 {
-  "allowlist": "trunk,just,wasm-pack",
+  "allowlist": "cargo-outdated,trunk,wasm-pack",
   "crates": {
     "bacon": {
       "flags": "",
@@ -51,7 +51,7 @@
 
     "cargo-outdated": {
       "flags": "--features vendored-openssl",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "git": "https://github.com/kbknapp/cargo-outdated",
       "bins": [
         "cargo-outdated"
@@ -60,7 +60,7 @@
 
     "trunk":{
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,s390x-unknown-linux-gnu,i686-unknown-freebsd,powerpc,mips",
       "git": "https://github.com/thedodd/trunk",
       "bins": [
         "trunk"
@@ -78,7 +78,7 @@
 
     "wasm-pack": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "git": "https://github.com/rustwasm/wasm-pack",
       "bins": [
         "wasm-pack"
