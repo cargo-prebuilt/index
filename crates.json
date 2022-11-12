@@ -1,5 +1,5 @@
 {
-  "allowlist": "cargo-deb,cargo-mpirun,cargo-clone",
+  "allowlist": "cargo-depgraph",
   "crates": {
     "bacon": {
       "flags": "",
