@@ -19,6 +19,18 @@ extra_targets = [
     "mips64-unknown-linux-muslabi64",
     "mips64el-unknown-linux-gnuabi64",
     "mips64el-unknown-linux-muslabi64",
+
+    "i686-unknown-linux-gnu",  # TODO: 32-bit
+    "i686-unknown-linux-musl",
+    "i686-pc-windows-gnu",
+    "i686-unknown-freebsd",
+    "armv7-unknown-linux-gnueabihf",
+    "armv7-unknown-linux-musleabihf",
+    "mips-unknown-linux-gnu",
+    "mips-unknown-linux-musl",
+    "mipsel-unknown-linux-gnu",
+    "mipsel-unknown-linux-musl",
+    "powerpc-unknown-linux-gnu",
 ]
 
 
