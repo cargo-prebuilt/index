@@ -1,5 +1,5 @@
 {
-  "allowlist": "just",
+  "allowlist": "bacon,cargo-audit,cargo-build-deps",
   "crates": {
     "bacon": {
       "flags": "",
