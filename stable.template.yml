@@ -301,6 +301,7 @@ jobs:
 
   cross:
     strategy:
+      fail-fast: false
       matrix:
         target: [ %%TARGETS%% ]
     runs-on: ubuntu-latest

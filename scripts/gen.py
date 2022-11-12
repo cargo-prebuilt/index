@@ -7,14 +7,14 @@ extra_targets = [
     "aarch64-unknown-linux-gnu",
     "aarch64-unknown-linux-musl",
 
-    "riscv64gc-unknown-linux-gnu",  # Optional Support (64-bit)
-    "powerpc64-unknown-linux-gnu",
-    "powerpc64le-unknown-linux-gnu",
-    "s390x-unknown-linux-gnu",
-    "x86_64-unknown-freebsd",
+    "x86_64-unknown-freebsd",  # Optional Support (64-bit)
     "x86_64-unknown-netbsd",
     "x86_64-unknown-illumos",
     "x86_64-sun-solaris",
+    "riscv64gc-unknown-linux-gnu",
+    "powerpc64-unknown-linux-gnu",
+    "powerpc64le-unknown-linux-gnu",
+    "s390x-unknown-linux-gnu",
     "sparc64-unknown-linux-gnu",
     "mips64-unknown-linux-gnuabi64",
     "mips64-unknown-linux-muslabi64",
@@ -26,12 +26,12 @@ extra_targets = [
     "i686-unknown-freebsd",
     "armv7-unknown-linux-gnueabihf",
     "armv7-unknown-linux-musleabihf",
+    "powerpc-unknown-linux-gnu",
+    "sparcv9-sun-solaris",
     "mips-unknown-linux-gnu",
     "mips-unknown-linux-musl",
     "mipsel-unknown-linux-gnu",
     "mipsel-unknown-linux-musl",
-    "powerpc-unknown-linux-gnu",
-    "sparcv9-sun-solaris",
 ]
 
 

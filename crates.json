@@ -3,7 +3,7 @@
   "crates": {
     "bacon": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "i686-unknown-freebsd",
       "git": "https://github.com/Canop/bacon",
       "bins": [
         "bacon"
@@ -12,7 +12,7 @@
 
     "cargo-audit": {
       "flags": "--features vendored-openssl",
-      "unsupported": "",
+      "unsupported": "sparcv9-sun-solaris",
       "git": "https://github.com/rustsec/rustsec/tree/main/cargo-audit",
       "bins": [
         "cargo-audit"
