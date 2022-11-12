@@ -30,7 +30,6 @@ Prebuilt crates optionally support these targets:
 - powerpc64-unknown-linux-gnu
 - powerpc64le-unknown-linux-gnu
 - s390x-unknown-linux-gnu
-- sparc64-unknown-linux-gnu
 - mips64-unknown-linux-gnuabi64
 - mips64-unknown-linux-muslabi64
 - mips64el-unknown-linux-gnuabi64 
@@ -43,7 +42,6 @@ Prebuilt crates optionally support these targets:
 - armv7-unknown-linux-gnueabihf
 - armv7-unknown-linux-musleabihf
 - powerpc-unknown-linux-gnu
-- sparcv9-sun-solaris
 - mips-unknown-linux-gnu
 - mips-unknown-linux-musl 
 - mipsel-unknown-linux-gnu 
