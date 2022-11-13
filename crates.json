@@ -1,9 +1,9 @@
 {
-  "allowlist": "just",
+  "allowlist": "cargo-clone",
   "crates": {
     "bacon": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-sun-solaris,i686-unknown-freebsd",
       "git": "https://github.com/Canop/bacon",
       "bins": [
         "bacon"
@@ -51,7 +51,7 @@
 
     "cargo-outdated": {
       "flags": "--features vendored-openssl",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "git": "https://github.com/kbknapp/cargo-outdated",
       "bins": [
         "cargo-outdated"
@@ -60,7 +60,7 @@
 
     "trunk":{
       "flags": "",
-      "unsupported": "riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu",
+      "unsupported": "x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/thedodd/trunk",
       "bins": [
         "trunk"
@@ -78,7 +78,7 @@
 
     "wasm-pack": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "git": "https://github.com/rustwasm/wasm-pack",
       "bins": [
         "wasm-pack"
@@ -87,7 +87,7 @@
 
     "tauri-cli": {
       "flags": "",
-      "unsupported": "riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu",
+      "unsupported": "x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/tauri-apps/tauri",
       "bins": [
         "cargo-tauri"
@@ -96,7 +96,7 @@
 
     "wasmtime-cli": {
       "flags": "",
-      "unsupported": "powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu",
+      "unsupported": "i686-pc-windows-msvc,x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-linux-gnu,i686-unknown-linux-musl,i686-unknown-freebsd,armv7-unknown-linux-gnueabihf,armv7-unknown-linux-musleabihf,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/bytecodealliance/wasmtime",
       "bins": [
         "wasmtime"
@@ -133,7 +133,7 @@
 
     "cargo-deb": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-freebsd,x86_64-sun-solaris,i686-unknown-freebsd",
       "git": "https://github.com/kornelski/cargo-deb",
       "bins": [
         "cargo-deb"
@@ -151,7 +151,7 @@
 
     "cargo-clone": {
       "flags": "--features vendored-openssl",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "git": "https://github.com/JanLikar/cargo-clone",
       "bins": [
         "cargo-clone"
