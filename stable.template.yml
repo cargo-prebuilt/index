@@ -21,16 +21,41 @@ jobs:
       - uses: ahmadnassri/action-workflow-queue@v1
         with:
           timeout: 10800000
+      - name: Create Folders
+        run: |
+          mkdir -p ~/.cargo/registry/index
+          mkdir -p ~/.cargo/registry/cache
+          mkdir -p ~/.cargo/git/db
+          mkdir -p ./bundle
+      - uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-deps
       - name: Download crate and check hash
         run: |
           wget ${{ env.dl }}
           echo "${{ env.checksum }} ${{ env.crate }}-${{ env.version }}.crate" | sha256sum -c
-          mv ${{ env.crate }}-${{ env.version }}.crate download
-      - name: Cache crate download
+          tar -xf ${{ env.crate }}-${{ env.version }}.crate
+          mv ${{ env.crate }}-${{ env.version }}/* bundle/build
+      - name: Download Deps
+        working-directory: ./bundle/build
+        run: cargo fetch --verbose
+      - name: Bundle Deps
+        run: |
+          mkdir -p ./bundle/store/registry
+          mkdir -p ./bundle/store/git
+          cp -r ~/.cargo/registry/index ./bundle/store/registry/index
+          cp -r ~/.cargo/registry/cache ./bundle/store/registry/cache
+          cp -r ~/.cargo/git/db ./bundle/store/git/db
+      - name: Store crate and crate deps
         uses: actions/upload-artifact@v3
         with:
-          name: crate-download
-          path: download
+          name: crate
+          path: bundle
+          retention-days: 1
       - name: Create Release
         if: %%IF%%
         uses: meeDamian/github-release@v2.0.3
@@ -46,28 +71,21 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
+      - name: Download crate and deps
+        uses: actions/download-artifact@v3
+        with:
+          name: crate
+      - name: Move deps
+        run: mv ./store/* ~/.cargo
       - uses: actions/cache@v3
         with:
           path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            build/target
+           build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-unknown-linux-gnu
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
       - name: Update Rust
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - name: Create Directory
-        run: mkdir -p build
-      - name: Extract crate
-        run: |
-          echo "${{ env.checksum }} download" | sha256sum -c
-          tar -xf download
-          mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
         run: cargo build --verbose --release %%FLAGS%%
@@ -90,272 +108,262 @@ jobs:
           file_glob: true
           file: x86_64-unknown-linux-gnu.*
 
-  x86_64-apple-darwin:
-    runs-on: macos-latest
-    needs: [ setup ]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-apple-darwin
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
-      - name: Get pkgs
-        run: brew install coreutils
-      - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
-      - name: Create Directory
-        run: mkdir -p build
-      - name: Extract crate
-        run: |
-          echo "${{ env.checksum }} download" | sha256sum -c
-          tar -xf download
-          mv ${{ env.crate }}-${{ env.version }}/* build
-      - name: Build crate
-        working-directory: ./build
-        run: cargo build --verbose --release %%FLAGS%%
-      - name: Collect
-        run: ./scripts/collect.py x86_64-apple-darwin ./build/target/release ${{ env.bins }}
-      - name: Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: x86_64-apple-darwin
-          path: |
-            x86_64-apple-darwin.tar.gz
-            x86_64-apple-darwin.sha256
-      - name: Release Artifact
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: x86_64-apple-darwin.*
-
-  aarch64-apple-darwin:
-    runs-on: macos-latest
-    needs: [ setup ]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-aarch64-apple-darwin
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
-      - name: Get pkgs
-        run: brew install coreutils
-      - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
-      - name: Add Rust target
-        run: rustup target add aarch64-apple-darwin
-      - name: MacOS SDK
-        run: |
-          export SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
-          export MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
-      - name: Create Directory
-        run: mkdir -p build
-      - name: Extract crate
-        run: |
-          echo "${{ env.checksum }} download" | sha256sum -c
-          tar -xf download
-          mv ${{ env.crate }}-${{ env.version }}/* build
-      - name: Build crate
-        working-directory: ./build
-        run: cargo build --verbose --release --target aarch64-apple-darwin %%FLAGS%%
-      - name: Collect
-        run: ./scripts/collect.py aarch64-apple-darwin ./build/target/aarch64-apple-darwin/release ${{ env.bins }}
-      - name: Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: aarch64-apple-darwin
-          path: |
-            aarch64-apple-darwin.tar.gz
-            aarch64-apple-darwin.sha256
-      - name: Release Artifact
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: aarch64-apple-darwin.*
-
-  x86_64-pc-windows-msvc:
-    runs-on: windows-latest
-    needs: [ setup ]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-pc-windows-msvc
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
-      - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
-      - name: Create Directory
-        run: New-Item -ItemType Directory -Force -Path ./build
-      - name: Extract crate
-        run: |
-          (Get-FileHash ./download).Hash -eq "${{ env.checksum }}"
-          tar -xf download
-          mv ${{ env.crate }}-${{ env.version }}/* build
-      - name: Build crate
-        working-directory: ./build
-        run: cargo build --verbose --release %%FLAGS%%
-      - name: Collect
-        run: python3  ./scripts/collect.py x86_64-pc-windows-msvc ./build/target/release ${{ env.bins }}
-      - name: Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: x86_64-pc-windows-msvc
-          path: |
-            x86_64-pc-windows-msvc.tar.gz
-            x86_64-pc-windows-msvc.sha256
-      - name: Release Artifact
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: x86_64-pc-windows-msvc.*
-
-  i686-pc-windows-msvc:
-    if: %%WIN_32_BUILD%%
-    runs-on: windows-latest
-    needs: [ setup ]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-i686-pc-windows-msvc
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
-      - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
-      - name: Add Rust target
-        run: rustup target add i686-pc-windows-msvc
-      - name: Create Directory
-        run: New-Item -ItemType Directory -Force -Path ./build
-      - name: Extract crate
-        run: |
-          (Get-FileHash ./download).Hash -eq "${{ env.checksum }}"
-          tar -xf download
-          mv ${{ env.crate }}-${{ env.version }}/* build
-      - name: Build crate
-        working-directory: ./build
-        run: cargo build --verbose --release --target i686-pc-windows-msvc %%FLAGS%%
-      - name: Collect
-        run: python3  ./scripts/collect.py i686-pc-windows-msvc ./build/target/i686-pc-windows-msvc/release ${{ env.bins }}
-      - name: Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: i686-pc-windows-msvc
-          path: |
-            i686-pc-windows-msvc.tar.gz
-            i686-pc-windows-msvc.sha256
-      - name: Release Artifact
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: i686-pc-windows-msvc.*
-
-  cross:
-    strategy:
-      fail-fast: false
-      matrix:
-        target: [ %%TARGETS%% ]
-    runs-on: ubuntu-latest
-    needs: [ setup ]
-    env:
-      CROSS_CONFIG: ../Cross.toml
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
-      - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
-      - uses: taiki-e/install-action@v1
-        with:
-          tool: cross
-      - name: Create Directory
-        run: mkdir -p build
-      - name: Extract crate
-        run: |
-          echo "${{ env.checksum }} download" | sha256sum -c
-          tar -xf download
-          mv ${{ env.crate }}-${{ env.version }}/* build
-      - name: Build crate
-        working-directory: ./build
-        run: cross build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
-      - name: Collect
-        run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
-      - name: Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.target }}
-          path: |
-            ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
-      - name: Release Artifact
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: ${{ matrix.target }}.*
+#  x86_64-apple-darwin:
+#    runs-on: macos-latest
+#    needs: [ setup ]
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/cache@v3
+#        with:
+#          path: |
+#           build/target
+#          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-apple-darwin
+#      - name: Download crate
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: crate-download
+#      - name: Get pkgs
+#        run: brew install coreutils
+#      - name: Update Rust
+#        run: rustup update
+#      - name: Rust Version
+#        run: rustc --version
+#      - name: Create Directory
+#        run: mkdir -p build
+#      - name: Extract crate
+#        run: |
+#          echo "${{ env.checksum }} download" | sha256sum -c
+#          tar -xf download
+#          mv ${{ env.crate }}-${{ env.version }}/* build
+#      - name: Build crate
+#        working-directory: ./build
+#        run: cargo build --verbose --release %%FLAGS%%
+#      - name: Collect
+#        run: ./scripts/collect.py x86_64-apple-darwin ./build/target/release ${{ env.bins }}
+#      - name: Artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: x86_64-apple-darwin
+#          path: |
+#            x86_64-apple-darwin.tar.gz
+#            x86_64-apple-darwin.sha256
+#      - name: Release Artifact
+#        if: %%IF%%
+#        uses: svenstaro/upload-release-action@2.3.0
+#        with:
+#          tag: ${{ env.crate }}-${{ env.version }}
+#          overwrite: true
+#          prerelease: true
+#          file_glob: true
+#          file: x86_64-apple-darwin.*
+#
+#  aarch64-apple-darwin:
+#    runs-on: macos-latest
+#    needs: [ setup ]
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/cache@v3
+#        with:
+#          path: |
+#           build/target
+#          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-aarch64-apple-darwin
+#      - name: Download crate
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: crate-download
+#      - name: Get pkgs
+#        run: brew install coreutils
+#      - name: Update Rust
+#        run: rustup update
+#      - name: Rust Version
+#        run: rustc --version
+#      - name: Add Rust target
+#        run: rustup target add aarch64-apple-darwin
+#      - name: MacOS SDK
+#        run: |
+#          export SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
+#          export MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
+#      - name: Create Directory
+#        run: mkdir -p build
+#      - name: Extract crate
+#        run: |
+#          echo "${{ env.checksum }} download" | sha256sum -c
+#          tar -xf download
+#          mv ${{ env.crate }}-${{ env.version }}/* build
+#      - name: Build crate
+#        working-directory: ./build
+#        run: cargo build --verbose --release --target aarch64-apple-darwin %%FLAGS%%
+#      - name: Collect
+#        run: ./scripts/collect.py aarch64-apple-darwin ./build/target/aarch64-apple-darwin/release ${{ env.bins }}
+#      - name: Artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: aarch64-apple-darwin
+#          path: |
+#            aarch64-apple-darwin.tar.gz
+#            aarch64-apple-darwin.sha256
+#      - name: Release Artifact
+#        if: %%IF%%
+#        uses: svenstaro/upload-release-action@2.3.0
+#        with:
+#          tag: ${{ env.crate }}-${{ env.version }}
+#          overwrite: true
+#          prerelease: true
+#          file_glob: true
+#          file: aarch64-apple-darwin.*
+#
+#  x86_64-pc-windows-msvc:
+#    runs-on: windows-latest
+#    needs: [ setup ]
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/cache@v3
+#        with:
+#          path: |
+#           build/target
+#          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-pc-windows-msvc
+#      - name: Download crate
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: crate-download
+#      - name: Update Rust
+#        run: rustup update
+#      - name: Rust Version
+#        run: rustc --version
+#      - name: Create Directory
+#        run: New-Item -ItemType Directory -Force -Path ./build
+#      - name: Extract crate
+#        run: |
+#          (Get-FileHash ./download).Hash -eq "${{ env.checksum }}"
+#          tar -xf download
+#          mv ${{ env.crate }}-${{ env.version }}/* build
+#      - name: Build crate
+#        working-directory: ./build
+#        run: cargo build --verbose --release %%FLAGS%%
+#      - name: Collect
+#        run: python3  ./scripts/collect.py x86_64-pc-windows-msvc ./build/target/release ${{ env.bins }}
+#      - name: Artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: x86_64-pc-windows-msvc
+#          path: |
+#            x86_64-pc-windows-msvc.tar.gz
+#            x86_64-pc-windows-msvc.sha256
+#      - name: Release Artifact
+#        if: %%IF%%
+#        uses: svenstaro/upload-release-action@2.3.0
+#        with:
+#          tag: ${{ env.crate }}-${{ env.version }}
+#          overwrite: true
+#          prerelease: true
+#          file_glob: true
+#          file: x86_64-pc-windows-msvc.*
+#
+#  i686-pc-windows-msvc:
+#    if: %%WIN_32_BUILD%%
+#    runs-on: windows-latest
+#    needs: [ setup ]
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/cache@v3
+#        with:
+#          path: |
+#           build/target
+#          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-i686-pc-windows-msvc
+#      - name: Download crate
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: crate-download
+#      - name: Update Rust
+#        run: rustup update
+#      - name: Rust Version
+#        run: rustc --version
+#      - name: Add Rust target
+#        run: rustup target add i686-pc-windows-msvc
+#      - name: Create Directory
+#        run: New-Item -ItemType Directory -Force -Path ./build
+#      - name: Extract crate
+#        run: |
+#          (Get-FileHash ./download).Hash -eq "${{ env.checksum }}"
+#          tar -xf download
+#          mv ${{ env.crate }}-${{ env.version }}/* build
+#      - name: Build crate
+#        working-directory: ./build
+#        run: cargo build --verbose --release --target i686-pc-windows-msvc %%FLAGS%%
+#      - name: Collect
+#        run: python3  ./scripts/collect.py i686-pc-windows-msvc ./build/target/i686-pc-windows-msvc/release ${{ env.bins }}
+#      - name: Artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: i686-pc-windows-msvc
+#          path: |
+#            i686-pc-windows-msvc.tar.gz
+#            i686-pc-windows-msvc.sha256
+#      - name: Release Artifact
+#        if: %%IF%%
+#        uses: svenstaro/upload-release-action@2.3.0
+#        with:
+#          tag: ${{ env.crate }}-${{ env.version }}
+#          overwrite: true
+#          prerelease: true
+#          file_glob: true
+#          file: i686-pc-windows-msvc.*
+#
+#  cross:
+#    strategy:
+#      fail-fast: false
+#      matrix:
+#        target: [ %%TARGETS%% ]
+#    runs-on: ubuntu-latest
+#    needs: [ setup ]
+#    env:
+#      CROSS_CONFIG: ../Cross.toml
+#    steps:
+#      - uses: actions/checkout@v3
+#      - uses: actions/cache@v3
+#        with:
+#          path: |
+#           build/target
+#          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+#      - name: Download crate
+#        uses: actions/download-artifact@v3
+#        with:
+#          name: crate-download
+#      - name: Update Rust
+#        run: rustup update
+#      - name: Rust Version
+#        run: rustc --version
+#      - uses: taiki-e/install-action@v1
+#        with:
+#          tool: cross
+#      - name: Create Directory
+#        run: mkdir -p build
+#      - name: Extract crate
+#        run: |
+#          echo "${{ env.checksum }} download" | sha256sum -c
+#          tar -xf download
+#          mv ${{ env.crate }}-${{ env.version }}/* build
+#      - name: Build crate
+#        working-directory: ./build
+#        run: cross build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
+#      - name: Collect
+#        run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
+#      - name: Artifact
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: ${{ matrix.target }}
+#          path: |
+#            ${{ matrix.target }}.tar.gz
+#            ${{ matrix.target }}.sha256
+#      - name: Release Artifact
+#        if: %%IF%%
+#        uses: svenstaro/upload-release-action@2.3.0
+#        with:
+#          tag: ${{ env.crate }}-${{ env.version }}
+#          overwrite: true
+#          prerelease: true
+#          file_glob: true
+#          file: ${{ matrix.target }}.*
 
   push-index:
     if: %%IF%%
