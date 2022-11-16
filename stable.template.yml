@@ -70,7 +70,7 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
-        run: cargo build --release %%FLAGS%%
+        run: cargo build --verbose --release %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py x86_64-unknown-linux-gnu ./build/target/release ${{ env.bins }}
       - name: Artifact
@@ -121,7 +121,7 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
-        run: cargo build --release %%FLAGS%%
+        run: cargo build --verbose --release %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py x86_64-apple-darwin ./build/target/release ${{ env.bins }}
       - name: Artifact
@@ -178,7 +178,7 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
-        run: cargo build --target aarch64-apple-darwin --release %%FLAGS%%
+        run: cargo build --verbose --release --target aarch64-apple-darwin %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py aarch64-apple-darwin ./build/target/aarch64-apple-darwin/release ${{ env.bins }}
       - name: Artifact
@@ -227,7 +227,7 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
-        run: cargo build --release %%FLAGS%%
+        run: cargo build --verbose --release %%FLAGS%%
       - name: Collect
         run: python3  ./scripts/collect.py x86_64-pc-windows-msvc ./build/target/release ${{ env.bins }}
       - name: Artifact
@@ -279,7 +279,7 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
-        run: cargo build --target i686-pc-windows-msvc --release %%FLAGS%%
+        run: cargo build --verbose --release --target i686-pc-windows-msvc %%FLAGS%%
       - name: Collect
         run: python3  ./scripts/collect.py i686-pc-windows-msvc ./build/target/i686-pc-windows-msvc/release ${{ env.bins }}
       - name: Artifact
@@ -337,7 +337,7 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* build
       - name: Build crate
         working-directory: ./build
-        run: cross build --release --target ${{ matrix.target }} %%FLAGS%%
+        run: cross build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
