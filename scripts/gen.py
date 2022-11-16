@@ -3,9 +3,9 @@
 import sys
 
 extra_targets = [
-    "x86_64-unknown-linux-musl",  # Must support
-    "aarch64-unknown-linux-gnu",
-    "aarch64-unknown-linux-musl",
+    # "x86_64-unknown-linux-musl",  # Must support
+    # "aarch64-unknown-linux-gnu",
+    # "aarch64-unknown-linux-musl",
 
     "x86_64-unknown-freebsd",  # Optional Support (64-bit)
     "x86_64-unknown-netbsd",
