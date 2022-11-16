@@ -124,10 +124,6 @@ jobs:
           path: |
            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-apple-darwin
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
       - name: Get pkgs
         run: brew install coreutils
       - name: Update Rust
@@ -172,10 +168,6 @@ jobs:
           path: |
            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-aarch64-apple-darwin
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
       - name: Get pkgs
         run: brew install coreutils
       - name: Update Rust
@@ -226,10 +218,6 @@ jobs:
           path: |
            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-pc-windows-msvc
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -273,10 +261,6 @@ jobs:
           path: |
            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-i686-pc-windows-msvc
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -327,10 +311,6 @@ jobs:
           path: |
            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -382,10 +362,6 @@ jobs:
           path: |
            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
-      - name: Download crate
-        uses: actions/download-artifact@v3
-        with:
-          name: crate-download
       - name: Update Rust
         run: rustup update
       - name: Rust Version
