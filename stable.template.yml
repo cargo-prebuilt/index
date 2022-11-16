@@ -364,18 +364,18 @@ jobs:
 #          prerelease: true
 #          file_glob: true
 #          file: ${{ matrix.target }}.*
-
-  push-index:
-    if: %%IF%%
-    runs-on: ubuntu-latest
-    needs: [ setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, aarch64-apple-darwin, x86_64-pc-windows-msvc, i686-pc-windows-msvc, cross ]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Create index file
-        run: echo "${{ env.version }}" > ${{ env.crate }}
-      - name: Push to index
-        uses: svenstaro/upload-release-action@2.3.0
-        with:
-          tag: stable-index
-          overwrite: true
-          file: ${{ env.crate }}
+#
+#  push-index:
+#    if: %%IF%%
+#    runs-on: ubuntu-latest
+#    needs: [ setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, aarch64-apple-darwin, x86_64-pc-windows-msvc, i686-pc-windows-msvc, cross ]
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Create index file
+#        run: echo "${{ env.version }}" > ${{ env.crate }}
+#      - name: Push to index
+#        uses: svenstaro/upload-release-action@2.3.0
+#        with:
+#          tag: stable-index
+#          overwrite: true
+#          file: ${{ env.crate }}
