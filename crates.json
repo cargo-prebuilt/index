@@ -1,5 +1,5 @@
 {
-  "allowlist": "just",
+  "allowlist": "just,wasmtime-cli,cargo-prebuilt",
   "crates": {
     "bacon": {
       "flags": "",
