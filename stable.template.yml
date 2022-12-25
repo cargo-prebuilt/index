@@ -109,7 +109,7 @@ jobs:
           file: x86_64-unknown-linux-gnu.*
 
   x86_64-apple-darwin:
-    runs-on: macos-latest
+    runs-on: macos-12
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
@@ -153,7 +153,7 @@ jobs:
           file: x86_64-apple-darwin.*
 
   aarch64-apple-darwin:
-    runs-on: macos-latest
+    runs-on: macos-12
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
