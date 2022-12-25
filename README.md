@@ -32,10 +32,11 @@ Prebuilt crates optionally support these targets:
 - s390x-unknown-linux-gnu
 - mips64-unknown-linux-gnuabi64
 - mips64-unknown-linux-muslabi64
-- mips64el-unknown-linux-gnuabi64 
+- mips64el-unknown-linux-gnuabi64
 - mips64el-unknown-linux-muslabi64
 
 (32-bit)
+- i686-pc-windows-msvc
 - i686-unknown-linux-gnu
 - i686-unknown-linux-musl
 - i686-unknown-freebsd
@@ -43,8 +44,8 @@ Prebuilt crates optionally support these targets:
 - armv7-unknown-linux-musleabihf
 - powerpc-unknown-linux-gnu
 - mips-unknown-linux-gnu
-- mips-unknown-linux-musl 
-- mipsel-unknown-linux-gnu 
+- mips-unknown-linux-musl
+- mipsel-unknown-linux-gnu
 - mipsel-unknown-linux-musl
 
 ## Crates
