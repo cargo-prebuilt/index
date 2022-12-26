@@ -203,15 +203,6 @@
       ]
     },
 
-    "cargo-bitbake": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/meta-rust/cargo-bitbake",
-      "bins": [
-        "cargo-bitbake"
-      ]
-    },
-
     "cargo-bloat": {
       "flags": "",
       "unsupported": "",
@@ -219,7 +210,35 @@
       "bins": [
         "cargo-bloat"
       ]
+    },
+
+    "cargo-cache": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/matthiaskrgr/cargo-cache",
+      "bins": [
+        "cargo-cache"
+      ]
+    },
+
+    "cargo-cook": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/vityafx/cargo-cook",
+      "bins": [
+        "cargo-cook"
+      ]
+    },
+
+    "cargo-deadlinks": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/deadlinks/cargo-deadlinks",
+      "bins": [
+        "cargo-deadlinks",
+        "deadlinks"
+      ]
     }
   },
-  "allowlist": "cargo-asm,cargo-benchcmp,cargo-bitbake,cargo-bloat"
+  "allowlist": "cargo-cache,cargo-cook,cargo-deadlinks"
 }
