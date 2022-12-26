@@ -176,10 +176,6 @@ jobs:
         run: rustc --version
       - name: Add Rust target
         run: rustup target add aarch64-apple-darwin
-#      - name: MacOS SDK
-#        run: |
-#          export SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
-#          export MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx --show-sdk-platform-version)
       - name: Build crate
         working-directory: ./build
         run: cargo build --verbose --release --target aarch64-apple-darwin %%FLAGS%%

@@ -1,5 +1,5 @@
 {
-  "allowlist": "cargo-edit,cargo-generate,cargo-outdated",
+  "allowlist": "trunk,just,wasm-pack",
   "crates": {
     "bacon": {
       "flags": "",
