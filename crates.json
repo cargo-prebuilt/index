@@ -1,5 +1,5 @@
 {
-  "allowlist": "tauri-cli,wasmtime-cli,cargo-prebuilt",
+  "allowlist": "jql,cargo-update,cargo-deb",
   "crates": {
     "bacon": {
       "flags": "",
