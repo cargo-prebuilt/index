@@ -51,7 +51,9 @@ Prebuilt crates optionally support these targets:
 ## Crates
 
 - [bacon](https://github.com/Canop/bacon)
+- [cargo-asm](https://github.com/gnzlbg/cargo-asm)
 - [cargo-audit](https://github.com/rustsec/rustsec/tree/main/cargo-audit)
+- [cargo-auditable](https://github.com/rust-secure-code/cargo-auditable)
 - [cargo-build-deps](https://github.com/nacardin/cargo-build-deps)
 - [cargo-clone](https://github.com/JanLikar/cargo-clone)
 - [cargo-deb](https://github.com/kornelski/cargo-deb)
@@ -61,6 +63,7 @@ Prebuilt crates optionally support these targets:
 - [cargo-mpirun](https://github.com/AndrewGaspar/cargo-mpirun)
 - [cargo-outdated](https://github.com/kbknapp/cargo-outdated)
 - [cargo-prebuilt](https://github.com/crow-rest/cargo-prebuilt)
+- [cargo-show-asm](https://github.com/pacak/cargo-show-asm)
 - [cargo-update](https://github.com/nabijaczleweli/cargo-update)
 - [jql](https://github.com/yamafaktory/jql)
 - [just](https://github.com/casey/just)

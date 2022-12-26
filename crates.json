@@ -1,5 +1,5 @@
 {
-  "allowlist": "cargo-prebuilt",
+  "allowlist": "cargo-auditable,cargo-asm,cargo-show-asm",
   "crates": {
     "bacon": {
       "flags": "",
@@ -164,6 +164,34 @@
       "git": "https://git.sr.ht/~jplatte/cargo-depgraph",
       "bins": [
         "cargo-depgraph"
+      ]
+    },
+
+    "cargo-auditable": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/rust-secure-code/cargo-auditable",
+      "bins": [
+        "cargo-auditable"
+      ]
+    },
+
+    "cargo-asm": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/gnzlbg/cargo-asm",
+      "bins": [
+        "cargo-asm",
+        "cargo-llvm-ir"
+      ]
+    },
+
+    "cargo-show-asm": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/pacak/cargo-show-asm",
+      "bins": [
+        "cargo-asm"
       ]
     }
   }
