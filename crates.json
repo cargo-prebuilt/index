@@ -221,15 +221,6 @@
       ]
     },
 
-    "cargo-cook": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/vityafx/cargo-cook",
-      "bins": [
-        "cargo-cook"
-      ]
-    },
-
     "cargo-deadlinks": {
       "flags": "",
       "unsupported": "",
@@ -238,7 +229,25 @@
         "cargo-deadlinks",
         "deadlinks"
       ]
+    },
+
+    "cargo-deny": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/EmbarkStudios/cargo-deny",
+      "bins": [
+        "cargo-deny"
+      ]
+    },
+
+    "cargo-diet": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/the-lean-crate/cargo-diet",
+      "bins": [
+        "cargo-diet"
+      ]
     }
   },
-  "allowlist": "cargo-cache,cargo-cook,cargo-deadlinks"
+  "allowlist": "cargo-deny,cargo-diet"
 }
