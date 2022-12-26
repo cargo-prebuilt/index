@@ -1,5 +1,4 @@
 {
-  "allowlist": "cargo-auditable,cargo-asm,cargo-show-asm",
   "crates": {
     "bacon": {
       "flags": "",
@@ -178,7 +177,7 @@
 
     "cargo-asm": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-freebsd,i686-unknown-freebsd",
       "git": "https://github.com/gnzlbg/cargo-asm",
       "bins": [
         "cargo-asm",
@@ -193,6 +192,34 @@
       "bins": [
         "cargo-asm"
       ]
+    },
+
+    "cargo-benchcmp": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/BurntSushi/cargo-benchcmp",
+      "bins": [
+        "cargo-benchcmp"
+      ]
+    },
+
+    "cargo-bitbake": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/meta-rust/cargo-bitbake",
+      "bins": [
+        "cargo-bitbake"
+      ]
+    },
+
+    "cargo-bloat": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/RazrFalcon/cargo-bloat",
+      "bins": [
+        "cargo-bloat"
+      ]
     }
-  }
+  },
+  "allowlist": "cargo-asm,cargo-benchcmp,cargo-bitbake,cargo-bloat"
 }
