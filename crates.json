@@ -1,5 +1,5 @@
 {
-  "allowlist": "trunk,just,wasm-pack",
+  "allowlist": "tauri-cli,wasmtime-cli,cargo-prebuilt",
   "crates": {
     "bacon": {
       "flags": "",

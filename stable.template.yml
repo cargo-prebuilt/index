@@ -311,7 +311,7 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: taiki-e/install-action@v1
+      - uses: taiki-e/install-action@v2
         with:
           tool: cross
       - name: Build crate
@@ -362,7 +362,7 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: taiki-e/install-action@v1
+      - uses: taiki-e/install-action@v2
         with:
           tool: cross
       - name: Build crate
