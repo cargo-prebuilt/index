@@ -1,5 +1,4 @@
 {
-  "allowlist": "cargo-prebuilt",
   "crates": {
     "bacon": {
       "flags": "",
@@ -165,6 +164,90 @@
       "bins": [
         "cargo-depgraph"
       ]
+    },
+
+    "cargo-auditable": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/rust-secure-code/cargo-auditable",
+      "bins": [
+        "cargo-auditable"
+      ]
+    },
+
+    "cargo-asm": {
+      "flags": "",
+      "unsupported": "x86_64-unknown-freebsd,i686-unknown-freebsd",
+      "git": "https://github.com/gnzlbg/cargo-asm",
+      "bins": [
+        "cargo-asm",
+        "cargo-llvm-ir"
+      ]
+    },
+
+    "cargo-show-asm": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/pacak/cargo-show-asm",
+      "bins": [
+        "cargo-asm"
+      ]
+    },
+
+    "cargo-benchcmp": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/BurntSushi/cargo-benchcmp",
+      "bins": [
+        "cargo-benchcmp"
+      ]
+    },
+
+    "cargo-bloat": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/RazrFalcon/cargo-bloat",
+      "bins": [
+        "cargo-bloat"
+      ]
+    },
+
+    "cargo-cache": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/matthiaskrgr/cargo-cache",
+      "bins": [
+        "cargo-cache"
+      ]
+    },
+
+    "cargo-deadlinks": {
+      "flags": "",
+      "unsupported": "riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "git": "https://github.com/deadlinks/cargo-deadlinks",
+      "bins": [
+        "cargo-deadlinks",
+        "deadlinks"
+      ]
+    },
+
+    "cargo-deny": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/EmbarkStudios/cargo-deny",
+      "bins": [
+        "cargo-deny"
+      ]
+    },
+
+    "cargo-diet": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/the-lean-crate/cargo-diet",
+      "bins": [
+        "cargo-diet"
+      ]
     }
-  }
+  },
+  "allowlist": "cargo-deadlinks"
 }
