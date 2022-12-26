@@ -1,5 +1,5 @@
 {
-  "allowlist": "bacon,cargo-audit,cargo-build-deps",
+  "allowlist": "cargo-edit,cargo-generate,cargo-outdated",
   "crates": {
     "bacon": {
       "flags": "",
