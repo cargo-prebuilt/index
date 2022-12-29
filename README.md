@@ -75,6 +75,8 @@ Prebuilt crates optionally support these targets:
 - [cargo-show-asm](https://github.com/pacak/cargo-show-asm)
 - [cargo-update](https://github.com/nabijaczleweli/cargo-update)
 - [cargo-watch](https://github.com/watchexec/cargo-watch)
+- [cocogitto](https://github.com/cocogitto/cocogitto)
+- [grcov](https://github.com/mozilla/grcov)
 - [jql](https://github.com/yamafaktory/jql)
 - [just](https://github.com/casey/just)
 - [tauri-cli](https://github.com/tauri-apps/tauri)

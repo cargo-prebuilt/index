@@ -284,7 +284,25 @@
       "bins": [
         "cargo-nextest"
       ]
+    },
+
+    "grcov": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/mozilla/grcov",
+      "bins": [
+        "grcov"
+      ]
+    },
+
+    "cocogitto": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/cocogitto/cocogitto",
+      "bins": [
+        "cog"
+      ]
     }
   },
-  "allowlist": "cargo-make,cargo-hack,cargo-nextest"
+  "allowlist": "grcov,cocogitto"
 }
