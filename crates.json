@@ -247,7 +247,16 @@
       "bins": [
         "cargo-diet"
       ]
+    },
+
+    "cargo-watch": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/watchexec/cargo-watch",
+      "bins": [
+        "cargo-watch"
+      ]
     }
   },
-  "allowlist": "cargo-deadlinks"
+  "allowlist": "cargo-watch"
 }
