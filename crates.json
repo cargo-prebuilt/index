@@ -250,8 +250,8 @@
     },
 
     "cargo-watch": {
-      "flags": "x86_64-unknown-freebsd,x86_64-unknown-illumos,x86_64-sun-solaris,i686-unknown-freebsd",
-      "unsupported": "",
+      "flags": "",
+      "unsupported": "x86_64-unknown-freebsd,x86_64-unknown-illumos,x86_64-sun-solaris,i686-unknown-freebsd",
       "git": "https://github.com/watchexec/cargo-watch",
       "bins": [
         "cargo-watch"
@@ -259,7 +259,7 @@
     },
 
     "cargo-make": {
-      "flags": "--no-default-features --features tls-native",
+      "flags": "",
       "unsupported": "",
       "git": "https://github.com/sagiegurari/cargo-make",
       "bins": [
@@ -275,7 +275,25 @@
       "bins": [
         "sccache"
       ]
+    },
+
+    "cargo-hack": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/taiki-e/cargo-hack",
+      "bins": [
+        "cargo-hack"
+      ]
+    },
+
+    "cargo-nextest": {
+      "flags": "--no-default-features --features default-no-update",
+      "unsupported": "",
+      "git": "https://github.com/nextest-rs/nextest",
+      "bins": [
+        "cargo-nextest"
+      ]
     }
   },
-  "allowlist": "cargo-watch,cargo-make,sccache"
+  "allowlist": "cargo-watch,cargo-make"
 }
