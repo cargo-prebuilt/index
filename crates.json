@@ -268,15 +268,6 @@
       ]
     },
 
-    "sccache": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/mozilla/sccache",
-      "bins": [
-        "sccache"
-      ]
-    },
-
     "cargo-hack": {
       "flags": "",
       "unsupported": "",
@@ -295,5 +286,5 @@
       ]
     }
   },
-  "allowlist": "cargo-watch,cargo-make"
+  "allowlist": "cargo-hack,cargo-nextest"
 }

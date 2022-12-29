@@ -77,7 +77,6 @@ Prebuilt crates optionally support these targets:
 - [cargo-watch](https://github.com/watchexec/cargo-watch)
 - [jql](https://github.com/yamafaktory/jql)
 - [just](https://github.com/casey/just)
-- [sccache](https://github.com/mozilla/sccache)
 - [tauri-cli](https://github.com/tauri-apps/tauri)
 - [trunk](https://github.com/thedodd/trunk)
 - [wasm-pack](https://github.com/rustwasm/wasm-pack)
