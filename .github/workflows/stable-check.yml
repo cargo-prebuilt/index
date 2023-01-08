@@ -38,6 +38,9 @@ jobs:
         run: ./scripts/gen.py stable ${{ github.event_name == 'pull_request' }} ${{ matrix.crate }} ${{ matrix.version }} ${{ matrix.dl }} ${{ matrix.checksum }} ${{ matrix.bins }} "${{ matrix.flags }}" "${{ matrix.unsupported }}"
       - name: Print generated workflow file
         run: cat .github/workflows/stable-${{ matrix.crate }}.yml
+      - name: Wait
+        if: ${{ github.event_name != 'pull_request' }}
+        run: sleep 13m
       - name: Run action
         uses: antaljanosbenjamin/single-commit-publish@v1.0.1
         with:
