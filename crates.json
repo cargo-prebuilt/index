@@ -68,7 +68,7 @@
 
     "just": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-freebsd,i686-unknown-freebsd",
       "git": "https://github.com/casey/just",
       "bins": [
         "just"
@@ -313,5 +313,5 @@
       ]
     }
   },
-  "allowlist": "sccache,cocogitto"
+  "allowlist": "just"
 }
