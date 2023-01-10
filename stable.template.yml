@@ -56,15 +56,6 @@ jobs:
           name: crate
           path: bundle
           retention-days: 1
-      - name: Create Release
-        if: %%IF%%
-        uses: meeDamian/github-release@v2.0.3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.crate }}-${{ env.version }}
-          name: ${{ env.crate }}-${{ env.version }}
-          prerelease: true
-          allow_override: true
 
   x86_64-unknown-linux-gnu:
     runs-on: ubuntu-latest
