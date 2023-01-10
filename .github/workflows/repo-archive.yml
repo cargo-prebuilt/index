@@ -22,13 +22,15 @@ jobs:
         working-directory: ./${{ matrix.type }}
         run: rm -rf *
       - name: Archive
-        uses: robinraju/release-downloader@v1.6
+        uses: robinraju/release-downloader@v1.7
         with:
           tag: "${{ matrix.type }}-index"
           fileName: "*"
           out-file-path: "./${{ matrix.type }}"
-      - name: Commit & Push changes
-        uses: Andro999b/push@v1.3
+      - name: Commit
+        run: git commit -a -m "Update Index"
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.6.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: archive
