@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ahmadnassri/action-workflow-queue@v1
+      - uses: ahmadnassri/action-workflow-queue@v1.1.0
         with:
           timeout: 10800000
       - name: Check for updates

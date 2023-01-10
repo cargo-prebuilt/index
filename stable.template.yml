@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ahmadnassri/action-workflow-queue@v1
+      - uses: ahmadnassri/action-workflow-queue@v1.1.0
         with:
           timeout: 10800000
       - name: Create Folders
@@ -100,7 +100,7 @@ jobs:
             x86_64-unknown-linux-gnu.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
+        uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           overwrite: true
@@ -144,7 +144,7 @@ jobs:
             x86_64-apple-darwin.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
+        uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           overwrite: true
@@ -190,7 +190,7 @@ jobs:
             aarch64-apple-darwin.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
+        uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           overwrite: true
@@ -232,7 +232,7 @@ jobs:
             x86_64-pc-windows-msvc.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
+        uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           overwrite: true
@@ -277,7 +277,7 @@ jobs:
             i686-pc-windows-msvc.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
+        uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           overwrite: true
@@ -328,7 +328,7 @@ jobs:
             ${{ matrix.target }}.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
+        uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           overwrite: true
@@ -379,7 +379,7 @@ jobs:
             ${{ matrix.target }}.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.3.0
+        uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           overwrite: true
@@ -396,7 +396,7 @@ jobs:
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.3.0
+        uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: stable-index
           overwrite: true
