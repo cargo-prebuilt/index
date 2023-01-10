@@ -27,13 +27,9 @@ jobs:
           tag: "${{ matrix.type }}-index"
           fileName: "*"
           out-file-path: "./${{ matrix.type }}"
-      - name: Commit
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git commit --allow-empty -a -m "Update Index"
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
+      - name: GitHub Commit & Push
+        uses: actions-js/push@v1.4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: archive
+          empty: true
