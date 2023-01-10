@@ -94,7 +94,7 @@ jobs:
         uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
-          name: ${{ env.crate }}-${{ env.version }}
+          release_name: ${{ env.crate }}-${{ env.version }}
           overwrite: true
           prerelease: true
           file_glob: true
@@ -139,7 +139,7 @@ jobs:
         uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
-          name: ${{ env.crate }}-${{ env.version }}
+          release_name: ${{ env.crate }}-${{ env.version }}
           overwrite: true
           prerelease: true
           file_glob: true
@@ -186,7 +186,7 @@ jobs:
         uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
-          name: ${{ env.crate }}-${{ env.version }}
+          release_name: ${{ env.crate }}-${{ env.version }}
           overwrite: true
           prerelease: true
           file_glob: true
@@ -229,7 +229,7 @@ jobs:
         uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
-          name: ${{ env.crate }}-${{ env.version }}
+          release_name: ${{ env.crate }}-${{ env.version }}
           overwrite: true
           prerelease: true
           file_glob: true
@@ -275,7 +275,7 @@ jobs:
         uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
-          name: ${{ env.crate }}-${{ env.version }}
+          release_name: ${{ env.crate }}-${{ env.version }}
           overwrite: true
           prerelease: true
           file_glob: true
@@ -327,7 +327,7 @@ jobs:
         uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
-          name: ${{ env.crate }}-${{ env.version }}
+          release_name: ${{ env.crate }}-${{ env.version }}
           overwrite: true
           prerelease: true
           file_glob: true
@@ -379,7 +379,7 @@ jobs:
         uses: svenstaro/upload-release-action@2.4.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
-          name: ${{ env.crate }}-${{ env.version }}
+          release_name: ${{ env.crate }}-${{ env.version }}
           overwrite: true
           prerelease: true
           file_glob: true
