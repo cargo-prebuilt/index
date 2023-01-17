@@ -311,7 +311,25 @@
       "bins": [
         "cog"
       ]
+    },
+
+    "cargo-binstall": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/cargo-bins/cargo-binstall",
+      "bins": [
+        "cargo-binstall"
+      ]
+    },
+
+    "cargo-quickinstall": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/cargo-bins/cargo-quickinstall",
+      "bins": [
+        "cargo-quickinstall"
+      ]
     }
   },
-  "allowlist": "just"
+  "allowlist": "cargo-binstall,cargo-quickinstall"
 }
