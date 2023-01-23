@@ -12,6 +12,7 @@ env:
   dl: %%DOWNLOAD%%
   checksum: %%CHECKSUM%%
   bins: %%BINS%%
+  CARGO_TERM_COLOR: always
 
 jobs:
   setup:
