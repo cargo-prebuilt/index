@@ -314,7 +314,7 @@
     },
 
     "cargo-binstall": {
-      "flags": "",
+      "flags": "--no-default-features --features static,native-tls,trust-dns,fancy-no-backtrace",
       "unsupported": "",
       "git": "https://github.com/cargo-bins/cargo-binstall",
       "bins": [
