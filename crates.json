@@ -331,5 +331,5 @@
       ]
     }
   },
-  "allowlist": "cargo-make"
+  "allowlist": "just,cargo-prebuilt"
 }
