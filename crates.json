@@ -331,5 +331,5 @@
       ]
     }
   },
-  "allowlist": "bacon,cargo-prebuilt,just"
+  "allowlist": "cargo-prebuilt,just"
 }
