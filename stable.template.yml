@@ -22,18 +22,9 @@ jobs:
       - uses: ahmadnassri/action-workflow-queue@v1.1.0
         with:
           timeout: 10800000
-      - name: Download crate and check hash
-        run: |
-          mkdir -p ./build
-          wget ${{ env.dl }}
-          echo "${{ env.checksum }} ${{ env.crate }}-${{ env.version }}.crate" | sha256sum -c
-          tar -xf ${{ env.crate }}-${{ env.version }}.crate
-          mv ${{ env.crate }}-${{ env.version }}/* ./build
-      - name: Download Deps
-        working-directory: ./build
-        run: cargo fetch --verbose
-      - name: Save crate and deps
-        uses: actions/cache/save@v3
+      - name: Cache crates and deps
+        id: cache
+        uses: actions/cache@v3
         with:
           path: |
             ~/.cargo/registry/index
@@ -41,6 +32,18 @@ jobs:
             ~/.cargo/git/db
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-bundle
+      - name: Download crate and check hash
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ./build
+          wget ${{ env.dl }}
+          echo "${{ env.checksum }} ${{ env.crate }}-${{ env.version }}.crate" | sha256sum -c
+          tar -xf ${{ env.crate }}-${{ env.version }}.crate
+          mv ${{ env.crate }}-${{ env.version }}/* ./build
+      - name: Download Deps
+        if: steps.cache.outputs.cache-hit != 'true'
+        working-directory: ./build
+        run: cargo fetch --verbose
 
   x86_64-unknown-linux-gnu:
     runs-on: ubuntu-latest
