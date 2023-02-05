@@ -24,6 +24,7 @@ jobs:
           timeout: 10800000
       - name: Download crate and check hash
         run: |
+          mkdir -p ./build
           wget ${{ env.dl }}
           echo "${{ env.checksum }} ${{ env.crate }}-${{ env.version }}.crate" | sha256sum -c
           tar -xf ${{ env.crate }}-${{ env.version }}.crate
