@@ -22,41 +22,24 @@ jobs:
       - uses: ahmadnassri/action-workflow-queue@v1.1.0
         with:
           timeout: 10800000
-      - name: Create Folders
-        run: |
-          mkdir -p ~/.cargo/registry/index
-          mkdir -p ~/.cargo/registry/cache
-          mkdir -p ~/.cargo/git/db
-          mkdir -p ./bundle/build
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/registry/index
-            ~/.cargo/registry/cache
-            ~/.cargo/git/db
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-deps
       - name: Download crate and check hash
         run: |
           wget ${{ env.dl }}
           echo "${{ env.checksum }} ${{ env.crate }}-${{ env.version }}.crate" | sha256sum -c
           tar -xf ${{ env.crate }}-${{ env.version }}.crate
-          mv ${{ env.crate }}-${{ env.version }}/* bundle/build
+          mv ${{ env.crate }}-${{ env.version }}/* ./build
       - name: Download Deps
-        working-directory: ./bundle/build
+        working-directory: ./build
         run: cargo fetch --verbose
-      - name: Bundle Deps
-        run: |
-          mkdir -p ./bundle/store/registry
-          mkdir -p ./bundle/store/git
-          cp -r ~/.cargo/registry/index ./bundle/store/registry/index
-          cp -r ~/.cargo/registry/cache ./bundle/store/registry/cache
-          cp -r ~/.cargo/git/db ./bundle/store/git/db
-      - name: Store crate and crate deps
-        uses: actions/upload-artifact@v3
+      - name: Save crate and deps
+        uses: actions/cache/save@v3
         with:
-          name: crate
-          path: bundle
-          retention-days: 1
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            ./build
+          key: ${{ env.crate }}-${{ env.version }}-stable-bundle
 
   x86_64-unknown-linux-gnu:
     runs-on: ubuntu-latest
@@ -64,11 +47,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download crate and deps
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v3
         with:
-          name: crate
-      - name: Move deps
-        run: mv ./store/* ~/.cargo
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            ./build
+          key: ${{ env.crate }}-${{ env.version }}-stable-bundle
       - uses: actions/cache@v3
         with:
           path: |
@@ -107,11 +93,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download crate and deps
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v3
         with:
-          name: crate
-      - name: Move deps
-        run: mv ./store/* ~/.cargo
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            ./build
+          key: ${{ env.crate }}-${{ env.version }}-stable-bundle
       - uses: actions/cache@v3
         with:
           path: |
@@ -152,11 +141,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download crate and deps
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v3
         with:
-          name: crate
-      - name: Move deps
-        run: mv ./store/* ~/.cargo
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            ./build
+          key: ${{ env.crate }}-${{ env.version }}-stable-bundle
       - uses: actions/cache@v3
         with:
           path: |
@@ -199,11 +191,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download crate and deps
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v3
         with:
-          name: crate
-      - name: Move deps
-        run: mv ./store/* ~/.cargo
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            ./build
+          key: ${{ env.crate }}-${{ env.version }}-stable-bundle
       - uses: actions/cache@v3
         with:
           path: |
@@ -243,11 +238,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download crate and deps
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v3
         with:
-          name: crate
-      - name: Move deps
-        run: mv ./store/* ~/.cargo
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            ./build
+          key: ${{ env.crate }}-${{ env.version }}-stable-bundle
       - uses: actions/cache@v3
         with:
           path: |
@@ -294,11 +292,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download crate and deps
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v3
         with:
-          name: crate
-      - name: Move deps
-        run: mv ./store/* ~/.cargo
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            ./build
+          key: ${{ env.crate }}-${{ env.version }}-stable-bundle
       - uses: actions/cache@v3
         with:
           path: |
@@ -346,11 +347,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Download crate and deps
-        uses: actions/download-artifact@v3
+        uses: actions/cache/restore@v3
         with:
-          name: crate
-      - name: Move deps
-        run: mv ./store/* ~/.cargo
+          path: |
+            ~/.cargo/registry/index
+            ~/.cargo/registry/cache
+            ~/.cargo/git/db
+            ./build
+          key: ${{ env.crate }}-${{ env.version }}-stable-bundle
       - uses: actions/cache@v3
         with:
           path: |
