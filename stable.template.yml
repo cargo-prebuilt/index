@@ -203,6 +203,8 @@ jobs:
             ~/.cargo/git/db
             **/build
           key: ${{ env.crate }}-${{ env.version }}-stable-bundle
+          restore-keys: |
+            ${{ env.crate }}-${{ env.version }}-stable-bundle
       - uses: actions/cache@v3
         with:
           path: |
@@ -250,6 +252,8 @@ jobs:
             ~/.cargo/git/db
             **/build
           key: ${{ env.crate }}-${{ env.version }}-stable-bundle
+          restore-keys: |
+            ${{ env.crate }}-${{ env.version }}-stable-bundle
       - uses: actions/cache@v3
         with:
           path: |
