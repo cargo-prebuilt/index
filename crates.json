@@ -329,7 +329,17 @@
       "bins": [
         "cargo-quickinstall"
       ]
+    },
+
+    "cross": {
+      "flags": "",
+      "unsupported": "x86_64-sun-solaris",
+      "git": "https://github.com/cross-rs/cross",
+      "bins": [
+        "cross",
+        "cross-util"
+      ]
     }
   },
-  "allowlist": "cargo-make"
+  "allowlist": "cross"
 }
