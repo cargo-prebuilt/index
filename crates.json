@@ -333,7 +333,7 @@
 
     "cross": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "git": "https://github.com/cross-rs/cross",
       "bins": [
         "cross",
