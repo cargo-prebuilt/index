@@ -329,7 +329,17 @@
       "bins": [
         "cargo-quickinstall"
       ]
+    },
+
+    "cross": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/cross-rs/cross",
+      "bins": [
+        "cross",
+        "cross-util"
+      ]
     }
   },
-  "allowlist": "cargo-make"
+  "allowlist": "cross"
 }

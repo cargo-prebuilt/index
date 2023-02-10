@@ -78,6 +78,7 @@ Prebuilt crates optionally support these targets:
 - [cargo-update](https://github.com/nabijaczleweli/cargo-update)
 - [cargo-watch](https://github.com/watchexec/cargo-watch)
 - [cocogitto](https://github.com/cocogitto/cocogitto)
+- [cross](https://github.com/cross-rs/cross)
 - [grcov](https://github.com/mozilla/grcov)
 - [jql](https://github.com/yamafaktory/jql)
 - [just](https://github.com/casey/just)
