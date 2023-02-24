@@ -1,5 +1,14 @@
 {
   "crates": {
+    "": {
+      "flags": "",
+      "unsupported": "",
+      "git": "",
+      "bins": [
+        ""
+      ]
+    },
+
     "cargo-wasi": {
       "_comment": "Does not currently allow for vendored or rustls.",
       "flags": "",
@@ -7,6 +16,24 @@
       "github": "https://github.com/bytecodealliance/cargo-wasi",
       "bins": [
         "cargo-wasi"
+      ]
+    },
+
+    "coreutils": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://crates.io/crates/coreutils",
+      "bins": [
+        ""
+      ]
+    },
+
+    "nu": {
+      "flags": "--features static-link-openssl",
+      "unsupported": "",
+      "git": "https://github.com/nushell/nushell",
+      "bins": [
+        "nu"
       ]
     }
   }
