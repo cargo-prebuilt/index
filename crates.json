@@ -385,7 +385,16 @@
       "bins": [
         "nu"
       ]
+    },
+
+    "coreutils": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://crates.io/crates/coreutils",
+      "bins": [
+        "coreutils"
+      ]
     }
   },
-  "allowlist": "null-crate"
+  "allowlist": "coreutils"
 }
