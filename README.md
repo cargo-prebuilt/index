@@ -85,6 +85,7 @@ Prebuilt crates optionally support these targets:
 - [grcov](https://github.com/mozilla/grcov)
 - [jql](https://github.com/yamafaktory/jql)
 - [just](https://github.com/casey/just)
+- [nu](https://github.com/nushell/nushell)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [sccache](https://github.com/mozilla/sccache)
 - [tauri-cli](https://github.com/tauri-apps/tauri)
