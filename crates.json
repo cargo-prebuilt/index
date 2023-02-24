@@ -387,5 +387,5 @@
       ]
     }
   },
-  "allowlist": "nu"
+  "allowlist": "null-crate"
 }
