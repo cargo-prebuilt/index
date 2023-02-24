@@ -339,7 +339,53 @@
         "cross",
         "cross-util"
       ]
+    },
+
+    "nu": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/nushell/nushell",
+      "bins": [
+        "nu"
+      ]
+    },
+
+    "gitoxide": {
+      "flags": "--no-default-features --features max-pure",
+      "unsupported": "",
+      "git": "https://github.com/Byron/gitoxide",
+      "bins": [
+        "ein",
+        "gix"
+      ]
+    },
+
+    "exa": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/ogham/exa",
+      "bins": [
+        "exa"
+      ]
+    },
+
+    "du-dust": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/bootandy/dust",
+      "bins": [
+        "dust"
+      ]
+    },
+
+    "bat": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/sharkdp/bat",
+      "bins": [
+        "bat"
+      ]
     }
   },
-  "allowlist": "cross"
+  "allowlist": "nu,gitoxide,exa,du-dust,bat"
 }
