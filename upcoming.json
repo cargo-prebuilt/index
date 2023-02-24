@@ -26,6 +26,15 @@
       "bins": [
         ""
       ]
+    },
+
+    "nu": {
+      "flags": "--features static-link-openssl",
+      "unsupported": "",
+      "git": "https://github.com/nushell/nushell",
+      "bins": [
+        "nu"
+      ]
     }
   }
 }
