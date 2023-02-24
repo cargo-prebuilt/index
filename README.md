@@ -51,6 +51,7 @@ Prebuilt crates optionally support these targets:
 ## Crates
 
 - [bacon](https://github.com/Canop/bacon)
+- [bat](https://github.com/sharkdp/bat)
 - [cargo-asm](https://github.com/gnzlbg/cargo-asm)
 - [cargo-audit](https://github.com/rustsec/rustsec/tree/main/cargo-audit)
 - [cargo-auditable](https://github.com/rust-secure-code/cargo-auditable)
@@ -79,9 +80,12 @@ Prebuilt crates optionally support these targets:
 - [cargo-watch](https://github.com/watchexec/cargo-watch)
 - [cocogitto](https://github.com/cocogitto/cocogitto)
 - [cross](https://github.com/cross-rs/cross)
+- [du-dust](https://github.com/bootandy/dust)
+- [gitoxide](https://github.com/Byron/gitoxide)
 - [grcov](https://github.com/mozilla/grcov)
 - [jql](https://github.com/yamafaktory/jql)
 - [just](https://github.com/casey/just)
+- [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [sccache](https://github.com/mozilla/sccache)
 - [tauri-cli](https://github.com/tauri-apps/tauri)
 - [trunk](https://github.com/thedodd/trunk)

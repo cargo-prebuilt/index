@@ -369,24 +369,6 @@
       ]
     },
 
-    "zellij": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/zellij-org/zellij",
-      "bins": [
-        "zellij"
-      ]
-    },
-
-    "mprocs": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/pvolok/mprocs",
-      "bins": [
-        "mprocs"
-      ]
-    },
-
     "ripgrep": {
       "flags": "",
       "unsupported": "",
@@ -396,5 +378,5 @@
       ]
     }
   },
-  "allowlist": "zellij,mprocs,ripgrep"
+  "allowlist": ""
 }
