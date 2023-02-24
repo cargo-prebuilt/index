@@ -342,7 +342,7 @@
     },
 
     "nu": {
-      "flags": "",
+      "flags": "--features static-link-openssl",
       "unsupported": "",
       "git": "https://github.com/nushell/nushell",
       "bins": [
@@ -352,7 +352,7 @@
 
     "gitoxide": {
       "flags": "--no-default-features --features max-pure",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/Byron/gitoxide",
       "bins": [
         "ein",
@@ -360,18 +360,9 @@
       ]
     },
 
-    "exa": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/ogham/exa",
-      "bins": [
-        "exa"
-      ]
-    },
-
     "du-dust": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/bootandy/dust",
       "bins": [
         "dust"
@@ -380,12 +371,39 @@
 
     "bat": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-netbsd,x86_64-sun-solaris,i686-unknown-freebsd",
       "git": "https://github.com/sharkdp/bat",
       "bins": [
         "bat"
       ]
+    },
+
+    "zellij": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/zellij-org/zellij",
+      "bins": [
+        "zellij"
+      ]
+    },
+
+    "mprocs": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/pvolok/mprocs",
+      "bins": [
+        "mprocs"
+      ]
+    },
+
+    "ripgrep": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/BurntSushi/ripgrep",
+      "bins": [
+        "rg"
+      ]
     }
   },
-  "allowlist": "nu,gitoxide,exa,du-dust,bat"
+  "allowlist": "nu,gitoxide,du-dust,bat"
 }
