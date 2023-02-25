@@ -54,6 +54,10 @@ jobs:
       - name: Download Deps
         working-directory: ./bundle/build
         run: cargo +stable fetch --verbose
+      - name: "TODO: Audit"
+        run: |
+          cargo +stable tree --verbose -e no-dev
+          cargo +stable generate-lockfile --verbose
       - name: Bundle Deps
         run: |
           mkdir -p ./bundle/store/registry
