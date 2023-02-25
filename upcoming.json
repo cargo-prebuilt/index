@@ -17,15 +17,6 @@
       "bins": [
         "cargo-wasi"
       ]
-    },
-
-    "coreutils": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://crates.io/crates/coreutils",
-      "bins": [
-        ""
-      ]
     }
   }
 }
