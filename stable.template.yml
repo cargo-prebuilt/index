@@ -308,9 +308,11 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: taiki-e/install-action@v2
-        with:
-          tool: cross
+      - uses: crow-rest/cargo-prebuilt-action@v1
+      - name: Install tools
+        run: |
+          cargo prebuilt cross
+          cross --version
       - name: Build crate
         working-directory: ./build
         run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
@@ -360,9 +362,11 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: taiki-e/install-action@v2
-        with:
-          tool: cross
+      - uses: crow-rest/cargo-prebuilt-action@v1
+      - name: Install tools
+        run: |
+          cargo prebuilt cross
+          cross --version
       - name: Build crate
         working-directory: ./build
         run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
