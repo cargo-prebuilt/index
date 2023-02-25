@@ -337,11 +337,11 @@ jobs:
       - uses: crow-rest/cargo-prebuilt-action@v1
       - name: Install tools
         run: |
-          cargo prebuilt cross
+          cargo prebuilt cross,cargo-auditable
           cross --version
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
+        run: cross +stable auditable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
