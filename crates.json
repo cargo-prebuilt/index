@@ -442,7 +442,7 @@
 
     "wiki-tui": {
       "flags": "--features reqwest/native-tls-vendored",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "git": "https://github.com/Builditluc/wiki-tui",
       "bins": [
         "wiki-tui"
@@ -458,5 +458,5 @@
       ]
     }
   },
-  "allowlist": "speedtest-rs"
+  "allowlist": "wiki-tui"
 }
