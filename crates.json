@@ -467,5 +467,5 @@
       ]
     }
   },
-  "allowlist": "cargo-info,wiki-tui"
+  "allowlist": "speedtest-rs,rtx-cli"
 }
