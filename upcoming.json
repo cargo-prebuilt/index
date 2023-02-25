@@ -17,6 +17,15 @@
       "bins": [
         "cargo-wasi"
       ]
+    },
+
+    "rtx-cli": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/jdxcode/rtx",
+      "bins": [
+        "rtx"
+      ]
     }
   }
 }

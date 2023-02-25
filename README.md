@@ -70,6 +70,7 @@ Prebuilt crates optionally support these targets:
 - [cargo-edit](https://github.com/killercup/cargo-edit)
 - [cargo-generate](https://github.com/cargo-generate/cargo-generate)
 - [cargo-hack](https://github.com/taiki-e/cargo-hack)
+- [cargo-info](https://gitlab.com/imp/cargo-info)
 - [cargo-make](https://github.com/sagiegurari/cargo-make)
 - [cargo-mpirun](https://github.com/AndrewGaspar/cargo-mpirun)
 - [cargo-nextest](https://github.com/nextest-rs/nextest)
@@ -97,6 +98,7 @@ Prebuilt crates optionally support these targets:
 - [trunk](https://github.com/thedodd/trunk)
 - [wasm-pack](https://github.com/rustwasm/wasm-pack)
 - [wasmtime-cli](https://github.com/bytecodealliance/wasmtime)
+- [wiki-tui](https://github.com/Builditluc/wiki-tui)
 
 ## "API"
 
