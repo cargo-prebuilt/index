@@ -57,8 +57,8 @@ jobs:
       - name: "TODO: Audit"
         working-directory: ./bundle/build
         run: |
+          test -f Cargo.lock || cargo +stable generate-lockfile --verbose
           cargo +stable tree --verbose -e no-dev
-          cargo +stable generate-lockfile --verbose
       - name: Bundle Deps
         run: |
           mkdir -p ./bundle/store/registry
