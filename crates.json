@@ -428,9 +428,9 @@
       "unsupported": "",
       "git": "https://github.com/google/evcxr",
       "bins": [
-        ""
+        "evcxr_jupyter"
       ]
     }
   },
-  "allowlist": "bob-nvim"
+  "allowlist": "gitui"
 }
