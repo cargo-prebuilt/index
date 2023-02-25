@@ -396,15 +396,6 @@
       ]
     },
 
-    "alacritty": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/alacritty/alacritty",
-      "bins": [
-        "alacritty"
-      ]
-    },
-
     "bob-nvim": {
       "flags": "",
       "unsupported": "",
@@ -430,7 +421,16 @@
       "bins": [
         "irust"
       ]
+    },
+
+    "evcxr_jupyter": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/google/evcxr",
+      "bins": [
+        ""
+      ]
     }
   },
-  "allowlist": "coreutils,alacritty"
+  "allowlist": "bob-nvim"
 }
