@@ -432,7 +432,7 @@
     },
 
     "cargo-info": {
-      "flags": "",
+      "flags": "--no-default-features --features rustls",
       "unsupported": "",
       "git": "https://gitlab.com/imp/cargo-info",
       "bins": [
@@ -445,7 +445,7 @@
       "unsupported": "",
       "git": "https://github.com/Builditluc/wiki-tui",
       "bins": [
-        ""
+        "wiki-tui"
       ]
     },
 
