@@ -449,5 +449,5 @@
       ]
     }
   },
-  "allowlist": "crate"
+  "allowlist": "just,cargo-info,cargo-prebuilt"
 }
