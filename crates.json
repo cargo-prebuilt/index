@@ -441,7 +441,7 @@
     },
 
     "wiki-tui": {
-      "flags": "",
+      "flags": "--features reqwest/native-tls-vendored",
       "unsupported": "",
       "git": "https://github.com/Builditluc/wiki-tui",
       "bins": [
@@ -450,22 +450,13 @@
     },
 
     "speedtest-rs": {
-      "flags": "",
+      "flags": "--features rust-tls",
       "unsupported": "",
       "git": "https://github.com/nelsonjchen/speedtest-rs",
       "bins": [
         "speedtest-rs"
       ]
-    },
-
-    "rtx-cli": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/jdxcode/rtx",
-      "bins": [
-        "rtx"
-      ]
     }
   },
-  "allowlist": "speedtest-rs,rtx-cli"
+  "allowlist": "wiki-tui,speedtest-rs"
 }
