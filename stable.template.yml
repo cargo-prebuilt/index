@@ -55,6 +55,7 @@ jobs:
         working-directory: ./bundle/build
         run: cargo +stable fetch --verbose
       - name: "TODO: Audit"
+        working-directory: ./bundle/build
         run: |
           cargo +stable tree --verbose -e no-dev
           cargo +stable generate-lockfile --verbose
