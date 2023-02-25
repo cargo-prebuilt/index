@@ -94,7 +94,6 @@ Prebuilt crates optionally support these targets:
 - [nu](https://github.com/nushell/nushell)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [sccache](https://github.com/mozilla/sccache)
-- [speedtest-rs](https://github.com/nelsonjchen/speedtest-rs)
 - [tauri-cli](https://github.com/tauri-apps/tauri)
 - [trunk](https://github.com/thedodd/trunk)
 - [wasm-pack](https://github.com/rustwasm/wasm-pack)

@@ -447,16 +447,7 @@
       "bins": [
         "wiki-tui"
       ]
-    },
-
-    "speedtest-rs": {
-      "flags": "--locked --features reqwest/native-tls-vendored",
-      "unsupported": "",
-      "git": "https://github.com/nelsonjchen/speedtest-rs",
-      "bins": [
-        "speedtest-rs"
-      ]
     }
   },
-  "allowlist": "speedtest-rs"
+  "allowlist": "crate"
 }
