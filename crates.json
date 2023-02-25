@@ -440,15 +440,6 @@
       ]
     },
 
-    "ncspot": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/hrkfdn/ncspot",
-      "bins": [
-        ""
-      ]
-    },
-
     "wiki-tui": {
       "flags": "",
       "unsupported": "",
