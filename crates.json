@@ -429,7 +429,61 @@
       "bins": [
         "evcxr_jupyter"
       ]
+    },
+
+    "cargo-info": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://gitlab.com/imp/cargo-info",
+      "bins": [
+        "cargo-info"
+      ]
+    },
+
+    "ncspot": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/hrkfdn/ncspot",
+      "bins": [
+        ""
+      ]
+    },
+
+    "wiki-tui": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/Builditluc/wiki-tui",
+      "bins": [
+        ""
+      ]
+    },
+
+    "speedtest-rs": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/nelsonjchen/speedtest-rs",
+      "bins": [
+        ""
+      ]
+    },
+
+    "rtx-cli": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/jdxcode/rtx",
+      "bins": [
+        ""
+      ]
+    },
+
+    "porsmo": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/ColorCookie-dev/porsmo",
+      "bins": [
+        ""
+      ]
     }
   },
-  "allowlist": "evcxr_jupyter"
+  "allowlist": "cargo-info"
 }
