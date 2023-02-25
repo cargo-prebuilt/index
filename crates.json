@@ -389,12 +389,48 @@
 
     "coreutils": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,s390x-unknown-linux-gnu",
       "git": "https://crates.io/crates/coreutils",
       "bins": [
         "coreutils"
       ]
+    },
+
+    "alacritty": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/alacritty/alacritty",
+      "bins": [
+        "alacritty"
+      ]
+    },
+
+    "bob-nvim": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/MordechaiHadad/bob",
+      "bins": [
+        "bob"
+      ]
+    },
+
+    "gitui": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/extrawurst/gitui",
+      "bins": [
+        "gitui"
+      ]
+    },
+
+    "irust": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/sigmaSd/IRust",
+      "bins": [
+        "irust"
+      ]
     }
   },
-  "allowlist": "coreutils"
+  "allowlist": "coreutils,alacritty"
 }
