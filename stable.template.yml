@@ -58,7 +58,8 @@ jobs:
         working-directory: ./bundle/build
         run: |
           test -f Cargo.lock || cargo +stable generate-lockfile --verbose
-          cargo +stable tree --verbose -e no-dev
+          cargo +stable tree --verbose -e no-dev > ../../deps.report
+          cargo audit > ../../audit.report || true
       - name: Bundle Deps
         run: |
           mkdir -p ./bundle/store/registry
@@ -72,6 +73,21 @@ jobs:
           name: crate
           path: bundle
           retention-days: 1
+      - name: Store reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: reports
+          path: "*.report"
+      - name: Release Artifact
+        if: %%IF%%
+        uses: svenstaro/upload-release-action@2.5.0
+        with:
+          tag: ${{ env.crate }}-${{ env.version }}
+          release_name: ${{ env.crate }}-${{ env.version }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: "*.report"
 
   x86_64-unknown-linux-gnu:
     runs-on: ubuntu-latest
