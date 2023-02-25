@@ -450,7 +450,7 @@
     },
 
     "speedtest-rs": {
-      "flags": "--features reqwest/native-tls-vendored",
+      "flags": "--locked --features reqwest/native-tls-vendored",
       "unsupported": "",
       "git": "https://github.com/nelsonjchen/speedtest-rs",
       "bins": [
@@ -458,5 +458,5 @@
       ]
     }
   },
-  "allowlist": "wiki-tui"
+  "allowlist": "speedtest-rs"
 }
