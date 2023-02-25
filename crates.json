@@ -415,7 +415,7 @@
 
     "irust": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "git": "https://github.com/sigmaSd/IRust",
       "bins": [
         "irust"
@@ -431,5 +431,5 @@
       ]
     }
   },
-  "allowlist": "irust"
+  "allowlist": "irust,evcxr_jupyter"
 }
