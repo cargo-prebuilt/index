@@ -48,8 +48,8 @@ jobs:
       - name: Generate reports
         working-directory: ./bundle/build
         run: |
-          echo "Generated on: $(date)" > ../../deps.report
-          echo "Generated on: $(date)" > ../../audit.report
+          echo "Generated on: $(date --utc)" > ../../deps.report
+          echo "Generated on: $(date --utc)" > ../../audit.report
           test -f Cargo.lock || cargo +stable generate-lockfile --verbose
           cargo +stable tree --verbose -e no-dev >> ../../deps.report
           cargo audit >> ../../audit.report || true
