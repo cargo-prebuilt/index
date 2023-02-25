@@ -406,7 +406,7 @@
 
     "gitui": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-netbsd,x86_64-sun-solaris,i686-unknown-freebsd",
       "git": "https://github.com/extrawurst/gitui",
       "bins": [
         "gitui"
@@ -431,5 +431,5 @@
       ]
     }
   },
-  "allowlist": "bob-nvim"
+  "allowlist": "gitui"
 }
