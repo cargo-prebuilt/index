@@ -449,5 +449,5 @@
       ]
     }
   },
-  "allowlist": "just,cargo-info,cargo-prebuilt"
+  "allowlist": "cargo-prebuilt"
 }

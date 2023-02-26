@@ -102,8 +102,7 @@ jobs:
         run: rustc --version
       - uses: crow-rest/cargo-prebuilt-action@v1
       - name: Install tools
-        run: |
-          cargo prebuilt cargo-auditable
+        run: cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release %%FLAGS%%
@@ -149,8 +148,7 @@ jobs:
         run: rustc --version
       - uses: crow-rest/cargo-prebuilt-action@v1
       - name: Install tools
-        run: |
-          cargo prebuilt cargo-auditable
+        run: cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release %%FLAGS%%
@@ -198,8 +196,7 @@ jobs:
         run: rustup target add aarch64-apple-darwin
       - uses: crow-rest/cargo-prebuilt-action@v1
       - name: Install tools
-        run: |
-          cargo prebuilt cargo-auditable
+        run: cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release --target aarch64-apple-darwin %%FLAGS%%
@@ -245,8 +242,7 @@ jobs:
         run: rustc --version
       - uses: crow-rest/cargo-prebuilt-action@v1
       - name: Install tools
-        run: |
-          cargo prebuilt cargo-auditable
+        run: cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release %%FLAGS%%
@@ -295,8 +291,7 @@ jobs:
         run: rustup target add i686-pc-windows-msvc
       - uses: crow-rest/cargo-prebuilt-action@v1
       - name: Install tools
-        run: |
-          cargo prebuilt cargo-auditable
+        run: cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release --target i686-pc-windows-msvc %%FLAGS%%
