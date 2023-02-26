@@ -44,12 +44,12 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* bundle/build
       - name: Download Deps
         working-directory: ./bundle/build
-        run: cargo +stable fetch --verbose --locked
+        run: cargo +stable fetch --verbose
       - name: Generate reports
         working-directory: ./bundle/build
         run: |
           test -f Cargo.lock || cargo +stable generate-lockfile --verbose
-          echo "Generated on: $(date --utc)" > ../../deps.report && cargo +stable tree --verbose --locked -e no-dev >> ../../deps.report
+          echo "Generated on: $(date --utc)" > ../../deps.report && cargo +stable tree --verbose -e no-dev >> ../../deps.report
           echo "Generated on: $(date --utc)" > ../../audit.report && cargo audit >> ../../audit.report || true
       - name: Bundle Deps
         run: |
@@ -106,7 +106,7 @@ jobs:
           cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py x86_64-unknown-linux-gnu ./build/target/release ${{ env.bins }}
       - name: Artifact
@@ -155,7 +155,7 @@ jobs:
           cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py x86_64-apple-darwin ./build/target/release ${{ env.bins }}
       - name: Artifact
@@ -206,7 +206,7 @@ jobs:
           cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked --target aarch64-apple-darwin %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release --target aarch64-apple-darwin %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py aarch64-apple-darwin ./build/target/aarch64-apple-darwin/release ${{ env.bins }}
       - name: Artifact
@@ -253,7 +253,7 @@ jobs:
           cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release %%FLAGS%%
       - name: Collect
         run: python3  ./scripts/collect.py x86_64-pc-windows-msvc ./build/target/release ${{ env.bins }}
       - name: Artifact
@@ -303,7 +303,7 @@ jobs:
           cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked --target i686-pc-windows-msvc %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release --target i686-pc-windows-msvc %%FLAGS%%
       - name: Collect
         run: python3  ./scripts/collect.py i686-pc-windows-msvc ./build/target/i686-pc-windows-msvc/release ${{ env.bins }}
       - name: Artifact
@@ -357,7 +357,7 @@ jobs:
           cross --version
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
+        run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
@@ -411,7 +411,7 @@ jobs:
           cross --version
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
+        run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
