@@ -45,6 +45,12 @@ jobs:
       - name: Download Deps
         working-directory: ./bundle/build
         run: cargo +stable fetch --verbose
+      - name: Generate reports
+        working-directory: ./bundle/build
+        run: |
+          test -f Cargo.lock || cargo +stable generate-lockfile --verbose
+          echo "Generated on: $(date --utc)" > ../../deps.report && cargo +stable tree --verbose -e no-dev >> ../../deps.report
+          echo "Generated on: $(date --utc)" > ../../audit.report && cargo audit >> ../../audit.report || true
       - name: Bundle Deps
         run: |
           mkdir -p ./bundle/store/registry
@@ -58,6 +64,21 @@ jobs:
           name: crate
           path: bundle
           retention-days: 1
+      - name: Store reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: reports
+          path: "*.report"
+      - name: Release Reports
+        if: %%IF%%
+        uses: svenstaro/upload-release-action@2.5.0
+        with:
+          tag: ${{ env.crate }}-${{ env.version }}
+          release_name: ${{ env.crate }}-${{ env.version }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: "*.report"
 
   x86_64-unknown-linux-gnu:
     runs-on: ubuntu-latest
@@ -79,9 +100,12 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
+      - uses: crow-rest/cargo-prebuilt-action@v1
+      - name: Install tools
+        run: cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable build --verbose --release %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py x86_64-unknown-linux-gnu ./build/target/release ${{ env.bins }}
       - name: Artifact
@@ -93,7 +117,7 @@ jobs:
             x86_64-unknown-linux-gnu.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.4.0
+        uses: svenstaro/upload-release-action@2.5.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           release_name: ${{ env.crate }}-${{ env.version }}
@@ -103,7 +127,7 @@ jobs:
           file: x86_64-unknown-linux-gnu.*
 
   x86_64-apple-darwin:
-    runs-on: macos-12
+    runs-on: macos-latest
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
@@ -118,15 +142,16 @@ jobs:
           path: |
            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-apple-darwin
-      - name: Get pkgs
-        run: brew install coreutils
       - name: Update Rust
         run: rustup update
       - name: Rust Version
         run: rustc --version
+      - uses: crow-rest/cargo-prebuilt-action@v1
+      - name: Install tools
+        run: cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable build --verbose --release %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py x86_64-apple-darwin ./build/target/release ${{ env.bins }}
       - name: Artifact
@@ -138,7 +163,7 @@ jobs:
             x86_64-apple-darwin.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.4.0
+        uses: svenstaro/upload-release-action@2.5.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           release_name: ${{ env.crate }}-${{ env.version }}
@@ -148,7 +173,7 @@ jobs:
           file: x86_64-apple-darwin.*
 
   aarch64-apple-darwin:
-    runs-on: macos-12
+    runs-on: macos-latest
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
@@ -163,17 +188,18 @@ jobs:
           path: |
            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-aarch64-apple-darwin
-      - name: Get pkgs
-        run: brew install coreutils
       - name: Update Rust
         run: rustup update
       - name: Rust Version
         run: rustc --version
       - name: Add Rust target
         run: rustup target add aarch64-apple-darwin
+      - uses: crow-rest/cargo-prebuilt-action@v1
+      - name: Install tools
+        run: cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable build --verbose --release --target aarch64-apple-darwin %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release --target aarch64-apple-darwin %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py aarch64-apple-darwin ./build/target/aarch64-apple-darwin/release ${{ env.bins }}
       - name: Artifact
@@ -185,7 +211,7 @@ jobs:
             aarch64-apple-darwin.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.4.0
+        uses: svenstaro/upload-release-action@2.5.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           release_name: ${{ env.crate }}-${{ env.version }}
@@ -214,9 +240,12 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
+      - uses: crow-rest/cargo-prebuilt-action@v1
+      - name: Install tools
+        run: cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable build --verbose --release %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release %%FLAGS%%
       - name: Collect
         run: python3  ./scripts/collect.py x86_64-pc-windows-msvc ./build/target/release ${{ env.bins }}
       - name: Artifact
@@ -228,7 +257,7 @@ jobs:
             x86_64-pc-windows-msvc.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.4.0
+        uses: svenstaro/upload-release-action@2.5.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           release_name: ${{ env.crate }}-${{ env.version }}
@@ -260,9 +289,12 @@ jobs:
         run: rustc --version
       - name: Add Rust target
         run: rustup target add i686-pc-windows-msvc
+      - uses: crow-rest/cargo-prebuilt-action@v1
+      - name: Install tools
+        run: cargo prebuilt cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable build --verbose --release --target i686-pc-windows-msvc %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release --target i686-pc-windows-msvc %%FLAGS%%
       - name: Collect
         run: python3  ./scripts/collect.py i686-pc-windows-msvc ./build/target/i686-pc-windows-msvc/release ${{ env.bins }}
       - name: Artifact
@@ -274,7 +306,7 @@ jobs:
             i686-pc-windows-msvc.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.4.0
+        uses: svenstaro/upload-release-action@2.5.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           release_name: ${{ env.crate }}-${{ env.version }}
@@ -328,7 +360,7 @@ jobs:
             ${{ matrix.target }}.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.4.0
+        uses: svenstaro/upload-release-action@2.5.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           release_name: ${{ env.crate }}-${{ env.version }}
@@ -382,7 +414,7 @@ jobs:
             ${{ matrix.target }}.sha256
       - name: Release Artifact
         if: %%IF%%
-        uses: svenstaro/upload-release-action@2.4.0
+        uses: svenstaro/upload-release-action@2.5.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           release_name: ${{ env.crate }}-${{ env.version }}
@@ -400,7 +432,7 @@ jobs:
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.4.0
+        uses: svenstaro/upload-release-action@2.5.0
         with:
           tag: stable-index
           overwrite: true
