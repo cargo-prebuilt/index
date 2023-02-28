@@ -449,5 +449,5 @@
       ]
     }
   },
-  "allowlist": "cargo-prebuilt,cargo-quickinstall"
+  "allowlist": "cargo-prebuilt,cargo-quickinstall,cargo-asm"
 }
