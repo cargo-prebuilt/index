@@ -101,6 +101,7 @@ Prebuilt crates optionally support these targets:
 - [wasm-pack](https://github.com/rustwasm/wasm-pack)
 - [wasmtime-cli](https://github.com/bytecodealliance/wasmtime)
 - [wiki-tui](https://github.com/Builditluc/wiki-tui)
+- [zellij](https://github.com/zellij-org/zellij)
 
 ## "API"
 
