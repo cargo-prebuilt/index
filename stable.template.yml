@@ -51,7 +51,7 @@ jobs:
         run: |
           echo "License"
           echo "Generated on: $(date --utc)" > ../../license.report && echo "Crates.io license metadata: ${{ env.license }}" >> ../../license.report
-          echo "Found license texts:" >> ../../license.report && cat *LICENSE* >> ../../license.report
+          echo "Found license texts:" >> ../../license.report && cat *LICENSE* >> ../../license.report || true
           echo "Audit"
           test -f Cargo.lock || cargo +stable generate-lockfile --verbose
           echo "Generated on: $(date --utc)" > ../../deps.report && cargo +stable tree --verbose -e normal,build >> ../../deps.report
