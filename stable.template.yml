@@ -49,7 +49,7 @@ jobs:
         working-directory: ./bundle/build
         run: |
           test -f Cargo.lock || cargo +stable generate-lockfile --verbose
-          echo "Generated on: $(date --utc)" > ../../deps.report && cargo +stable tree --verbose -e no-dev >> ../../deps.report
+          echo "Generated on: $(date --utc)" > ../../deps.report && cargo +stable tree --verbose -e normal,build >> ../../deps.report
           echo "Generated on: $(date --utc)" > ../../audit.report && cargo audit >> ../../audit.report || true
       - name: Bundle Deps
         run: |
