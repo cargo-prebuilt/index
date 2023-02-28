@@ -447,7 +447,25 @@
       "bins": [
         "wiki-tui"
       ]
+    },
+
+    "exa": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/ogham/exa",
+      "bins": [
+        "exa"
+      ]
+    },
+
+    "rtx-cli": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/jdxcode/rtx",
+      "bins": [
+        "rtx"
+      ]
     }
   },
-  "allowlist": "cargo-prebuilt,cargo-quickinstall,cargo-asm"
+  "allowlist": "exa,rtx-cli"
 }
