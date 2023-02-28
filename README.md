@@ -22,6 +22,7 @@ Prebuilt crates optionally support these targets:
 
 (64-bit)
 - x86_64-pc-windows-msvc
+- aarch64-pc-windows-msvc
 - x86_64-unknown-freebsd
 - x86_64-unknown-netbsd
 - x86_64-unknown-illumos
