@@ -476,5 +476,5 @@
       ]
     }
   },
-  "allowlist": "exa,rtx-cli,zellij"
+  "allowlist": "cargo-prebuilt"
 }
