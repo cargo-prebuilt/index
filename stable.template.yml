@@ -101,7 +101,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-           build/target
+            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-unknown-linux-gnu
       - name: Update Rust
         run: rustup update
@@ -147,7 +147,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-           build/target
+            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-apple-darwin
       - name: Update Rust
         run: rustup update
@@ -193,7 +193,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-           build/target
+            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-aarch64-apple-darwin
       - name: Update Rust
         run: rustup update
@@ -227,7 +227,62 @@ jobs:
           file_glob: true
           file: aarch64-apple-darwin.*
 
-  x86_64-pc-windows-msvc:
+  cross:
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ x86_64-unknown-linux-musl, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl ]
+    runs-on: ubuntu-latest
+    needs: [ setup ]
+    env:
+      CROSS_CONFIG: ../Cross.toml
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download crate and deps
+        uses: actions/download-artifact@v3
+        with:
+          name: crate
+      - name: Move deps
+        run: mv ./store/* ~/.cargo
+      - uses: actions/cache@v3
+        with:
+          path: |
+            build/target
+          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+      - name: Update Rust
+        run: rustup update
+      - name: Rust Version
+        run: rustc --version
+      - uses: crow-rest/cargo-prebuilt-action@v1
+      - name: Install tools
+        run: |
+          cargo prebuilt cross
+          cross --version
+      - name: Build crate
+        working-directory: ./build
+        run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
+      - name: Collect
+        run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.target }}
+          path: |
+            ${{ matrix.target }}.tar.gz
+            ${{ matrix.target }}.sha256
+      - name: Release Artifact
+        if: %%IF%%
+        uses: svenstaro/upload-release-action@2.5.0
+        with:
+          tag: ${{ env.crate }}-${{ env.version }}
+          release_name: ${{ env.crate }}-${{ env.version }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: ${{ matrix.target }}.*
+
+  opt-x86_64-pc-windows-msvc:
+    if: %%WIN_64_BUILD%%
     runs-on: windows-latest
     needs: [ setup ]
     steps:
@@ -241,7 +296,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-           build/target
+            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-pc-windows-msvc
       - name: Update Rust
         run: rustup update
@@ -288,7 +343,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-           build/target
+            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-i686-pc-windows-msvc
       - name: Update Rust
         run: rustup update
@@ -322,60 +377,6 @@ jobs:
           file_glob: true
           file: i686-pc-windows-msvc.*
 
-  cross:
-    strategy:
-      fail-fast: false
-      matrix:
-        target: [ x86_64-unknown-linux-musl, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl ]
-    runs-on: ubuntu-latest
-    needs: [ setup ]
-    env:
-      CROSS_CONFIG: ../Cross.toml
-    steps:
-      - uses: actions/checkout@v3
-      - name: Download crate and deps
-        uses: actions/download-artifact@v3
-        with:
-          name: crate
-      - name: Move deps
-        run: mv ./store/* ~/.cargo
-      - uses: actions/cache@v3
-        with:
-          path: |
-           build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
-      - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
-      - uses: crow-rest/cargo-prebuilt-action@v1
-      - name: Install tools
-        run: |
-          cargo prebuilt cross
-          cross --version
-      - name: Build crate
-        working-directory: ./build
-        run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
-      - name: Collect
-        run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
-      - name: Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ matrix.target }}
-          path: |
-            ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
-      - name: Release Artifact
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.5.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          release_name: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: ${{ matrix.target }}.*
-
   opt-cross:
     strategy:
       fail-fast: false
@@ -396,7 +397,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: |
-           build/target
+            build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
       - name: Update Rust
         run: rustup update
@@ -433,7 +434,7 @@ jobs:
   push-index:
     if: %%IF%%
     runs-on: ubuntu-latest
-    needs: [ setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, aarch64-apple-darwin, x86_64-pc-windows-msvc, cross ]
+    needs: [ setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, aarch64-apple-darwin, cross ]
     steps:
       - uses: actions/checkout@v3
       - name: Create index file
