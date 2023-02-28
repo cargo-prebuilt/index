@@ -227,7 +227,8 @@ jobs:
           file_glob: true
           file: aarch64-apple-darwin.*
 
-  x86_64-pc-windows-msvc:
+  opt-x86_64-pc-windows-msvc:
+    if: %%WIN_64_BUILD%%
     runs-on: windows-latest
     needs: [ setup ]
     steps:
@@ -433,7 +434,7 @@ jobs:
   push-index:
     if: %%IF%%
     runs-on: ubuntu-latest
-    needs: [ setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, aarch64-apple-darwin, x86_64-pc-windows-msvc, cross ]
+    needs: [ setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, aarch64-apple-darwin, cross ]
     steps:
       - uses: actions/checkout@v3
       - name: Create index file
