@@ -14,7 +14,6 @@ All prebuilt crates are required support these targets:
 - x86_64-unknown-linux-gnu
 - x86_64-unknown-linux-musl
 - x86_64-apple-darwin
-- x86_64-pc-windows-msvc
 - aarch64-apple-darwin
 - aarch64-unknown-linux-gnu
 - aarch64-unknown-linux-musl
@@ -22,6 +21,7 @@ All prebuilt crates are required support these targets:
 Prebuilt crates optionally support these targets:
 
 (64-bit)
+- x86_64-pc-windows-msvc
 - x86_64-unknown-freebsd
 - x86_64-unknown-netbsd
 - x86_64-unknown-illumos
@@ -105,3 +105,4 @@ Prebuilt crates optionally support these targets:
 - Index holds the latest version built. (https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/CRATE)
 - Builds are put under a prerelease named CRATE-VERSION.
 - The binary is in TARGET.tar.gz file and the hash is in TARGET.sha256 file.
+- TODO: Mention report files
