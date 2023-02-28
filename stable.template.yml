@@ -9,6 +9,7 @@ env:
   index: https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/
   crate: %%CRATE%%
   version: %%VERSION%%
+  license: %%LICENSE%%
   dl: %%DOWNLOAD%%
   checksum: %%CHECKSUM%%
   bins: %%BINS%%
@@ -48,6 +49,10 @@ jobs:
       - name: Generate reports
         working-directory: ./bundle/build
         run: |
+          echo "License"
+          echo "Generated on: $(date --utc)" > ../../license.report && echo "Crates.io license id: ${{ env.license }}" >> ../../license.report
+          cat *LICENSE* >> ../../license.report
+          echo "Audit"
           test -f Cargo.lock || cargo +stable generate-lockfile --verbose
           echo "Generated on: $(date --utc)" > ../../deps.report && cargo +stable tree --verbose -e normal,build >> ../../deps.report
           echo "Generated on: $(date --utc)" > ../../audit.report && cargo audit >> ../../audit.report || true
