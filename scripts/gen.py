@@ -29,7 +29,7 @@ extra_targets = [
 ]
 
 
-def main(mode, pull_request, crate, version, dl, checksum, bins, flags, unsupported):
+def main(mode, pull_request, crate, version, crate_license, dl, checksum, bins, flags, unsupported):
     pull_request = True if pull_request == "true" else False
 
     if mode == "stable":
@@ -38,6 +38,7 @@ def main(mode, pull_request, crate, version, dl, checksum, bins, flags, unsuppor
 
         action = action_template.replace("%%CRATE%%", crate)
         action = action.replace("%%VERSION%%", version)
+        action = action.replace("%%LICENSE%%", crate_license)
         action = action.replace("%%DOWNLOAD%%", dl)
         action = action.replace("%%CHECKSUM%%", checksum)
         action = action.replace("%%BINS%%", bins)
@@ -67,4 +68,4 @@ def main(mode, pull_request, crate, version, dl, checksum, bins, flags, unsuppor
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9])
+    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10])

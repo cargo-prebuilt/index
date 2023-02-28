@@ -37,7 +37,7 @@ def getNewestCrate(versions):
 
 
 def main(mode, pull_request):
-    pull_request = True if pull_request == "true" else False
+    pull_request = True if pull_request.lower() == "true" else False
 
     with open("./crates.json", "r") as file:
         crates_json = json.loads(file.read())
@@ -68,12 +68,12 @@ def main(mode, pull_request):
 
             versions = []
             for v in api["versions"]:
-                versions.append((v["num"], v["yanked"],
+                versions.append((v["num"], v["yanked"], v["license"],
                                  crates_io_cdn.replace("{CRATE}", crate).replace("{VERSION}", v["num"]), v["checksum"]))
             latestCrate = getNewestCrate(versions)
 
             if (not pull_request and version != latestCrate[0]) or (pull_request and (allow == "" or crate in allow)):
-                toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], ",".join(crates[crate]["bins"]),
+                toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], latestCrate[4], ",".join(crates[crate]["bins"]),
                                  crates[crate]["flags"], crates[crate]["unsupported"]))
 
         x = {
@@ -82,6 +82,7 @@ def main(mode, pull_request):
         model = {
             "crate": None,
             "version": None,
+            "license": None,
             "dl": None,
             "checksum": None,
             "bins": None,
@@ -92,11 +93,12 @@ def main(mode, pull_request):
         for c in toUpdate:
             model["crate"] = c[0]
             model["version"] = c[1]
-            model["dl"] = c[2]
-            model["checksum"] = c[3]
-            model["bins"] = c[4]
-            model["flags"] = c[5]
-            model["unsupported"] = c[6]
+            model["license"] = c[2]
+            model["dl"] = c[3]
+            model["checksum"] = c[4]
+            model["bins"] = c[5]
+            model["flags"] = c[6]
+            model["unsupported"] = c[7]
 
             x["include"].append(copy.deepcopy(model))
 
