@@ -451,7 +451,7 @@
 
     "exa": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris",
       "git": "https://github.com/ogham/exa",
       "bins": [
         "exa"
@@ -460,12 +460,21 @@
 
     "rtx-cli": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-sun-solaris",
       "git": "https://github.com/jdxcode/rtx",
       "bins": [
         "rtx"
       ]
+    },
+
+    "zellij": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/zellij-org/zellij",
+      "bins": [
+        "zellij"
+      ]
     }
   },
-  "allowlist": "exa,rtx-cli"
+  "allowlist": "exa,rtx-cli,zellij"
 }
