@@ -476,5 +476,5 @@
       ]
     }
   },
-  "allowlist": "bacon,bat,bob-nvim,cargo-asm,cargo-audit,cargo-auditable,cargo-benchcmp,cargo-binstall,cargo-bloat,cargo-build-deps"
+  "allowlist": "cargo-cache,cargo-clone,cargo-deadlinks,cargo-deb,cargo-deny,cargo-depgraph,cargo-diet,cargo-edit,cargo-generate,cargo-hack"
 }
