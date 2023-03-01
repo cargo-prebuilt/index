@@ -476,5 +476,5 @@
       ]
     }
   },
-  "allowlist": "cargo-cache,cargo-clone,cargo-deadlinks,cargo-deb,cargo-deny,cargo-depgraph,cargo-diet,cargo-edit,cargo-generate,cargo-hack"
+  "allowlist": "cargo-info,cargo-make,cargo-mpirun,cargo-nextest,cargo-outdated,cargo-quickinstall,cargo-show-asm,cargo-update,cargo-watch,cocogitto"
 }
