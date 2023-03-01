@@ -29,7 +29,7 @@
 
     "cargo-edit": {
       "flags": "--features vendored-openssl",
-      "unsupported": "",
+      "unsupported": "aarch64-pc-windows-msvc",
       "git": "https://github.com/killercup/cargo-edit",
       "bins": [
         "cargo-add",
@@ -59,7 +59,7 @@
 
     "trunk":{
       "flags": "",
-      "unsupported": "x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/thedodd/trunk",
       "bins": [
         "trunk"
@@ -77,7 +77,7 @@
 
     "wasm-pack": {
       "flags": "",
-      "unsupported": "x86_64-sun-solaris",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-sun-solaris",
       "git": "https://github.com/rustwasm/wasm-pack",
       "bins": [
         "wasm-pack"
@@ -86,7 +86,7 @@
 
     "tauri-cli": {
       "flags": "",
-      "unsupported": "x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/tauri-apps/tauri",
       "bins": [
         "cargo-tauri"
@@ -223,7 +223,7 @@
 
     "cargo-deadlinks": {
       "flags": "",
-      "unsupported": "riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "unsupported": "aarch64-pc-windows-msvc,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/deadlinks/cargo-deadlinks",
       "bins": [
         "cargo-deadlinks",
@@ -242,7 +242,7 @@
 
     "cargo-diet": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "aarch64-pc-windows-msvc",
       "git": "https://github.com/the-lean-crate/cargo-diet",
       "bins": [
         "cargo-diet"
@@ -260,7 +260,7 @@
 
     "cargo-make": {
       "flags": "",
-      "unsupported": "x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/sagiegurari/cargo-make",
       "bins": [
         "cargo-make",
@@ -270,7 +270,7 @@
 
     "sccache": {
       "flags": "--features openssl/vendored",
-      "unsupported": "x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/mozilla/sccache",
       "bins": [
         "sccache"
@@ -315,7 +315,7 @@
 
     "cargo-binstall": {
       "flags": "",
-      "unsupported": "x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/cargo-bins/cargo-binstall",
       "bins": [
         "cargo-binstall"
@@ -343,7 +343,7 @@
 
     "gitoxide": {
       "flags": "--no-default-features --features max-pure",
-      "unsupported": "x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "bins": [
         "ein",
         "gix"
@@ -397,7 +397,7 @@
 
     "bob-nvim": {
       "flags": "",
-      "unsupported": "x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/MordechaiHadad/bob",
       "bins": [
         "bob"
@@ -433,7 +433,7 @@
 
     "cargo-info": {
       "flags": "--no-default-features --features rustls",
-      "unsupported": "x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://gitlab.com/imp/cargo-info",
       "bins": [
         "cargo-info"
@@ -451,7 +451,7 @@
 
     "exa": {
       "flags": "",
-      "unsupported": "x86_64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris",
       "git": "https://github.com/ogham/exa",
       "bins": [
         "exa"
@@ -460,7 +460,7 @@
 
     "rtx-cli": {
       "flags": "",
-      "unsupported": "x86_64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-sun-solaris",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-sun-solaris",
       "git": "https://github.com/jdxcode/rtx",
       "bins": [
         "rtx"
@@ -469,12 +469,12 @@
 
     "zellij": {
       "flags": "",
-      "unsupported": "x86_64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-linux-musl,i686-unknown-freebsd,armv7-unknown-linux-gnueabihf,armv7-unknown-linux-musleabihf,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-linux-musl,i686-unknown-freebsd,armv7-unknown-linux-gnueabihf,armv7-unknown-linux-musleabihf,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/zellij-org/zellij",
       "bins": [
         "zellij"
       ]
     }
   },
-  "allowlist": "just,nu,ripgrep,rtx-cli,sccache,tauri-cli,trunk,wasm-pack,wasmtime-cli,wiki-tui,zellij"
+  "allowlist": "blank"
 }
