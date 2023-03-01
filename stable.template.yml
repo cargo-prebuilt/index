@@ -328,6 +328,55 @@ jobs:
           file_glob: true
           file: x86_64-pc-windows-msvc.*
 
+  opt-aarch64-pc-windows-msvc:
+    if: %%WIN_ARM64_BUILD%%
+    runs-on: windows-latest
+    needs: [ setup ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download crate and deps
+        uses: actions/download-artifact@v3
+        with:
+          name: crate
+      - name: Move deps
+        run: mv ./store/* ~/.cargo
+      - uses: actions/cache@v3
+        with:
+          path: |
+            build/target
+          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-aarch64-pc-windows-msvc
+      - name: Update Rust
+        run: rustup update
+      - name: Rust Version
+        run: rustc --version
+      - name: Add Rust target
+        run: rustup target add aarch64-pc-windows-msvc
+      - uses: crow-rest/cargo-prebuilt-action@v1
+      - name: Install tools
+        run: cargo prebuilt cargo-auditable
+      - name: Build crate
+        working-directory: ./build
+        run: cargo +stable auditable build --verbose --release --target aarch64-pc-windows-msvc %%FLAGS%%
+      - name: Collect
+        run: python3  ./scripts/collect.py aarch64-pc-windows-msvc ./build/target/aarch64-pc-windows-msvc/release ${{ env.bins }}
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: aarch64-pc-windows-msvc
+          path: |
+            aarch64-pc-windows-msvc.tar.gz
+            aarch64-pc-windows-msvc.sha256
+      - name: Release Artifact
+        if: %%IF%%
+        uses: svenstaro/upload-release-action@2.5.0
+        with:
+          tag: ${{ env.crate }}-${{ env.version }}
+          release_name: ${{ env.crate }}-${{ env.version }}
+          overwrite: true
+          prerelease: true
+          file_glob: true
+          file: aarch64-pc-windows-msvc.*
+
   opt-i686-pc-windows-msvc:
     if: %%WIN_32_BUILD%%
     runs-on: windows-latest
