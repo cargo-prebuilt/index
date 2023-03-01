@@ -20,12 +20,13 @@ assignees: ''
 Required:
 - [ ] x86_64-unknown-linux-gnu
 - [ ] x86_64-apple-darwin
-- [ ] x86_64-pc-windows-msvc
 - [ ] aarch64-apple-darwin
 - [ ] x86_64-unknown-linux-musl
 - [ ] aarch64-unknown-linux-gnu
 - [ ] aarch64-unknown-linux-musl
 Optional (64-bit):
+- [ ] x86_64-pc-windows-msvc
+- [ ] aarch64-pc-windows-msvc
 - [ ] x86_64-unknown-freebsd
 - [ ] x86_64-unknown-netbsd
 - [ ] x86_64-unknown-illumos
@@ -52,4 +53,4 @@ Optional (32-bit):
 
 **Testing Environment**
  - OS(s): [e.g. MacOS 13, Windows 11, Ubuntu Focal]
- - Rust Version: [e.g. 1.65.0]
+ - Rust Version: [e.g. 1.67.0]
