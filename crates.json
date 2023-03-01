@@ -476,5 +476,5 @@
       ]
     }
   },
-  "allowlist": "coreutils,cross,du-dust,evcxr_jupyter,exa,gitoxide,gitui,grcov,irust,jql"
+  "allowlist": "just,nu,ripgrep,rtx-cli,sccache,tauri-cli,trunk,wasm-pack,wasmtime-cli,wiki-tui,zellij"
 }
