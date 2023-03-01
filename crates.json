@@ -476,5 +476,5 @@
       ]
     }
   },
-  "allowlist": "cargo-info,cargo-make,cargo-mpirun,cargo-nextest,cargo-outdated,cargo-quickinstall,cargo-show-asm,cargo-update,cargo-watch,cocogitto"
+  "allowlist": "coreutils,cross,du-dust,evcxr_jupyter,exa,gitoxide,gitui,grcov,irust,jql"
 }
