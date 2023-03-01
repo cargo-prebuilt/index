@@ -89,12 +89,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get deps and crates from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache@v3
         with:
           path: |
             bundle
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
@@ -139,12 +140,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get deps and crates from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache@v3
         with:
           path: |
             bundle
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
@@ -189,12 +191,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get deps and crates from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache@v3
         with:
           path: |
             bundle
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
@@ -247,12 +250,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get deps and crates from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache@v3
         with:
           path: |
             bundle
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
@@ -300,12 +304,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get deps and crates from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache@v3
         with:
           path: |
             bundle
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
@@ -351,12 +356,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get deps and crates from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache@v3
         with:
           path: |
             bundle
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
@@ -404,12 +410,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get deps and crates from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache@v3
         with:
           path: |
             bundle
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
@@ -462,12 +469,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Get deps and crates from cache
-        uses: actions/cache/restore@v3
+        uses: actions/cache@v3
         with:
           path: |
             bundle
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
