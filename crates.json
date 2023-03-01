@@ -476,5 +476,5 @@
       ]
     }
   },
-  "allowlist": "cargo-prebuilt"
+  "allowlist": "bacon,bat,bob-nvim,cargo-asm,cargo-audit,cargo-auditable,cargo-benchcmp,cargo-binstall,cargo-bloat,cargo-build-deps"
 }
