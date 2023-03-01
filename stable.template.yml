@@ -20,10 +20,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ahmadnassri/action-workflow-queue@v1.1.0
-        if: %%IF%%
-        with:
-          timeout: 10800000
       - name: Create Folders
         run: |
           mkdir -p ~/.cargo/registry/index

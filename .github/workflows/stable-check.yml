@@ -21,7 +21,8 @@ jobs:
       - uses: ahmadnassri/action-workflow-queue@v1.1.0
         if: ${{ github.event_name != 'pull_request' }}
         with:
-          timeout: 10800000
+          timeout: 14400000
+          delay: 1800000
       - name: Check for updates
         id: check
         run: echo "crates=$(./scripts/check.py stable ${{ github.event_name == 'pull_request' }})" >> $GITHUB_OUTPUT
@@ -41,7 +42,7 @@ jobs:
         run: cat .github/workflows/stable-${{ matrix.crate }}.yml
       - name: Wait
         if: ${{ github.event_name != 'pull_request' }}
-        run: sleep 13m
+        run: sleep 15m
       - name: Run action
         uses: antaljanosbenjamin/single-commit-publish@v1.0.1
         with:
