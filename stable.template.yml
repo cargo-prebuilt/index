@@ -36,6 +36,10 @@ jobs:
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
           enableCrossOsArchive: true
+      - name: TODO
+        run: |
+          ls bundle
+          ls build
       - name: Move deps
         if: ${{ steps.cache.outputs.cache-hit }}
         run: mv ./bundle/* ~/.cargo
