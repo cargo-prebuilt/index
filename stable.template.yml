@@ -29,10 +29,6 @@ jobs:
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
           enableCrossOsArchive: true
-      - name: TODO
-        run: |
-          ls bundle
-          ls build
       - name: Move deps
         if: ${{ steps.cache.outputs.cache-hit }}
         run: mv ./bundle/* ~/.cargo
@@ -44,6 +40,14 @@ jobs:
           mkdir -p ~/.cargo/git/db
           mkdir -p ./bundle
           mkdir -p ./build
+      - name: TODO
+        run: |
+          echo "Bundle"
+          ls bundle
+          echo "Build"
+          ls build
+          echo ".cargo"
+          ls ~/.cargo
       - name: Download crate and check hash
         if: ${{ !steps.cache.outputs.cache-hit }}
         run: |
