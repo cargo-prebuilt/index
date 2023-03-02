@@ -78,9 +78,9 @@ jobs:
           mkdir -p ./bundle/registry/index
           mkdir -p ./bundle/registry/cache
           mkdir -p ./bundle/git
-          cp -r ~/.cargo/registry/index ./bundle/registry/index
-          cp -r ~/.cargo/registry/cache ./bundle/registry/cache
-          cp -r ~/.cargo/git/db ./bundle/git/db
+          cp -r ~/.cargo/registry/index/* ./bundle/registry/index
+          cp -r ~/.cargo/registry/cache/* ./bundle/registry/cache
+          cp -r ~/.cargo/git/db/* ./bundle/git/db
       - name: TODO 2
         run: |
           echo "Bundle"
