@@ -130,7 +130,7 @@ jobs:
           echo "GIT"
           ls ~/.cargo/git
       - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -182,7 +182,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -234,7 +234,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -294,7 +294,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -349,7 +349,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -402,7 +402,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -457,7 +457,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -517,7 +517,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
