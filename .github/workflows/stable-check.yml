@@ -27,7 +27,7 @@ jobs:
           concurrent_skipping: always
       - name: Check for updates
         id: check
-        run: echo "crates=$(./scripts/check.py stable '${{ github.event_name == 'pull_request' }}' '${{ steps.skip.outputs.should-skip }}')" >> $GITHUB_OUTPUT
+        run: echo "crates=$(./scripts/check.py stable '${{ github.event_name == 'pull_request' }}' '${{ steps.skip.outputs.should_skip }}')" >> $GITHUB_OUTPUT
 
   dispatch:
     if: ${{ needs.check.outputs.crates != '{}' }}
