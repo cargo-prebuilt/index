@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Skip Duplicate Actions
-        uses: fkirc/skip-duplicate-actions@v5
+        uses: fkirc/skip-duplicate-actions@v5.3.0
         id: skip
         with:
           skip_after_successful_duplicate: false
@@ -31,7 +31,7 @@ jobs:
         run: echo "crates=$(./scripts/check.py stable ${{ github.event_name == 'pull_request' }})" >> $GITHUB_OUTPUT
 
   dispatch:
-    if: ${{ needs.check.outputs.crates != '{}'}}
+    if: ${{ needs.check.outputs.crates != '{}' || needs.check.outputs.crates != '' }}
     strategy:
       max-parallel: 1
       matrix: ${{ fromJson(needs.check.outputs.crates) }}
