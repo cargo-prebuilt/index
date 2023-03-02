@@ -36,8 +36,12 @@ def getNewestCrate(versions):
     return latest
 
 
-def main(mode, pull_request):
+def main(mode, pull_request, duplicate):
     pull_request = True if pull_request.lower() == "true" else False
+    duplicate = True if duplicate.lower() == "true" else False
+
+    if not pull_request and duplicate:
+        print("{}")
 
     with open("./crates.json", "r") as file:
         crates_json = json.loads(file.read())
@@ -114,4 +118,4 @@ def main(mode, pull_request):
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2])
+    main(argv[1], argv[2], argv[3])

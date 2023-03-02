@@ -20,57 +20,57 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ahmadnassri/action-workflow-queue@v1.1.0
-        if: %%IF%%
+      - name: Cache
+        uses: actions/cache@v3
+        id: cache
         with:
-          timeout: 10800000
+          path: |
+            bundle
+            build
+          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
+      - name: Move deps
+        if: ${{ steps.cache.outputs.cache-hit }}
+        run: mv ./bundle/* ~/.cargo
       - name: Create Folders
+        if: ${{ !steps.cache.outputs.cache-hit }}
         run: |
           mkdir -p ~/.cargo/registry/index
           mkdir -p ~/.cargo/registry/cache
           mkdir -p ~/.cargo/git/db
-          mkdir -p ./bundle/build
-      - uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/registry/index
-            ~/.cargo/registry/cache
-            ~/.cargo/git/db
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-deps
+          mkdir -p ./bundle
+          mkdir -p ./build
       - name: Download crate and check hash
+        if: ${{ !steps.cache.outputs.cache-hit }}
         run: |
           wget ${{ env.dl }}
           echo "${{ env.checksum }} ${{ env.crate }}-${{ env.version }}.crate" | sha256sum -c
           tar -xf ${{ env.crate }}-${{ env.version }}.crate
-          mv ${{ env.crate }}-${{ env.version }}/* bundle/build
+          mv ${{ env.crate }}-${{ env.version }}/* ./build
       - name: Download Deps
-        working-directory: ./bundle/build
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        working-directory: ./build
         run: cargo +stable fetch --verbose
       - name: Generate reports
-        working-directory: ./bundle/build
+        working-directory: ./build
         run: |
           echo "License"
-          echo "Generated on: $(date --utc)" > ../../license.report && echo "Crates.io license metadata: ${{ env.license }}" >> ../../license.report
-          echo "Found license texts:" >> ../../license.report
-          tail -n +1 *LICENSE* >> ../../license.report || true
-          tail -n +1 *license* >> ../../license.report || true
+          echo "Generated on: $(date --utc)" > ../license.report && echo "Crates.io license metadata: ${{ env.license }}" >> ../license.report
+          echo "Found license texts:" >> ../license.report
+          tail -n +1 *LICENSE* >> ../license.report || true
+          tail -n +1 *license* >> ../license.report || true
           echo "Audit"
           test -f Cargo.lock || cargo +stable generate-lockfile --verbose
-          echo "Generated on: $(date --utc)" > ../../deps.report && cargo +stable tree --verbose -e normal,build >> ../../deps.report
-          echo "Generated on: $(date --utc)" > ../../audit.report && cargo audit >> ../../audit.report || true
+          echo "Generated on: $(date --utc)" > ../deps.report && cargo +stable tree --verbose -e normal,build >> ../deps.report
+          echo "Generated on: $(date --utc)" > ../audit.report && cargo audit >> ../audit.report || true
       - name: Bundle Deps
+        if: ${{ !steps.cache.outputs.cache-hit }}
         run: |
-          mkdir -p ./bundle/store/registry
-          mkdir -p ./bundle/store/git
-          cp -r ~/.cargo/registry/index ./bundle/store/registry/index
-          cp -r ~/.cargo/registry/cache ./bundle/store/registry/cache
-          cp -r ~/.cargo/git/db ./bundle/store/git/db
-      - name: Store crate and crate deps
-        uses: actions/upload-artifact@v3
-        with:
-          name: crate
-          path: bundle
-          retention-days: 1
+          mkdir -p ./bundle/registry
+          mkdir -p ./bundle/git
+          cp -r ~/.cargo/registry/index ./bundle/registry
+          cp -r ~/.cargo/registry/cache ./bundle/registry
+          cp -r ~/.cargo/git/db ./bundle/git
       - name: Store reports
         uses: actions/upload-artifact@v3
         with:
@@ -92,13 +92,19 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
-      - name: Download crate and deps
-        uses: actions/download-artifact@v3
+      - name: Get deps and crates from cache
+        uses: actions/cache@v3
         with:
-          name: crate
+          path: |
+            bundle
+            build
+          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
       - name: Move deps
-        run: mv ./store/* ~/.cargo
+        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -138,13 +144,19 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
-      - name: Download crate and deps
-        uses: actions/download-artifact@v3
+      - name: Get deps and crates from cache
+        uses: actions/cache@v3
         with:
-          name: crate
+          path: |
+            bundle
+            build
+          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
       - name: Move deps
-        run: mv ./store/* ~/.cargo
+        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -184,13 +196,19 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
-      - name: Download crate and deps
-        uses: actions/download-artifact@v3
+      - name: Get deps and crates from cache
+        uses: actions/cache@v3
         with:
-          name: crate
+          path: |
+            bundle
+            build
+          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
       - name: Move deps
-        run: mv ./store/* ~/.cargo
+        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -238,13 +256,19 @@ jobs:
       CROSS_CONFIG: ../Cross.toml
     steps:
       - uses: actions/checkout@v3
-      - name: Download crate and deps
-        uses: actions/download-artifact@v3
+      - name: Get deps and crates from cache
+        uses: actions/cache@v3
         with:
-          name: crate
+          path: |
+            bundle
+            build
+          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
       - name: Move deps
-        run: mv ./store/* ~/.cargo
+        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -287,13 +311,19 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
-      - name: Download crate and deps
-        uses: actions/download-artifact@v3
+      - name: Get deps and crates from cache
+        uses: actions/cache@v3
         with:
-          name: crate
+          path: |
+            bundle
+            build
+          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
       - name: Move deps
-        run: mv ./store/* ~/.cargo
+        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -334,13 +364,19 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
-      - name: Download crate and deps
-        uses: actions/download-artifact@v3
+      - name: Get deps and crates from cache
+        uses: actions/cache@v3
         with:
-          name: crate
+          path: |
+            bundle
+            build
+          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
       - name: Move deps
-        run: mv ./store/* ~/.cargo
+        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -383,13 +419,19 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
-      - name: Download crate and deps
-        uses: actions/download-artifact@v3
+      - name: Get deps and crates from cache
+        uses: actions/cache@v3
         with:
-          name: crate
+          path: |
+            bundle
+            build
+          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
       - name: Move deps
-        run: mv ./store/* ~/.cargo
+        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target
@@ -437,13 +479,19 @@ jobs:
       CROSS_CONFIG: ../Cross.toml
     steps:
       - uses: actions/checkout@v3
-      - name: Download crate and deps
-        uses: actions/download-artifact@v3
+      - name: Get deps and crates from cache
+        uses: actions/cache@v3
         with:
-          name: crate
+          path: |
+            bundle
+            build
+          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
       - name: Move deps
-        run: mv ./store/* ~/.cargo
+        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
+        if: ${{ '%%IF%%' == 'False' }}
         with:
           path: |
             build/target

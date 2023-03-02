@@ -3,7 +3,7 @@ name: Archive Index
 on:
   workflow_dispatch:
   schedule:
-    - cron: '30 5 * * *'
+    - cron: '0 5 * * *'
 
 jobs:
   archive:

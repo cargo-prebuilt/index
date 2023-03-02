@@ -18,16 +18,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ahmadnassri/action-workflow-queue@v1.1.0
-        if: ${{ github.event_name != 'pull_request' }}
+      - name: Skip Duplicate Actions
+        uses: fkirc/skip-duplicate-actions@v5
+        id: skip
         with:
-          timeout: 10800000
+          skip_after_successful_duplicate: false
+          do_not_skip: '["pull_request"]'
+          concurrent_skipping: always
       - name: Check for updates
         id: check
-        run: echo "crates=$(./scripts/check.py stable ${{ github.event_name == 'pull_request' }})" >> $GITHUB_OUTPUT
+        run: echo "crates=$(./scripts/check.py stable '${{ github.event_name == 'pull_request' }}' '${{ steps.skip.outputs.should-skip }}')" >> $GITHUB_OUTPUT
 
   dispatch:
-    if: ${{ needs.check.outputs.crates != '{}'}}
+    if: ${{ needs.check.outputs.crates != '{}' }}
     strategy:
       max-parallel: 1
       matrix: ${{ fromJson(needs.check.outputs.crates) }}
@@ -41,7 +44,7 @@ jobs:
         run: cat .github/workflows/stable-${{ matrix.crate }}.yml
       - name: Wait
         if: ${{ github.event_name != 'pull_request' }}
-        run: sleep 13m
+        run: sleep 15m
       - name: Run action
         uses: antaljanosbenjamin/single-commit-publish@v1.0.1
         with:
