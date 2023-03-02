@@ -81,6 +81,14 @@ jobs:
           cp -r ~/.cargo/registry/index ./bundle/registry/index
           cp -r ~/.cargo/registry/cache ./bundle/registry/cache
           cp -r ~/.cargo/git/db ./bundle/git/db
+      - name: TODO 2
+        run: |
+          echo "Bundle"
+          ls bundle
+          echo "Build"
+          ls build
+          echo ".cargo"
+          ls ~/.cargo
       - name: Store reports
         uses: actions/upload-artifact@v3
         with:
