@@ -42,6 +42,7 @@ def main(mode, pull_request, duplicate):
 
     if not pull_request and duplicate:
         print("{}")
+        return
 
     with open("./crates.json", "r") as file:
         crates_json = json.loads(file.read())
