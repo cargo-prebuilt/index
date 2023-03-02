@@ -40,14 +40,6 @@ jobs:
           mkdir -p ~/.cargo/git/db
           mkdir -p ./bundle
           mkdir -p ./build
-      - name: TODO
-        run: |
-          echo "Bundle"
-          ls bundle
-          echo "Build"
-          ls build
-          echo ".cargo"
-          ls ~/.cargo
       - name: Download crate and check hash
         if: ${{ !steps.cache.outputs.cache-hit }}
         run: |
@@ -79,14 +71,6 @@ jobs:
           cp -r ~/.cargo/registry/index ./bundle/registry
           cp -r ~/.cargo/registry/cache ./bundle/registry
           cp -r ~/.cargo/git/db ./bundle/git
-      - name: TODO 2
-        run: |
-          echo "Bundle"
-          ls bundle
-          echo "Build"
-          ls build
-          echo ".cargo"
-          ls ~/.cargo
       - name: Store reports
         uses: actions/upload-artifact@v3
         with:
@@ -119,16 +103,6 @@ jobs:
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
-      - name: TODO 3
-        run: |
-          echo "CARGO"
-          ls ~/.cargo
-          echo "REG"
-          ls ~/.cargo/registry
-          echo "REG_INDEX"
-          ls ~/.cargo/registry/index
-          echo "GIT"
-          ls ~/.cargo/git
       - uses: actions/cache@v3
         if: ${{ '%%IF%%' == 'False' }}
         with:
