@@ -476,5 +476,5 @@
       ]
     }
   },
-  "allowlist": "cargo-prebuilt,just,rtx-cli"
+  "allowlist": "cargo-generate"
 }
