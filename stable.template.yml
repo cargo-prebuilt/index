@@ -286,7 +286,6 @@ jobs:
           - target: ${{ %%WIN_ARM64_BUILD%% && 'dummy' || 'aarch64-pc-windows-msvc' }}
           - target: ${{ %%WIN_32_BUILD%% && 'dummy' || 'i686-pc-windows-msvc' }}
     runs-on: windows-latest
-    if: ${{ matrix.opt }}
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
