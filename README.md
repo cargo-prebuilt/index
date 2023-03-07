@@ -90,6 +90,7 @@ Prebuilt crates optionally support these targets:
 - [gitoxide](https://github.com/Byron/gitoxide)
 - [gitui](https://github.com/extrawurst/gitui)
 - [grcov](https://github.com/mozilla/grcov)
+- [hyperfine](https://github.com/sharkdp/hyperfine)
 - [irust](https://github.com/sigmaSd/IRust)
 - [jql](https://github.com/yamafaktory/jql)
 - [just](https://github.com/casey/just)

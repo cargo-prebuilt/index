@@ -476,15 +476,6 @@
       ]
     },
 
-    "speedtest-rs": {
-      "flags": "--features rustls-tls",
-      "unsupported": "",
-      "git": "https://github.com/nelsonjchen/speedtest-rs",
-      "bins": [
-        "speedtest-rs"
-      ]
-    },
-
     "hyperfine": {
       "flags": "",
       "unsupported": "",
@@ -494,5 +485,5 @@
       ]
     }
   },
-  "allowlist": "speedtest-rs,hyperfine"
+  "allowlist": "hyperfine"
 }
