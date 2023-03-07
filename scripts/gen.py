@@ -46,9 +46,18 @@ def main(mode, pull_request, crate, version, crate_license, dl, checksum, bins, 
         action = action.replace("%%IF%%", str(not pull_request).lower())
 
         # Windows
-        action = action.replace("%%WIN_64_BUILD%%", str("x86_64-pc-windows-msvc" not in unsupported).lower())
-        action = action.replace("%%WIN_ARM64_BUILD%%", str("aarch64-pc-windows-msvc" not in unsupported).lower())
-        action = action.replace("%%WIN_32_BUILD%%", str("i686-pc-windows-msvc" not in unsupported).lower())
+        targets = ""
+        for possible in ["x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc", "i686-pc-windows-msvc"]:
+            if possible not in unsupported:
+                if len(targets) != 0:
+                    targets += ","
+                targets += possible
+        if len(targets) != 0:
+            action = action.replace("%%OPT_WIN_HAS_TARGETS%%", "true")
+            action = action.replace("%%OPT_WIN_TARGETS%%", targets)
+        else:
+            action = action.replace("%%OPT_WIN_HAS_TARGETS%%", "false")
+            action = action.replace("%%OPT_WIN_TARGETS%%", "err_no_targets")
 
         # Other optional
         targets = ""
@@ -57,7 +66,12 @@ def main(mode, pull_request, crate, version, crate_license, dl, checksum, bins, 
                 if len(targets) != 0:
                     targets += ","
                 targets += possible
-        action = action.replace("%%TARGETS%%", targets)
+        if len(targets) != 0:
+            action = action.replace("%%OPT_CROSS_HAS_TARGETS%%", "true")
+            action = action.replace("%%OPT_CROSS_TARGETS%%", targets)
+        else:
+            action = action.replace("%%OPT_CROSS_HAS_TARGETS%%", "false")
+            action = action.replace("%%OPT_CROSS_TARGETS%%", "err_no_targets")
 
         with open("./.github/workflows/stable-" + crate + ".yml", "w") as file:
             file.write(action)
