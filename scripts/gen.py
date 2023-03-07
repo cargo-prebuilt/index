@@ -43,7 +43,7 @@ def main(mode, pull_request, crate, version, crate_license, dl, checksum, bins, 
         action = action.replace("%%CHECKSUM%%", checksum)
         action = action.replace("%%BINS%%", bins)
         action = action.replace("%%FLAGS%%", flags)
-        action = action.replace("%%IF%%", str(not pull_request))
+        action = action.replace("%%IF%%", str(not pull_request).lower())
 
         # Windows
         action = action.replace("%%WIN_64_BUILD%%", str("x86_64-pc-windows-msvc" not in unsupported))
