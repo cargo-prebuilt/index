@@ -474,7 +474,25 @@
       "bins": [
         "zellij"
       ]
+    },
+
+    "speedtest-rs": {
+      "flags": "--features rustls-tls",
+      "unsupported": "",
+      "git": "https://github.com/nelsonjchen/speedtest-rs",
+      "bins": [
+        "speedtest-rs"
+      ]
+    },
+
+    "hyperfine": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/sharkdp/hyperfine",
+      "bins": [
+        "hyperfine"
+      ]
     }
   },
-  "allowlist": "cargo-generate"
+  "allowlist": "speedtest-rs,hyperfine"
 }
