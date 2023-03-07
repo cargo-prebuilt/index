@@ -476,5 +476,5 @@
       ]
     }
   },
-  "allowlist": "zellij,cargo-prebuilt"
+  "allowlist": "cargo-prebuilt,just"
 }

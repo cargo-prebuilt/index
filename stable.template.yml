@@ -47,6 +47,13 @@ jobs:
           echo "${{ env.checksum }} ${{ env.crate }}-${{ env.version }}.crate" | sha256sum -c
           tar -xf ${{ env.crate }}-${{ env.version }}.crate
           mv ${{ env.crate }}-${{ env.version }}/* ./build
+      - name: Update Rust
+        run: rustup update
+      - name: Rust Version
+        run: rustc --version
+      - uses: crow-rest/cargo-prebuilt-action@v1
+        with:
+          tools: cargo-audit
       - name: Download Deps
         if: ${{ !steps.cache.outputs.cache-hit }}
         working-directory: ./build
@@ -114,8 +121,8 @@ jobs:
       - name: Rust Version
         run: rustc --version
       - uses: crow-rest/cargo-prebuilt-action@v1
-      - name: Install tools
-        run: cargo prebuilt cargo-auditable
+        with:
+          tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release %%FLAGS%%
@@ -166,8 +173,8 @@ jobs:
       - name: Rust Version
         run: rustc --version
       - uses: crow-rest/cargo-prebuilt-action@v1
-      - name: Install tools
-        run: cargo prebuilt cargo-auditable
+        with:
+          tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release %%FLAGS%%
@@ -220,8 +227,8 @@ jobs:
       - name: Add Rust target
         run: rustup target add aarch64-apple-darwin
       - uses: crow-rest/cargo-prebuilt-action@v1
-      - name: Install tools
-        run: cargo prebuilt cargo-auditable
+        with:
+          tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release --target aarch64-apple-darwin %%FLAGS%%
@@ -333,8 +340,8 @@ jobs:
       - name: Rust Version
         run: rustc --version
       - uses: crow-rest/cargo-prebuilt-action@v1
-      - name: Install tools
-        run: cargo prebuilt cargo-auditable
+        with:
+          tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release %%FLAGS%%
@@ -388,8 +395,8 @@ jobs:
       - name: Add Rust target
         run: rustup target add aarch64-pc-windows-msvc
       - uses: crow-rest/cargo-prebuilt-action@v1
-      - name: Install tools
-        run: cargo prebuilt cargo-auditable
+        with:
+          tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release --target aarch64-pc-windows-msvc %%FLAGS%%
@@ -443,8 +450,8 @@ jobs:
       - name: Add Rust target
         run: rustup target add i686-pc-windows-msvc
       - uses: crow-rest/cargo-prebuilt-action@v1
-      - name: Install tools
-        run: cargo prebuilt cargo-auditable
+        with:
+          tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release --target i686-pc-windows-msvc %%FLAGS%%
@@ -501,10 +508,8 @@ jobs:
       - name: Rust Version
         run: rustc --version
       - uses: crow-rest/cargo-prebuilt-action@v1
-      - name: Install tools
-        run: |
-          cargo prebuilt cross
-          cross --version
+        with:
+          tools: cross
       - name: Build crate
         working-directory: ./build
         run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
@@ -529,9 +534,9 @@ jobs:
           file: ${{ matrix.target }}.*
 
   push-index:
-    if: %%IF%%
+    if: %%IF%% && always() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
     runs-on: ubuntu-latest
-    needs: [ setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, aarch64-apple-darwin, cross ]
+    needs: [ setup, x86_64-unknown-linux-gnu, x86_64-apple-darwin, aarch64-apple-darwin, cross, opt-i686-pc-windows-msvc, opt-x86_64-pc-windows-msvc, opt-aarch64-pc-windows-msvc, opt-cross ]
     steps:
       - uses: actions/checkout@v3
       - name: Create index file
