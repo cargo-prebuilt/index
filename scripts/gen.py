@@ -46,9 +46,9 @@ def main(mode, pull_request, crate, version, crate_license, dl, checksum, bins, 
         action = action.replace("%%IF%%", str(not pull_request).lower())
 
         # Windows
-        action = action.replace("%%WIN_64_BUILD%%", str("x86_64-pc-windows-msvc" not in unsupported))
-        action = action.replace("%%WIN_ARM64_BUILD%%", str("aarch64-pc-windows-msvc" not in unsupported))
-        action = action.replace("%%WIN_32_BUILD%%", str("i686-pc-windows-msvc" not in unsupported))
+        action = action.replace("%%WIN_64_BUILD%%", str("x86_64-pc-windows-msvc" not in unsupported).lower())
+        action = action.replace("%%WIN_ARM64_BUILD%%", str("aarch64-pc-windows-msvc" not in unsupported).lower())
+        action = action.replace("%%WIN_32_BUILD%%", str("i686-pc-windows-msvc" not in unsupported).lower())
 
         # Other optional
         targets = ""

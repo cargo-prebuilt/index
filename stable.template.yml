@@ -164,9 +164,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target:
-          - x86_64-apple-darwin
-          - aarch64-apple-darwin
+        target: [ x86_64-apple-darwin, aarch64-apple-darwin ]
     runs-on: macos-latest
     needs: [ setup ]
     steps:
@@ -282,13 +280,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - target: x86_64-pc-windows-msvc
-            opt: %%WIN_64_BUILD%%
-          - target: aarch64-pc-windows-msvc
-            opt: %%WIN_ARM64_BUILD%%
-          - target: i686-pc-windows-msvc
-            opt: %%WIN_32_BUILD%%
+        target: [ x86_64-pc-windows-msvc, aarch64-pc-windows-msvc, i686-pc-windows-msvc ]
+        exclude:
+          - target: ${{ %%WIN_64_BUILD%% && 'dummy' || 'x86_64-pc-windows-msvc' }}
+          - target: ${{ %%WIN_ARM64_BUILD%% && 'dummy' || 'aarch64-pc-windows-msvc' }}
+          - target: ${{ %%WIN_32_BUILD%% && 'dummy' || 'i686-pc-windows-msvc' }}
     runs-on: windows-latest
     if: ${{ matrix.opt }}
     needs: [ setup ]
