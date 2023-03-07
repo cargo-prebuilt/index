@@ -70,6 +70,20 @@ jobs:
           test -f Cargo.lock || cargo +stable generate-lockfile --verbose
           echo "Generated on: $(date --utc)" > ../deps.report && cargo +stable tree --verbose -e normal,build >> ../deps.report
           echo "Generated on: $(date --utc)" > ../audit.report && cargo audit >> ../audit.report || true
+      - name: Output reports
+        run: |
+          echo "### License:" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cat license.report >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "### Deps:" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cat deps.report >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          echo "### Audit:" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          cat audit.report >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
       - name: Bundle Deps
         if: ${{ !steps.cache.outputs.cache-hit }}
         run: |
