@@ -181,7 +181,7 @@ jobs:
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: x86_64-unknown-linux-gnu
+          name: target-x86_64-unknown-linux-gnu
           path: |
             x86_64-unknown-linux-gnu.tar.gz
             x86_64-unknown-linux-gnu.sha256
@@ -229,7 +229,7 @@ jobs:
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.target }}
+          name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
@@ -277,7 +277,7 @@ jobs:
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.target }}
+          name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
@@ -326,7 +326,7 @@ jobs:
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.target }}
+          name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
@@ -375,7 +375,7 @@ jobs:
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.target }}
+          name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
@@ -399,7 +399,7 @@ jobs:
           name: ${{ env.crate }}-${{ env.version }}
           allowUpdates: true
           prerelease: true
-          artifacts: "*.report,*.tar.gz,*.sha256"
+          artifacts: "reports/*.report,target-*/*.tar.gz,target-*/*.sha256"
           body: ""
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
