@@ -112,37 +112,6 @@ jobs:
         with:
           name: reports
           path: "*.report"
-#      - name: Delete existing release
-#        env:
-#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        run: gh release delete ${{ env.crate }}-${{ env.version }} -y -R ${{ github.repository }}
-#      - name: Create Release
-#        env:
-#          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        run: |
-#          gh api \
-#            --method POST \
-#            -H "Accept: application/vnd.github+json" \
-#            -H "X-GitHub-Api-Version: 2022-11-28" \
-#            /repos/${{ github.repository }}/releases \
-#            -f tag_name='${{ env.crate }}-${{ env.version }}' \
-#            -f name='${{ env.crate }}-${{ env.version }}' \
-#            -F prerelease=true
-#      - name: Release Reports
-##        if: %%IF%%
-#        uses: AButler/upload-release-assets@v2.0.2
-#        with:
-#          release-tag: ${{ env.crate }}-${{ env.version }}
-#          repo-token: ${{ secrets.GITHUB_TOKEN }}
-#          files: "*.report"
-      - name: DBG - API
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api \
-            -H "Accept: application/vnd.github+json" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /rate_limit
 
   x86_64-unknown-linux-gnu:
     runs-on: ubuntu-latest
@@ -390,8 +359,6 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           path: ./
-      - name: TODO LS
-        run: ls -a
       - name: Create and push artifacts to release
         uses: ncipollo/release-action@v1
         with:

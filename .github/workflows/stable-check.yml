@@ -44,7 +44,7 @@ jobs:
         run: cat .github/workflows/stable-${{ matrix.crate }}.yml
       - name: Wait
         if: ${{ github.event_name != 'pull_request' }}
-        run: sleep 20m
+        run: sleep 15m
       - name: Run action
         uses: antaljanosbenjamin/single-commit-publish@v1.0.1
         with:
