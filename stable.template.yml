@@ -140,7 +140,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ '%%IF%%' == 'False' }}
+        if: ${{ !%%IF%% }}
         with:
           path: |
             build/target
@@ -197,7 +197,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ '%%IF%%' == 'False' }}
+        if: ${{ !%%IF%% }}
         with:
           path: |
             build/target
@@ -258,7 +258,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ '%%IF%%' == 'False' }}
+        if: ${{ !%%IF%% }}
         with:
           path: |
             build/target
@@ -316,7 +316,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ '%%IF%%' == 'False' }}
+        if: ${{ !%%IF%% }}
         with:
           path: |
             build/target
@@ -378,7 +378,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ '%%IF%%' == 'False' }}
+        if: ${{ !%%IF%% }}
         with:
           path: |
             build/target
