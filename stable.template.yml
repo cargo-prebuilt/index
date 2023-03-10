@@ -420,7 +420,7 @@ jobs:
   dbg-api:
     if: always()
     runs-on: ubuntu-latest
-    needs: [ push-index ]
+    needs: [ opt-cross, push-index ]
     steps:
       - uses: actions/checkout@v3
       - name: DBG - API
