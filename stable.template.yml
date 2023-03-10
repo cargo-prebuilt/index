@@ -112,14 +112,18 @@ jobs:
         with:
           name: reports
           path: "*.report"
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.crate }}-${{ env.version }}
+          name: ${{ env.crate }}-${{ env.version }}
+          prerelease: true
+          removeArtifacts: true
       - name: Release Reports
-        if: %%IF%%
+#        if: %%IF%%
         uses: svenstaro/upload-release-action@2.5.0
         with:
           tag: ${{ env.crate }}-${{ env.version }}
-          release_name: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
           file_glob: true
           file: "*.report"
       - name: DBG - API
@@ -166,7 +170,6 @@ jobs:
       - name: Collect
         run: ./scripts/collect.py x86_64-unknown-linux-gnu ./build/target/release ${{ env.bins }}
       - name: Artifact
-        if: ${{ !%%IF%% }}
         uses: actions/upload-artifact@v3
         with:
           name: x86_64-unknown-linux-gnu
@@ -225,7 +228,6 @@ jobs:
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
-        if: ${{ !%%IF%% }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.target }}
@@ -284,7 +286,6 @@ jobs:
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
-        if: ${{ !%%IF%% }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.target }}
@@ -345,7 +346,6 @@ jobs:
         run: python3  ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
         uses: actions/upload-artifact@v3
-        if: ${{ !%%IF%% }}
         with:
           name: ${{ matrix.target }}
           path: |
@@ -404,7 +404,6 @@ jobs:
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
-        if: ${{ !%%IF%% }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.target }}
