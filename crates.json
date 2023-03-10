@@ -485,5 +485,5 @@
       ]
     }
   },
-  "allowlist": "hyperfine"
+  "allowlist": "cargo-prebuilt"
 }
