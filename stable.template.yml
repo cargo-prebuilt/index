@@ -152,6 +152,7 @@ jobs:
       - name: Collect
         run: ./scripts/collect.py x86_64-unknown-linux-gnu ./build/target/release ${{ env.bins }}
       - name: Artifact
+        if: ${{ !%%IF%% }}
         uses: actions/upload-artifact@v3
         with:
           name: x86_64-unknown-linux-gnu
@@ -210,6 +211,7 @@ jobs:
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
+        if: ${{ !%%IF%% }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.target }}
@@ -268,6 +270,7 @@ jobs:
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
+        if: ${{ !%%IF%% }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.target }}
@@ -328,6 +331,7 @@ jobs:
         run: python3  ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
         uses: actions/upload-artifact@v3
+        if: ${{ !%%IF%% }}
         with:
           name: ${{ matrix.target }}
           path: |
@@ -386,6 +390,7 @@ jobs:
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
+        if: ${{ !%%IF%% }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.target }}
