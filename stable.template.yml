@@ -14,6 +14,7 @@ env:
   checksum: %%CHECKSUM%%
   bins: %%BINS%%
   CARGO_TERM_COLOR: always
+  CARGO_REGISTRIES_CRATES_IO_PROTOCOL: sparse
 
 jobs:
   setup:
