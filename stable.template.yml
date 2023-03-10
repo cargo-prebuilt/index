@@ -117,9 +117,7 @@ jobs:
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           name: ${{ env.crate }}-${{ env.version }}
-          allowUpdates: true
           prerelease: true
-          removeArtifacts: true
       - name: Release Reports
 #        if: %%IF%%
         uses: AButler/upload-release-assets@v2.0.2
