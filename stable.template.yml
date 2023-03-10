@@ -38,6 +38,12 @@ jobs:
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
           enableCrossOsArchive: true
+      - name: Cache Advisory DB
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/advisory-db
+          key: stable-advisory-db
       - name: Move deps
         if: ${{ steps.cache.outputs.cache-hit }}
         run: mv ./bundle/* ~/.cargo
