@@ -122,11 +122,11 @@ jobs:
           removeArtifacts: true
       - name: Release Reports
 #        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.5.0
+        uses: AButler/upload-release-assets@v2.0.2
         with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          file_glob: true
-          file: "*.report"
+          release-tag: ${{ env.crate }}-${{ env.version }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          files: "*.report"
       - name: DBG - API
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
