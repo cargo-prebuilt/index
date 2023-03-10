@@ -117,6 +117,7 @@ jobs:
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           name: ${{ env.crate }}-${{ env.version }}
+          allowUpdates: true
           prerelease: true
           removeArtifacts: true
       - name: Release Reports
