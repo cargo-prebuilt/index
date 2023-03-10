@@ -14,12 +14,18 @@ env:
   checksum: %%CHECKSUM%%
   bins: %%BINS%%
   CARGO_TERM_COLOR: always
+  CARGO_REGISTRIES_CRATES_IO_PROTOCOL: sparse
 
 jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: DBG - API
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
       - name: Cache
         uses: actions/cache@v3
         id: cache
@@ -29,6 +35,12 @@ jobs:
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
           enableCrossOsArchive: true
+      - name: Cache Advisory DB
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/advisory-db
+          key: stable-advisory-db
       - name: Move deps
         if: ${{ steps.cache.outputs.cache-hit }}
         run: mv ./bundle/* ~/.cargo
@@ -97,16 +109,6 @@ jobs:
         with:
           name: reports
           path: "*.report"
-      - name: Release Reports
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.5.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          release_name: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: "*.report"
 
   x86_64-unknown-linux-gnu:
     runs-on: ubuntu-latest
@@ -125,7 +127,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ '%%IF%%' == 'False' }}
+        if: ${{ !%%IF%% }}
         with:
           path: |
             build/target
@@ -145,20 +147,10 @@ jobs:
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: x86_64-unknown-linux-gnu
+          name: target-x86_64-unknown-linux-gnu
           path: |
             x86_64-unknown-linux-gnu.tar.gz
             x86_64-unknown-linux-gnu.sha256
-      - name: Release Artifact
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.5.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          release_name: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: x86_64-unknown-linux-gnu.*
 
   apple-darwin:
     strategy:
@@ -181,7 +173,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ '%%IF%%' == 'False' }}
+        if: ${{ !%%IF%% }}
         with:
           path: |
             build/target
@@ -203,20 +195,10 @@ jobs:
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.target }}
+          name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
-      - name: Release Artifact
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.5.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          release_name: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: ${{ matrix.target }}.*
 
   cross:
     strategy:
@@ -241,7 +223,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ '%%IF%%' == 'False' }}
+        if: ${{ !%%IF%% }}
         with:
           path: |
             build/target
@@ -261,20 +243,10 @@ jobs:
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.target }}
+          name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
-      - name: Release Artifact
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.5.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          release_name: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: ${{ matrix.target }}.*
 
   opt-pc-windows-msvc:
     if: %%OPT_WIN_HAS_TARGETS%%
@@ -298,7 +270,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ '%%IF%%' == 'False' }}
+        if: ${{ !%%IF%% }}
         with:
           path: |
             build/target
@@ -320,20 +292,10 @@ jobs:
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.target }}
+          name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
-      - name: Release Artifact
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.5.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          release_name: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: ${{ matrix.target }}.*
 
   opt-cross:
     if: %%OPT_CROSS_HAS_TARGETS%%
@@ -359,7 +321,7 @@ jobs:
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
-        if: ${{ '%%IF%%' == 'False' }}
+        if: ${{ !%%IF%% }}
         with:
           path: |
             build/target
@@ -379,27 +341,27 @@ jobs:
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.target }}
+          name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
-      - name: Release Artifact
-        if: %%IF%%
-        uses: svenstaro/upload-release-action@2.5.0
-        with:
-          tag: ${{ env.crate }}-${{ env.version }}
-          release_name: ${{ env.crate }}-${{ env.version }}
-          overwrite: true
-          prerelease: true
-          file_glob: true
-          file: ${{ matrix.target }}.*
 
   push-index:
-    if: ${{ %%IF%% && always() && !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled') }}
+    if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.x86_64-unknown-linux-gnu.result, 'failure') && !contains(needs.apple-darwin.result, 'failure') && !contains(needs.cross.result, 'failure') && !contains(needs.opt-pc-windows-msvc.result, 'failure') }}
     runs-on: ubuntu-latest
-    needs: [ setup, x86_64-unknown-linux-gnu, apple-darwin, cross, opt-pc-windows-msvc ]
+    needs: [ setup, x86_64-unknown-linux-gnu, apple-darwin, cross, opt-pc-windows-msvc, opt-cross ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+      - name: Create and push artifacts to release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ env.crate }}-${{ env.version }}
+          name: ${{ env.crate }}-${{ env.version }}
+          allowUpdates: true
+          prerelease: true
+          artifacts: "reports/*.report,target-*/*.tar.gz,target-*/*.sha256"
+          body: ""
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
@@ -408,3 +370,15 @@ jobs:
           tag: stable-index
           overwrite: true
           file: ${{ env.crate }}
+
+  dbg-api:
+    if: always()
+    runs-on: ubuntu-latest
+    needs: [ opt-cross, push-index ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: DBG - API
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
