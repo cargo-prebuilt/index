@@ -485,5 +485,5 @@
       ]
     }
   },
-  "allowlist": "cargo-prebuilt,wiki-tui,rtx-cli"
+  "allowlist": "cargo-prebuilt"
 }

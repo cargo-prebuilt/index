@@ -8,9 +8,3 @@ pre-build = [
     "echo 'cargo-auditable auditable \"$@\"' >> /bin/cargo",
     "chmod +x /bin/cargo"
 ]
-
-#[target.x86_64-unknown-freebsd]
-#image = "ghcr.io/cross-rs/x86_64-unknown-freebsd:edge"
-#
-#[target.i686-unknown-freebsd]
-#image = "ghcr.io/cross-rs/i686-unknown-freebsd:edge"
