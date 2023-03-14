@@ -271,7 +271,7 @@ jobs:
           -v "$(which cargo-auditable | rev | cut -c17- | rev):/cargo-auditable" \
           -v "$(pwd):/project:z" -v "$(pwd)/target:/target:z" \
           ghcr.io/cross-rs/${{ matrix.target }}:main \
-          sh -c "PATH=$PATH:/rust/bin:/cargo-auditable cargo +stable auditable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%"
+          sh -c "PATH=$PATH:/rust/bin:/cargo-auditable cargo auditable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%"
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
