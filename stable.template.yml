@@ -57,9 +57,6 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: crow-rest/cargo-prebuilt-action@v1
-        with:
-          tools: cargo-audit
       - name: Download Deps
         if: ${{ !steps.cache.outputs.cache-hit }}
         working-directory: ./build
@@ -404,13 +401,6 @@ jobs:
           tag: stable-index
           overwrite: true
           file: ${{ env.crate }}
-
-  dbg-api:
-    if: always()
-    runs-on: ubuntu-latest
-    needs: [ opt-cross, push-index ]
-    steps:
-      - uses: actions/checkout@v3
       - name: DBG - API
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
