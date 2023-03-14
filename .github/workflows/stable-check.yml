@@ -19,6 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Skip Duplicate Actions
+        if: ${{ github.event_name != 'pull_request' }}
         uses: fkirc/skip-duplicate-actions@v5
         id: skip
         with:
