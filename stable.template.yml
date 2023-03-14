@@ -259,7 +259,7 @@ jobs:
       - uses: crow-rest/cargo-prebuilt-action@v1
         with:
           tools: cargo-auditable
-          tools-target: x86_64-unknown-linux-gnu
+          tools-target: x86_64-unknown-linux-musl
       - name: Build crate
         working-directory: ./build
         run: |
