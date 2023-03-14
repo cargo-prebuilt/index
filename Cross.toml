@@ -1,5 +1,9 @@
-[target.x86_64-unknown-freebsd]
-image = "ghcr.io/cross-rs/x86_64-unknown-freebsd:edge"
-
-[target.i686-unknown-freebsd]
-image = "ghcr.io/cross-rs/i686-unknown-freebsd:edge"
+[build]
+pre-build = [
+    "curl -fsSL \"https://github.com/crow-rest/cargo-prebuilt-index/releases/download/cargo-auditable-$(curl -fsSL https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/cargo-auditable)/x86_64-unknown-linux-musl.tar.gz\" -o ca-musl.tar.gz",
+    "tar -xvzf ca-musl.tar.gz -C /bin",
+    "echo \\#\\!/bin/sh > /bin/cargo",
+    "echo \"export CARGO='/rust/bin/cargo'\" >> /bin/cargo",
+    "echo 'cargo-auditable auditable \"$@\"' >> /bin/cargo",
+    "chmod +x /bin/cargo"
+]

@@ -35,15 +35,6 @@ jobs:
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
           enableCrossOsArchive: true
-      - name: Cache Advisory DB
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cargo/advisory-db
-          key: stable-advisory-db
-      - name: Move deps
-        if: ${{ steps.cache.outputs.cache-hit }}
-        run: mv ./bundle/* ~/.cargo
       - name: Create Folders
         if: ${{ !steps.cache.outputs.cache-hit }}
         run: |
@@ -60,16 +51,53 @@ jobs:
           tar -xf ${{ env.crate }}-${{ env.version }}.crate
           mv ${{ env.crate }}-${{ env.version }}/* ./build
       - name: Update Rust
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        run: rustup update
+      - name: Rust Version
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        run: rustc --version
+      - name: Download Deps
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        working-directory: ./build
+        run: cargo +stable fetch --verbose
+      - name: Bundle Deps
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        run: |
+          mkdir -p ./bundle/registry
+          mkdir -p ./bundle/git
+          cp -r ~/.cargo/registry/index ./bundle/registry
+          cp -r ~/.cargo/registry/cache ./bundle/registry
+          cp -r ~/.cargo/git/db ./bundle/git
+
+  reports:
+    runs-on: ubuntu-latest
+    needs: [ setup ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Get deps and crates from cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            bundle
+            build
+          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+      - name: Move deps
+        run: mv ./bundle/* ~/.cargo
+      - name: Cache Advisory DB
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cargo/advisory-db
+          key: stable-advisory-db
+      - name: Update Rust
         run: rustup update
       - name: Rust Version
         run: rustc --version
       - uses: crow-rest/cargo-prebuilt-action@v1
         with:
           tools: cargo-audit
-      - name: Download Deps
-        if: ${{ !steps.cache.outputs.cache-hit }}
-        working-directory: ./build
-        run: cargo +stable fetch --verbose
       - name: Generate reports
         working-directory: ./build
         run: |
@@ -96,21 +124,19 @@ jobs:
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
           cat audit.report >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-      - name: Bundle Deps
-        if: ${{ !steps.cache.outputs.cache-hit }}
-        run: |
-          mkdir -p ./bundle/registry
-          mkdir -p ./bundle/git
-          cp -r ~/.cargo/registry/index ./bundle/registry
-          cp -r ~/.cargo/registry/cache ./bundle/registry
-          cp -r ~/.cargo/git/db ./bundle/git
       - name: Store reports
         uses: actions/upload-artifact@v3
         with:
           name: reports
           path: "*.report"
 
-  x86_64-unknown-linux-gnu:
+  t1-cross:
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ x86_64-unknown-linux-gnu, x86_64-unknown-linux-musl, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl ]
+    env:
+      CROSS_CONFIG: ../Cross.toml
     runs-on: ubuntu-latest
     needs: [ setup ]
     steps:
@@ -131,28 +157,28 @@ jobs:
         with:
           path: |
             build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-x86_64-unknown-linux-gnu
+          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
       - name: Update Rust
         run: rustup update
       - name: Rust Version
         run: rustc --version
       - uses: crow-rest/cargo-prebuilt-action@v1
         with:
-          tools: cargo-auditable
+          tools: cross
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release %%FLAGS%%
+        run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
-        run: ./scripts/collect.py x86_64-unknown-linux-gnu ./build/target/release ${{ env.bins }}
+        run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: target-x86_64-unknown-linux-gnu
+          name: target-${{ matrix.target }}
           path: |
-            x86_64-unknown-linux-gnu.tar.gz
-            x86_64-unknown-linux-gnu.sha256
+            ${{ matrix.target }}.tar.gz
+            ${{ matrix.target }}.sha256
 
-  apple-darwin:
+  t1-apple-darwin:
     strategy:
       fail-fast: false
       matrix:
@@ -200,15 +226,16 @@ jobs:
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
 
-  cross:
+  t2-cross:
+    if: %%T2_CROSS_HAS_TARGETS%%
     strategy:
       fail-fast: false
       matrix:
-        target: [ x86_64-unknown-linux-musl, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl ]
-    runs-on: ubuntu-latest
-    needs: [ setup ]
+        target: [ %%T2_CROSS_TARGETS%% ]
     env:
       CROSS_CONFIG: ../Cross.toml
+    runs-on: ubuntu-latest
+    needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
       - name: Get deps and crates from cache
@@ -248,12 +275,12 @@ jobs:
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
 
-  opt-pc-windows-msvc:
-    if: %%OPT_WIN_HAS_TARGETS%%
+  t2-pc-windows-msvc:
+    if: %%T2_WIN_HAS_TARGETS%%
     strategy:
       fail-fast: false
       matrix:
-        target: [ %%OPT_WIN_TARGETS%% ]
+        target: [ %%T2_WIN_TARGETS%% ]
     runs-on: windows-latest
     needs: [ setup ]
     steps:
@@ -297,16 +324,16 @@ jobs:
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
 
-  opt-cross:
-    if: %%OPT_CROSS_HAS_TARGETS%%
+  t3-cross:
+    if: %%T3_CROSS_HAS_TARGETS%%
     strategy:
       fail-fast: false
       matrix:
-        target: [ %%OPT_CROSS_TARGETS%% ]
-    runs-on: ubuntu-latest
-    needs: [ setup ]
+        target: [ %%T3_CROSS_TARGETS%% ]
     env:
       CROSS_CONFIG: ../Cross.toml
+    runs-on: ubuntu-latest
+    needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
       - name: Get deps and crates from cache
@@ -347,9 +374,9 @@ jobs:
             ${{ matrix.target }}.sha256
 
   push-index:
-    if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.x86_64-unknown-linux-gnu.result, 'failure') && !contains(needs.apple-darwin.result, 'failure') && !contains(needs.cross.result, 'failure') && !contains(needs.opt-pc-windows-msvc.result, 'failure') }}
+    if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && !contains(needs.t1-cross.result, 'failure') && !contains(needs.t1-apple-darwin.result, 'failure') && !contains(needs.t2-cross.result, 'failure') && !contains(needs.t2-pc-windows-msvc.result, 'failure') }}
     runs-on: ubuntu-latest
-    needs: [ setup, x86_64-unknown-linux-gnu, apple-darwin, cross, opt-pc-windows-msvc, opt-cross ]
+    needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
@@ -370,13 +397,6 @@ jobs:
           tag: stable-index
           overwrite: true
           file: ${{ env.crate }}
-
-  dbg-api:
-    if: always()
-    runs-on: ubuntu-latest
-    needs: [ opt-cross, push-index ]
-    steps:
-      - uses: actions/checkout@v3
       - name: DBG - API
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -2,15 +2,18 @@
 
 import sys
 
-extra_targets = [
-    "x86_64-unknown-freebsd",  # Optional Support (64-bit)
-    "x86_64-unknown-netbsd",
+t2_targets = [
+    "x86_64-unknown-freebsd",
+    "riscv64gc-unknown-linux-gnu",
+    "s390x-unknown-linux-gnu",
+]
+
+t3_targets = [
+    "x86_64-unknown-netbsd",  # Optional Support (64-bit)
     "x86_64-unknown-illumos",
     "x86_64-sun-solaris",
-    "riscv64gc-unknown-linux-gnu",
     "powerpc64-unknown-linux-gnu",
     "powerpc64le-unknown-linux-gnu",
-    "s390x-unknown-linux-gnu",
     "mips64-unknown-linux-gnuabi64",
     "mips64-unknown-linux-muslabi64",
     "mips64el-unknown-linux-gnuabi64",
@@ -45,6 +48,20 @@ def main(mode, pull_request, crate, version, crate_license, dl, checksum, bins, 
         action = action.replace("%%FLAGS%%", flags)
         action = action.replace("%%IF%%", str(not pull_request).lower())
 
+        # T2
+        # Cross
+        targets = ""
+        for possible in t2_targets:
+            if possible not in unsupported:
+                if len(targets) != 0:
+                    targets += ","
+                targets += possible
+        if len(targets) != 0:
+            action = action.replace("%%T2_CROSS_HAS_TARGETS%%", "true")
+            action = action.replace("%%T2_CROSS_TARGETS%%", targets)
+        else:
+            action = action.replace("%%T2_CROSS_HAS_TARGETS%%", "false")
+            action = action.replace("%%T2_CROSS_TARGETS%%", "err_no_targets")
         # Windows
         targets = ""
         for possible in ["x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc", "i686-pc-windows-msvc"]:
@@ -53,25 +70,26 @@ def main(mode, pull_request, crate, version, crate_license, dl, checksum, bins, 
                     targets += ","
                 targets += possible
         if len(targets) != 0:
-            action = action.replace("%%OPT_WIN_HAS_TARGETS%%", "true")
-            action = action.replace("%%OPT_WIN_TARGETS%%", targets)
+            action = action.replace("%%T2_WIN_HAS_TARGETS%%", "true")
+            action = action.replace("%%T2_WIN_TARGETS%%", targets)
         else:
-            action = action.replace("%%OPT_WIN_HAS_TARGETS%%", "false")
-            action = action.replace("%%OPT_WIN_TARGETS%%", "err_no_targets")
+            action = action.replace("%%T2_WIN_HAS_TARGETS%%", "false")
+            action = action.replace("%%T2_WIN_TARGETS%%", "err_no_targets")
 
-        # Other optional
+        # T3
+        # Cross
         targets = ""
-        for possible in extra_targets:
+        for possible in t3_targets:
             if possible not in unsupported:
                 if len(targets) != 0:
                     targets += ","
                 targets += possible
         if len(targets) != 0:
-            action = action.replace("%%OPT_CROSS_HAS_TARGETS%%", "true")
-            action = action.replace("%%OPT_CROSS_TARGETS%%", targets)
+            action = action.replace("%%T3_CROSS_HAS_TARGETS%%", "true")
+            action = action.replace("%%T3_CROSS_TARGETS%%", targets)
         else:
-            action = action.replace("%%OPT_CROSS_HAS_TARGETS%%", "false")
-            action = action.replace("%%OPT_CROSS_TARGETS%%", "err_no_targets")
+            action = action.replace("%%T3_CROSS_HAS_TARGETS%%", "false")
+            action = action.replace("%%T3_CROSS_TARGETS%%", "err_no_targets")
 
         with open("./.github/workflows/stable-" + crate + ".yml", "w") as file:
             file.write(action)
