@@ -407,7 +407,7 @@ jobs:
   push-index:
     if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && !contains(needs.t1-cross.result, 'failure') && !contains(needs.t1-apple-darwin.result, 'failure') && !contains(needs.t2-cross.result, 'failure') && !contains(needs.t2-pc-windows-msvc.result, 'failure') }}
     runs-on: ubuntu-latest
-    needs: [ setup, reports, x86_64-unknown-linux-gnu, apple-darwin, cross, opt-pc-windows-msvc, opt-cross ]
+    needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
