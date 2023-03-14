@@ -35,9 +35,6 @@ jobs:
             build
           key: ${{ env.crate }}-${{ env.version }}-stable-deps
           enableCrossOsArchive: true
-      - name: Move deps
-        if: ${{ steps.cache.outputs.cache-hit }}
-        run: mv ./bundle/* ~/.cargo
       - name: Create Folders
         if: ${{ !steps.cache.outputs.cache-hit }}
         run: |
@@ -54,8 +51,10 @@ jobs:
           tar -xf ${{ env.crate }}-${{ env.version }}.crate
           mv ${{ env.crate }}-${{ env.version }}/* ./build
       - name: Update Rust
+        if: ${{ !steps.cache.outputs.cache-hit }}
         run: rustup update
       - name: Rust Version
+        if: ${{ !steps.cache.outputs.cache-hit }}
         run: rustc --version
       - name: Download Deps
         if: ${{ !steps.cache.outputs.cache-hit }}

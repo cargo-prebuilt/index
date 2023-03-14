@@ -4,7 +4,9 @@ pre-build = [
     "curl -fsSL \"https://github.com/crow-rest/cargo-prebuilt-index/releases/download/cargo-auditable-$(curl -fsSL https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/cargo-auditable)/x86_64-unknown-linux-musl.tar.gz\" -o ca-musl.tar.gz",
     "tar -xvzf ca-musl.tar.gz -C /cargo-auditable",
     "echo 'alias cargo=\"cargo auditable\"' >> /etc/profile",
-    "echo 'export PATH=$PATH:/cargo-auditable' >> /etc/profile"
+    "echo 'export PATH=$PATH:/cargo-auditable' >> /etc/profile",
+    "echo 'alias cargo=\"cargo auditable\"' >> ~/.profile",
+    "echo 'export PATH=$PATH:/cargo-auditable' >> ~/.profile",
 ]
 
 #[target.x86_64-unknown-freebsd]
