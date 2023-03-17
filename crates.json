@@ -483,7 +483,16 @@
       "bins": [
         "hyperfine"
       ]
+    },
+
+    "cargo-zigbuild": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/rust-cross/cargo-zigbuild",
+      "bins": [
+        "cargo-zigbuild"
+      ]
     }
   },
-  "allowlist": "cargo-prebuilt"
+  "allowlist": "cargo-zigbuild"
 }
