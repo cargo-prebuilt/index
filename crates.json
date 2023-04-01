@@ -492,7 +492,25 @@
       "bins": [
         "cargo-zigbuild"
       ]
+    },
+
+    "erdtree": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/solidiquis/erdtree",
+      "bins": [
+        "et"
+      ]
+    },
+
+    "cargo-semver-checks": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/obi1kenobi/cargo-semver-checks",
+      "bins": [
+        "cargo-semver-checks"
+      ]
     }
   },
-  "allowlist": "wasm-pack,cargo-update"
+  "allowlist": "erdtree,cargo-semver-checks"
 }
