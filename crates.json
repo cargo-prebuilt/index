@@ -494,5 +494,5 @@
       ]
     }
   },
-  "allowlist": "cargo-zigbuild"
+  "allowlist": "wasm-pack,cargo-update"
 }
