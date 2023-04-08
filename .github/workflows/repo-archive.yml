@@ -10,7 +10,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        type: [ stable, nightly ]
+        type: [ stable ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
