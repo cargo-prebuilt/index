@@ -40,7 +40,7 @@ def main(mode, pull_request, index, crate, version, crate_license, dl, checksum,
             action_template = file.read()
 
         action = action_template.replace("%%INDEX%%", index)
-        action = action_template.replace("%%CRATE%%", crate)
+        action = action.replace("%%CRATE%%", crate)
         action = action.replace("%%VERSION%%", version)
         action = action.replace("%%LICENSE%%", crate_license)
         action = action.replace("%%DOWNLOAD%%", dl)
