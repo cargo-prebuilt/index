@@ -512,5 +512,5 @@
       ]
     }
   },
-  "allowlist": "cargo-semver-checks"
+  "allowlist": "cargo-prebuilt"
 }

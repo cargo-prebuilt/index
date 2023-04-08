@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  index: https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/
+  index: %%INDEX%%/releases/download/stable-index/
   crate: %%CRATE%%
   version: %%VERSION%%
   license: %%LICENSE%%

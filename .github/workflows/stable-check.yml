@@ -28,7 +28,7 @@ jobs:
           concurrent_skipping: always
       - name: Check for updates
         id: check
-        run: echo "crates=$(./scripts/check.py stable '${{ github.event_name == 'pull_request' }}' '${{ steps.skip.outputs.should_skip }}')" >> $GITHUB_OUTPUT
+        run: echo "crates=$(./scripts/check.py stable '${{ github.event_name == 'pull_request' }}' '${{ steps.skip.outputs.should_skip }}' '${{ github.server_url }}' '${{ github.repository }}')" >> $GITHUB_OUTPUT
 
   dispatch:
     if: ${{ needs.check.outputs.crates != '{}' }}
@@ -36,11 +36,11 @@ jobs:
       max-parallel: 1
       matrix: ${{ fromJson(needs.check.outputs.crates) }}
     runs-on: ubuntu-latest
-    needs: [check]
+    needs: [ check ]
     steps:
       - uses: actions/checkout@v3
       - name: Generate workflow
-        run: ./scripts/gen.py stable ${{ github.event_name == 'pull_request' }} "${{ matrix.crate }}" "${{ matrix.version }}" "${{ matrix.license }}" "${{ matrix.dl }}" "${{ matrix.checksum }}" "${{ matrix.bins }}" "${{ matrix.flags }}" "${{ matrix.unsupported }}"
+        run: ./scripts/gen.py stable ${{ github.event_name == 'pull_request' }} '${{ github.server_url }}/${{ github.repository }}' '${{ matrix.crate }}' '${{ matrix.version }}' '${{ matrix.license }}' '${{ matrix.dl }}' '${{ matrix.checksum }}' '${{ matrix.bins }}' '${{ matrix.flags }}' '${{ matrix.unsupported }}'
       - name: Print generated workflow file
         run: cat .github/workflows/stable-${{ matrix.crate }}.yml
       - name: Wait
@@ -49,6 +49,6 @@ jobs:
       - name: Run action
         uses: antaljanosbenjamin/single-commit-publish@v1.0.1
         with:
-          github-token: ${{ secrets.API_TOKEN }}
+          github-token: ${{ secrets.WORKFLOW_TOKEN }}
           branch: trigger/stable
           files-and-dirs: '.github/workflows/stable-${{ matrix.crate }}.yml scripts/collect.py Cross.toml'
