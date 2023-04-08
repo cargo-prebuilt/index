@@ -6,11 +6,10 @@ import sys
 import time
 import urllib.request
 
-stable_index = "https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/"
+stable_index = "/releases/download/stable-index/"
 crates_io_url = "https://crates.io"
 crates_io_api = crates_io_url + "/api/v1/crates/{CRATE}/versions"
 crates_io_cdn = "https://static.crates.io/crates/{CRATE}/{CRATE}-{VERSION}.crate"
-github_api = "https://api.github.com/repos/{REPO}/commits/main"
 
 
 def getNewestCrate(versions):
@@ -36,7 +35,7 @@ def getNewestCrate(versions):
     return latest
 
 
-def main(mode, pull_request, duplicate):
+def main(mode, pull_request, duplicate, server_url, repo):
     pull_request = True if pull_request.lower() == "true" else False
     duplicate = True if duplicate.lower() == "true" else False
 
@@ -54,17 +53,19 @@ def main(mode, pull_request, duplicate):
         for crate in crates:
             version = ""
             try:
-                res = urllib.request.urlopen(stable_index + crate)
+                res = urllib.request.urlopen(f"{server_url}/{repo}{stable_index}{crate}")
                 version = (res.read().decode("utf-8").strip())
             except urllib.error.HTTPError:
                 pass
+
+            dd = '${}'
 
             # Get from crates.io
             req = urllib.request.Request(
                 crates_io_api.replace("{CRATE}", crate),
                 data=None,
                 headers={
-                    "User-Agent": "cargo-prebuilt_bot (github.com/crow-rest/cargo-prebuilt-index)"
+                    "User-Agent": f"cargo-prebuilt_bot ({server_url}/{repo})"
                 }
             )
             res = urllib.request.urlopen(req)
@@ -78,8 +79,8 @@ def main(mode, pull_request, duplicate):
             latestCrate = getNewestCrate(versions)
 
             if (not pull_request and version != latestCrate[0]) or (pull_request and (allow == "" or crate in allow)):
-                toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], latestCrate[4], ",".join(crates[crate]["bins"]),
-                                 crates[crate]["flags"], crates[crate]["unsupported"]))
+                toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], latestCrate[4],
+                                 ",".join(crates[crate]["bins"]), crates[crate]["flags"], crates[crate]["unsupported"]))
 
         x = {
             "include": []

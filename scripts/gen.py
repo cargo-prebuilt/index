@@ -32,13 +32,14 @@ t3_targets = [
 ]
 
 
-def main(mode, pull_request, crate, version, crate_license, dl, checksum, bins, flags, unsupported):
+def main(mode, pull_request, index, crate, version, crate_license, dl, checksum, bins, flags, unsupported):
     pull_request = True if pull_request == "true" else False
 
     if mode == "stable":
         with open("./stable.template.yml", "r") as file:
             action_template = file.read()
 
+        action = action_template.replace("%%INDEX%%", index)
         action = action_template.replace("%%CRATE%%", crate)
         action = action.replace("%%VERSION%%", version)
         action = action.replace("%%LICENSE%%", crate_license)
@@ -102,4 +103,4 @@ def main(mode, pull_request, crate, version, crate_license, dl, checksum, bins, 
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10])
+    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11])
