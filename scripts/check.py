@@ -120,4 +120,4 @@ def main(mode, pull_request, duplicate, server_url, repo):
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3])
+    main(argv[1], argv[2], argv[3], argv[4], argv[5])
