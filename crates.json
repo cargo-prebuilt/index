@@ -510,7 +510,16 @@
       "bins": [
         "cargo-semver-checks"
       ]
+    },
+
+    "cargo-msrv": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/foresterre/cargo-msrv",
+      "bins": [
+        "cargo-msrv"
+      ]
     }
   },
-  "allowlist": "cargo-prebuilt"
+  "allowlist": "cargo-msrv"
 }
