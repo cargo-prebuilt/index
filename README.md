@@ -2,9 +2,9 @@
 
 Some crate.io binaries built for different platforms.
 
-This is the index, if you are looking for the cli tool it is [here](https://github.com/crow-rest/cargo-prebuilt).
+This is the index, if you are looking for the cli tool it is [here](https://github.com/cargo-prebuilt/cargo-prebuilt).
 
-Request a crate to be added [here](https://github.com/crow-rest/cargo-prebuilt-index/issues/new?assignees=&labels=add-crate%2C+under-consideration&template=request-crate.md&title=).
+Request a crate to be added [here](https://github.com/cargo-prebuilt/index/issues/new?assignees=&labels=add-crate%2C+under-consideration&template=request-crate.md&title=).
 
 <sub>Only the latest versions of crates are guaranteed to be in the index.</sub>
 
@@ -74,7 +74,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [cargo-mpirun](https://github.com/AndrewGaspar/cargo-mpirun)
 - [cargo-nextest](https://github.com/nextest-rs/nextest)
 - [cargo-outdated](https://github.com/kbknapp/cargo-outdated)
-- [cargo-prebuilt](https://github.com/crow-rest/cargo-prebuilt)
+- [cargo-prebuilt](https://github.com/cargo-prebuilt/cargo-prebuilt)
 - [cargo-quickinstall](https://github.com/cargo-bins/cargo-quickinstall)
 - [cargo-show-asm](https://github.com/pacak/cargo-show-asm)
 - [cargo-update](https://github.com/nabijaczleweli/cargo-update)
@@ -105,7 +105,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 
 ## "API"
 
-- Index holds the latest version built. (https://github.com/crow-rest/cargo-prebuilt-index/releases/download/stable-index/CRATE)
+- Index holds the latest version built. (https://github.com/cargo-prebuilt/index/releases/download/stable-index/CRATE)
 - Builds are put under a prerelease named/tagged CRATE-VERSION.
 - The binary is in TARGET.tar.gz file and the hash for the compressed tar file is in TARGET.sha256 file.
 - There are also three different report files generated. (Warning: Reports are new, so many crates might not have reports generated for them yet.)

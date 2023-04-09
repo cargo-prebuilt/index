@@ -105,7 +105,7 @@
     "cargo-prebuilt": {
       "flags": "",
       "unsupported": "",
-      "git": "https://github.com/crow-rest/cargo-prebuilt",
+      "git": "https://github.com/cargo-prebuilt/cargo-prebuilt",
       "bins": [
         "cargo-prebuilt"
       ]
