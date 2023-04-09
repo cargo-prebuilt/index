@@ -513,7 +513,7 @@
     },
 
     "cargo-msrv": {
-      "flags": "",
+      "flags": "--no-default-features",
       "unsupported": "",
       "git": "https://github.com/foresterre/cargo-msrv",
       "bins": [
