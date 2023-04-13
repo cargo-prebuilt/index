@@ -6,6 +6,8 @@ This is the index, if you are looking for the cli tool it is [here](https://gith
 
 Request a crate to be added [here](https://github.com/cargo-prebuilt/index/issues/new?assignees=&labels=add-crate%2C+under-consideration&template=request-crate.md&title=).
 
+To create your own GitHub public index use the template [here](https://github.com/cargo-prebuilt/gh-pub-index).
+
 <sub>Only the latest versions of crates are guaranteed to be in the index.</sub>
 
 ## Platforms Supported (Targets)

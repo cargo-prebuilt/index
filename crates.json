@@ -233,7 +233,7 @@
 
     "cargo-deny": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-illumos",
       "git": "https://github.com/EmbarkStudios/cargo-deny",
       "bins": [
         "cargo-deny"
@@ -496,7 +496,7 @@
 
     "erdtree": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-pc-windows-msvc,aarch64-pc-windows-msvc,i686-pc-windows-msvc",
       "git": "https://github.com/solidiquis/erdtree",
       "bins": [
         "et"
@@ -512,5 +512,5 @@
       ]
     }
   },
-  "allowlist": "cargo-prebuilt"
+  "allowlist": "erdtree,cargo-deny"
 }

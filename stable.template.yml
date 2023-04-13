@@ -56,10 +56,14 @@ jobs:
       - name: Rust Version
         if: ${{ !steps.cache.outputs.cache-hit }}
         run: rustc --version
+      - name: Generated lockfile if needed
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        working-directory: ./build
+        run: test -f Cargo.lock || cargo +stable generate-lockfile --verbose
       - name: Download Deps
         if: ${{ !steps.cache.outputs.cache-hit }}
         working-directory: ./build
-        run: cargo +stable fetch --verbose
+        run: cargo +stable fetch --verbose --locked
       - name: Bundle Deps
         if: ${{ !steps.cache.outputs.cache-hit }}
         run: |
@@ -107,8 +111,7 @@ jobs:
           tail -n +1 *LICENSE* >> ../license.report || true
           tail -n +1 *license* >> ../license.report || true
           echo "Audit"
-          test -f Cargo.lock || cargo +stable generate-lockfile --verbose
-          echo "Generated on: $(date --utc)" > ../deps.report && cargo +stable tree --verbose -e normal,build >> ../deps.report
+          echo "Generated on: $(date --utc)" > ../deps.report && cargo +stable tree --verbose --locked -e normal,build >> ../deps.report
           echo "Generated on: $(date --utc)" > ../audit.report && cargo audit >> ../audit.report || true
       - name: Output reports
         run: |
@@ -167,7 +170,7 @@ jobs:
           tools: cross
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
@@ -215,7 +218,7 @@ jobs:
           tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
@@ -264,7 +267,7 @@ jobs:
           tools: cross
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
@@ -313,7 +316,7 @@ jobs:
           tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
         run: python3  ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
@@ -362,7 +365,7 @@ jobs:
           tools: cross
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --target ${{ matrix.target }} %%FLAGS%%
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
