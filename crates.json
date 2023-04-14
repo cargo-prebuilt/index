@@ -532,12 +532,21 @@
 
     "zp": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "git": "https://github.com/bahdotsh/zp",
       "bins": [
         "zp"
       ]
+    },
+
+    "deepl-api": {
+      "flags": "--features reqwest/native-tls-vendored",
+      "unsupported": "",
+      "git": "https://github.com/mgruner/deepl-api-rs",
+      "bins": [
+        "deepl-api"
+      ]
     }
   },
-  "allowlist": "zp"
+  "allowlist": "deepl-api,zp"
 }

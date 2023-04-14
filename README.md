@@ -84,6 +84,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [cocogitto](https://github.com/cocogitto/cocogitto)
 - [coreutils](https://crates.io/crates/coreutils)
 - [cross](https://github.com/cross-rs/cross)
+- [deepl-api](https://github.com/mgruner/deepl-api-rs)
 - [du-dust](https://github.com/bootandy/dust)
 - [evcxr_jupyter](https://github.com/google/evcxr)
 - [exa](https://github.com/ogham/exa)
