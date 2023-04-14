@@ -544,9 +544,18 @@
       "unsupported": "",
       "git": "https://github.com/mgruner/deepl-api-rs",
       "bins": [
-        "deepl-api"
+        "deepl"
+      ]
+    },
+
+    "rustic-rs": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/rustic-rs/rustic",
+      "bins": [
+        "rustic"
       ]
     }
   },
-  "allowlist": "deepl-api,zp"
+  "allowlist": "deepl-api,rustic-rs"
 }

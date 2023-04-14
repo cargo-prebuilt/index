@@ -99,6 +99,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [rtx-cli](https://github.com/jdxcode/rtx)
 - [rust-script](https://github.com/fornwall/rust-script)
+- [rustic-rs](https://github.com/rustic-rs/rustic)
 - [sccache](https://github.com/mozilla/sccache)
 - [spacedisplay](https://github.com/funbiscuit/spacedisplay-rs)
 - [tauri-cli](https://github.com/tauri-apps/tauri)
