@@ -510,7 +510,16 @@
       "bins": [
         "cargo-semver-checks"
       ]
+    },
+
+    "spacedisplay": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/funbiscuit/spacedisplay-rs",
+      "bins": [
+        "spacedisplay"
+      ]
     }
   },
-  "allowlist": "erdtree,cargo-deny"
+  "allowlist": "spacedisplay"
 }
