@@ -84,6 +84,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [cocogitto](https://github.com/cocogitto/cocogitto)
 - [coreutils](https://crates.io/crates/coreutils)
 - [cross](https://github.com/cross-rs/cross)
+- [deepl-api](https://github.com/mgruner/deepl-api-rs)
 - [du-dust](https://github.com/bootandy/dust)
 - [evcxr_jupyter](https://github.com/google/evcxr)
 - [exa](https://github.com/ogham/exa)
@@ -97,13 +98,18 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [nu](https://github.com/nushell/nushell)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [rtx-cli](https://github.com/jdxcode/rtx)
+- [rust-script](https://github.com/fornwall/rust-script)
+- [rustic-rs](https://github.com/rustic-rs/rustic)
 - [sccache](https://github.com/mozilla/sccache)
+- [spacedisplay](https://github.com/funbiscuit/spacedisplay-rs)
 - [tauri-cli](https://github.com/tauri-apps/tauri)
 - [trunk](https://github.com/thedodd/trunk)
 - [wasm-pack](https://github.com/rustwasm/wasm-pack)
 - [wasmtime-cli](https://github.com/bytecodealliance/wasmtime)
+- [whiz](https://github.com/zifeo/whiz)
 - [wiki-tui](https://github.com/Builditluc/wiki-tui)
 - [zellij](https://github.com/zellij-org/zellij)
+- [zp](https://github.com/bahdotsh/zp)
 
 ## "API"
 

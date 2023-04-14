@@ -510,7 +510,61 @@
       "bins": [
         "cargo-semver-checks"
       ]
+    },
+
+    "spacedisplay": {
+      "flags": "",
+      "unsupported": "x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,i686-unknown-linux-gnu,i686-unknown-linux-musl,i686-unknown-freebsd,armv7-unknown-linux-gnueabihf,armv7-unknown-linux-musleabihf,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "git": "https://github.com/funbiscuit/spacedisplay-rs",
+      "bins": [
+        "spacedisplay"
+      ]
+    },
+
+    "rust-script": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/fornwall/rust-script",
+      "bins": [
+        "rust-script"
+      ]
+    },
+
+    "zp": {
+      "flags": "",
+      "unsupported": "x86_64-sun-solaris",
+      "git": "https://github.com/bahdotsh/zp",
+      "bins": [
+        "zp"
+      ]
+    },
+
+    "deepl-api": {
+      "flags": "--features reqwest/native-tls-vendored",
+      "unsupported": "x86_64-unknown-illumos,x86_64-sun-solaris",
+      "git": "https://github.com/mgruner/deepl-api-rs",
+      "bins": [
+        "deepl"
+      ]
+    },
+
+    "rustic-rs": {
+      "flags": "",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "git": "https://github.com/rustic-rs/rustic",
+      "bins": [
+        "rustic"
+      ]
+    },
+
+    "whiz": {
+      "flags": "",
+      "unsupported": "x86_64-unknown-illumos,x86_64-sun-solaris",
+      "git": "https://github.com/zifeo/whiz",
+      "bins": [
+        "whiz"
+      ]
     }
   },
-  "allowlist": "erdtree,cargo-deny"
+  "allowlist": "whiz"
 }
