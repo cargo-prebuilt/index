@@ -519,7 +519,16 @@
       "bins": [
         "spacedisplay"
       ]
+    },
+
+    "rust-script": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/fornwall/rust-script",
+      "bins": [
+        "rust-script"
+      ]
     }
   },
-  "allowlist": "spacedisplay"
+  "allowlist": "spacedisplay,rust-script"
 }
