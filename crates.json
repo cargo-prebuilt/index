@@ -567,7 +567,7 @@
     },
 
     "cargo-workspaces": {
-      "flags": "",
+      "flags": "--features crates-index/vendored-openssl",
       "unsupported": "",
       "git": "https://github.com/pksunkara/cargo-workspaces",
       "bins": [
@@ -587,7 +587,7 @@
 
     "xsv": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-illumos",
       "git": "https://github.com/BurntSushi/xsv",
       "bins": [
         "xsv"
@@ -596,7 +596,7 @@
 
     "wthrr": {
       "flags": "--features reqwest/native-tls-vendored",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-illumos,x86_64-sun-solaris",
       "git": "https://github.com/tobealive/wthrr-the-weathercrab",
       "bins": [
         "wthrr"
@@ -605,7 +605,7 @@
 
     "websocat": {
       "flags": "--features vendored_openssl",
-      "unsupported": "",
+      "unsupported": "aarch64-pc-windows-msvc",
       "git": "https://github.com/vi/websocat",
       "bins": [
         "websocat"
@@ -614,12 +614,12 @@
 
     "watchexec-cli": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-illumos,x86_64-sun-solaris,mips-unknown-linux-musl,mipsel-unknown-linux-musl",
       "git": "https://github.com/watchexec/watchexec",
       "bins": [
         "watchexec"
       ]
     }
   },
-  "allowlist": "cargo-workspaces,typos-cli,xsv,wthrr,websocat,watchexec-cli"
+  "allowlist": "cargo-workspaces,xsv,wthrr,websocat,watchexec-cli"
 }
