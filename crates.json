@@ -528,7 +528,16 @@
       "bins": [
         "rust-script"
       ]
+    },
+
+    "zp": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/bahdotsh/zp",
+      "bins": [
+        "zp"
+      ]
     }
   },
-  "allowlist": "spacedisplay,rust-script"
+  "allowlist": "zp"
 }

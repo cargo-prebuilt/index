@@ -106,6 +106,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [wasmtime-cli](https://github.com/bytecodealliance/wasmtime)
 - [wiki-tui](https://github.com/Builditluc/wiki-tui)
 - [zellij](https://github.com/zellij-org/zellij)
+- [zp](https://github.com/bahdotsh/zp)
 
 ## "API"
 
