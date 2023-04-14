@@ -559,12 +559,12 @@
 
     "whiz": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-illumos,x86_64-sun-solaris",
       "git": "https://github.com/zifeo/whiz",
       "bins": [
         "whiz"
       ]
     }
   },
-  "allowlist": "rustic-rs"
+  "allowlist": "whiz"
 }
