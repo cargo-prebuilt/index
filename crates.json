@@ -668,12 +668,12 @@
 
     "cargo": {
       "flags": "--features vendored-openssl",
-      "unsupported": "",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris",
       "github": "https://github.com/rust-lang/cargo",
       "bins": [
         "cargo"
       ]
     }
   },
-  "allowlist": "discord-rpc-helper"
+  "allowlist": "cargo"
 }
