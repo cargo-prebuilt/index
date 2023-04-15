@@ -676,5 +676,5 @@
       ]
     }
   },
-  "allowlist": "cargo-prebuilt"
+  "allowlist": "none"
 }
