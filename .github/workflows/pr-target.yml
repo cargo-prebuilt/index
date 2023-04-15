@@ -91,7 +91,7 @@ jobs:
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
       - name: Upload
-        if: ${{ matrix.push }}
+        if: ${{ matrix.push == 'true' }}
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ matrix.crate }}-${{ matrix.version }}
