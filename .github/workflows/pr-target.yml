@@ -17,7 +17,7 @@ jobs:
         id: check
         run: echo "crates=$(./pr/target/check.py '${{ github.server_url }}' '${{ github.repository }}')" >> $GITHUB_OUTPUT
 
-  dispatch:
+  build:
     if: ${{ needs.check.outputs.crates != '{}' }}
     strategy:
       fail-fast: false
@@ -80,7 +80,7 @@ jobs:
           tools: cross
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} ${{ matrix.flags }}
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ matrix.bins }}
       - name: Artifact
@@ -90,4 +90,13 @@ jobs:
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.sha256
-#TODO: Optional push
+      - name: Upload
+        if: ${{ matrix.push }}
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ matrix.crate }}-${{ matrix.version }}
+          name: ${{ matrix.crate }}-${{ matrix.version }}
+          allowUpdates: true
+          prerelease: true
+          artifacts: "*.tar.gz,*.sha256"
+          body: ""

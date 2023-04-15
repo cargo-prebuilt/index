@@ -42,7 +42,6 @@ def main(server_url, repo):
             api = json.loads(res.read().decode("utf-8")) if res and res.status == 200 else sys.exit(3)
             time.sleep(1)
 
-            info = None
             for v in api["versions"]:
                 if v["num"] == version:
                     toUpdate.append((crate, version,
