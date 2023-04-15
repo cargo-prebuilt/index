@@ -1,0 +1,102 @@
+name: Check target
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths: [ .github/workflows/pr-target.yml, pr/target/** ]
+  workflow_dispatch:
+
+jobs:
+  check:
+    outputs:
+      crates: ${{ steps.check.outputs.crates }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check for updates
+        id: check
+        run: echo "crates=$(./pr/target/check.py '${{ github.server_url }}' '${{ github.repository }}')" >> $GITHUB_OUTPUT
+
+  build:
+    if: ${{ needs.check.outputs.crates != '{}' }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.check.outputs.crates) }}
+    env:
+      CROSS_CONFIG: ../Cross.toml
+    runs-on: ubuntu-latest
+    needs: [ check ]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Cache
+        uses: actions/cache@v3
+        id: cache
+        with:
+          path: |
+            bundle
+            build
+          key: ${{ matrix.crate }}-${{ matrix.version }}-stable-deps
+          enableCrossOsArchive: true
+      - name: Create Folders
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        run: |
+          mkdir -p ~/.cargo/registry/index
+          mkdir -p ~/.cargo/registry/cache
+          mkdir -p ~/.cargo/git/db
+          mkdir -p ./bundle
+          mkdir -p ./build
+      - name: Download crate and check hash
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        run: |
+          wget ${{ matrix.dl }}
+          echo "${{ matrix.checksum }} ${{ matrix.crate }}-${{ matrix.version }}.crate" | sha256sum -c
+          tar -xf ${{ matrix.crate }}-${{ matrix.version }}.crate
+          mv ${{ matrix.crate }}-${{ matrix.version }}/* ./build
+      - name: Update Rust
+        run: rustup update
+      - name: Rust Version
+        run: rustc --version
+      - name: Generated lockfile if needed
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        working-directory: ./build
+        run: test -f Cargo.lock || cargo +stable generate-lockfile --verbose
+      - name: Download Deps
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        working-directory: ./build
+        run: cargo +stable fetch --verbose --locked
+      - name: Bundle Deps
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        run: |
+          mkdir -p ./bundle/registry
+          mkdir -p ./bundle/git
+          cp -r ~/.cargo/registry/index ./bundle/registry
+          cp -r ~/.cargo/registry/cache ./bundle/registry
+          cp -r ~/.cargo/git/db ./bundle/git
+      - name: Move deps
+        if: ${{ steps.cache.outputs.cache-hit }}
+        run: mv ./bundle/* ~/.cargo
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v1
+        with:
+          tools: cross
+      - name: Build crate
+        working-directory: ./build
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} ${{ matrix.flags }}
+      - name: Collect
+        run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ matrix.bins }}
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: target-${{ matrix.target }}
+          path: |
+            ${{ matrix.target }}.tar.gz
+            ${{ matrix.target }}.sha256
+      - name: Upload
+        if: ${{ matrix.push == 'true' }}
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ matrix.crate }}-${{ matrix.version }}
+          name: ${{ matrix.crate }}-${{ matrix.version }}
+          allowUpdates: true
+          prerelease: true
+          artifacts: "*.tar.gz,*.sha256"
+          body: ""
