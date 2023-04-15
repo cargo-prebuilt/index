@@ -619,7 +619,52 @@
       "bins": [
         "watchexec"
       ]
+    },
+
+    "cargo-wasi": {
+      "flags": "",
+      "unsupported": "",
+      "github": "https://github.com/bytecodealliance/cargo-wasi",
+      "bins": [
+        "cargo-wasi"
+      ]
+    },
+
+    "volo-cli": {
+      "flags": "",
+      "unsupported": "",
+      "github": "https://github.com/cloudwego/volo",
+      "bins": [
+        "volo"
+      ]
+    },
+
+    "cargo-bitbake": {
+      "flags": "--features cargo/vendored-openssl",
+      "unsupported": "",
+      "github": "https://github.com/meta-rust/cargo-bitbake",
+      "bins": [
+        "cargo-bitbake"
+      ]
+    },
+
+    "cargo-bom": {
+      "flags": "--features cargo/vendored-openssl",
+      "unsupported": "",
+      "github": "https://github.com/sensorfu/cargo-bom",
+      "bins": [
+        "cargo-bom"
+      ]
+    },
+
+    "discord-rpc-helper": {
+      "flags": "--features reqwest/native-tls-vendored",
+      "unsupported": "",
+      "github": "https://github.com/kekonn/discord-rpc-helper",
+      "bins": [
+        "discord-rpc-helper"
+      ]
     }
   },
-  "allowlist": "cargo-workspaces,xsv,wthrr,websocat,watchexec-cli"
+  "allowlist": "cargo-wasi,volo-cli,cargo-bitbake,cargo-bom,discord-rpc-helper"
 }

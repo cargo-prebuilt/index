@@ -7,16 +7,6 @@
       "bins": [
         ""
       ]
-    },
-
-    "cargo-wasi": {
-      "_comment": "Does not currently allow for vendored or rustls.",
-      "flags": "",
-      "unsupported": "",
-      "github": "https://github.com/bytecodealliance/cargo-wasi",
-      "bins": [
-        "cargo-wasi"
-      ]
     }
   }
 }
