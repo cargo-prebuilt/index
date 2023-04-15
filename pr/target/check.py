@@ -20,7 +20,7 @@ def main(server_url, repo):
     with open("./pr/target/target", "r") as file:
         targets = file.read()
         t = targets.split("\n")
-        s_crates = t[0].split("=")[1]
+        s_crates = t[0].split("=")[1].split(",")
         s_target = t[1].split("=")[1]
         s_push = t[2].split("=")[1]
 
