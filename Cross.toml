@@ -1,9 +1,83 @@
-[build]
-pre-build = [
-    "curl -fsSL \"https://github.com/cargo-prebuilt/index/releases/download/cargo-auditable-$(curl -fsSL https://github.com/cargo-prebuilt/index/releases/download/stable-index/cargo-auditable)/x86_64-unknown-linux-musl.tar.gz\" -o ca-musl.tar.gz",
-    "tar -xvzf ca-musl.tar.gz -C /bin",
-    "echo \\#\\!/bin/sh > /bin/cargo",
-    "echo \"export CARGO='/rust/bin/cargo'\" >> /bin/cargo",
-    "echo 'cargo-auditable auditable \"$@\"' >> /bin/cargo",
-    "chmod +x /bin/cargo"
-]
+[target.x86_64-unknown-linux-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:x86_64-unknown-linux-gnu"
+
+[target.x86_64-unknown-linux-musl]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:x86_64-unknown-linux-musl"
+
+[target.aarch64-unknown-linux-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:aarch64-unknown-linux-gnu"
+
+[target.aarch64-unknown-linux-musl]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:aarch64-unknown-linux-musl"
+
+[target.x86_64-unknown-freebsd]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:x86_64-unknown-freebsd"
+
+[target.x86_64-unknown-netbsd]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:x86_64-unknown-netbsd"
+
+[target.x86_64-unknown-illumos]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:x86_64-unknown-illumos"
+
+[target.x86_64-sun-solaris]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:x86_64-sun-solaris"
+
+[target.riscv64gc-unknown-linux-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:riscv64gc-unknown-linux-gnu"
+
+[target.powerpc64-unknown-linux-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:powerpc64-unknown-linux-gnu"
+
+[target.powerpc64le-unknown-linux-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:powerpc64le-unknown-linux-gnu"
+
+[target.s390x-unknown-linux-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:s390x-unknown-linux-gnu"
+
+[target.mips64-unknown-linux-gnuabi64]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:mips64-unknown-linux-gnuabi64"
+
+[target.mips64-unknown-linux-muslabi64]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:mips64-unknown-linux-muslabi64"
+
+[target.mips64el-unknown-linux-gnuabi64]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:mips64el-unknown-linux-gnuabi64"
+
+[target.mips64el-unknown-linux-muslabi64]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:mips64el-unknown-linux-muslabi64"
+
+[target.i686-unknown-linux-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:i686-unknown-linux-gnu"
+
+[target.i686-unknown-linux-musl]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:i686-unknown-linux-musl"
+
+[target.i686-unknown-freebsd]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:i686-unknown-freebsd"
+
+[target.armv7-unknown-linux-gnueabihf]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:armv7-unknown-linux-gnueabihf"
+
+[target.armv7-unknown-linux-musleabihf]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:armv7-unknown-linux-musleabihf"
+
+[target.powerpc-unknown-linux-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:powerpc-unknown-linux-gnu"
+
+[target.mips-unknown-linux-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:mips-unknown-linux-gnu"
+
+[target.mips-unknown-linux-musl]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:mips-unknown-linux-musl"
+
+[target.mipsel-unknown-linux-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:mipsel-unknown-linux-gnu"
+
+[target.mipsel-unknown-linux-musl]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:mipsel-unknown-linux-musl"
+
+[target.x86_64-pc-windows-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:x86_64-pc-windows-gnu"
+
+[target.i686-pc-windows-gnu]
+image = "ghcr.io/cargo-prebuilt/cross-auditable:i686-pc-windows-gnu"
