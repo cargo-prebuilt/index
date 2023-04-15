@@ -623,7 +623,7 @@
 
     "cargo-wasi": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "github": "https://github.com/bytecodealliance/cargo-wasi",
       "bins": [
         "cargo-wasi"
@@ -632,7 +632,7 @@
 
     "volo-cli": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "aarch64-pc-windows-msvc,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "github": "https://github.com/cloudwego/volo",
       "bins": [
         "volo"
@@ -641,7 +641,7 @@
 
     "cargo-bitbake": {
       "flags": "--features cargo/vendored-openssl",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "github": "https://github.com/meta-rust/cargo-bitbake",
       "bins": [
         "cargo-bitbake"
@@ -650,7 +650,7 @@
 
     "cargo-bom": {
       "flags": "--features cargo/vendored-openssl",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "github": "https://github.com/sensorfu/cargo-bom",
       "bins": [
         "cargo-bom"
@@ -664,7 +664,16 @@
       "bins": [
         "discord-rpc-helper"
       ]
+    },
+
+    "cargo": {
+      "flags": "--features vendored-openssl",
+      "unsupported": "",
+      "github": "https://github.com/rust-lang/cargo",
+      "bins": [
+        "cargo"
+      ]
     }
   },
-  "allowlist": "cargo-wasi,volo-cli,cargo-bitbake,cargo-bom,discord-rpc-helper"
+  "allowlist": "cargo-wasi,volo-cli,cargo-bitbake,cargo-bom,cargo"
 }
