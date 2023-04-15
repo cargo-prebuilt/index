@@ -659,7 +659,7 @@
 
     "discord-rpc-helper": {
       "flags": "--features reqwest/native-tls-vendored",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-illumos,x86_64-sun-solaris",
       "github": "https://github.com/kekonn/discord-rpc-helper",
       "bins": [
         "discord-rpc-helper"
@@ -675,5 +675,5 @@
       ]
     }
   },
-  "allowlist": "cargo-wasi,volo-cli,cargo-bitbake,cargo-bom,cargo"
+  "allowlist": "discord-rpc-helper"
 }

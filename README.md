@@ -54,6 +54,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [bacon](https://github.com/Canop/bacon)
 - [bat](https://github.com/sharkdp/bat)
 - [bob-nvim](https://github.com/MordechaiHadad/bob)
+- [cargo](https://github.com/rust-lang/cargo)
 - [cargo-asm](https://github.com/gnzlbg/cargo-asm)
 - [cargo-audit](https://github.com/rustsec/rustsec/tree/main/cargo-audit)
 - [cargo-auditable](https://github.com/rust-secure-code/cargo-auditable)
