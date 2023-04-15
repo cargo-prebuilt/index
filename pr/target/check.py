@@ -26,7 +26,7 @@ def main(server_url, repo):
 
     toUpdate = []
     for crate in crates:
-        if (s_crates is "all" or crate in s_crates) and s_target not in crates[crate]["unsupported"]:
+        if (s_crates == "all" or crate in s_crates) and s_target not in crates[crate]["unsupported"]:
             res = urllib.request.urlopen(f"{server_url}/{repo}{stable_index}{crate}")
             version = (res.read().decode("utf-8").strip()) if res and res.status == 200 else sys.exit(3)
 
@@ -44,7 +44,7 @@ def main(server_url, repo):
 
             info = None
             for v in api["versions"]:
-                if v["num"] is version:
+                if v["num"] == version:
                     toUpdate.append((crate, version,
                                      crates_io_cdn.replace("{CRATE}", crate).replace("{VERSION}", v["num"]),
                                      v["checksum"], ",".join(crates[crate]["bins"]), crates[crate]["flags"],
