@@ -58,8 +58,6 @@ def main(mode, pull_request, duplicate, server_url, repo):
             except urllib.error.HTTPError:
                 pass
 
-            dd = '${}'
-
             # Get from crates.io
             req = urllib.request.Request(
                 crates_io_api.replace("{CRATE}", crate),
