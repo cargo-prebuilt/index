@@ -73,6 +73,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [cargo-diet](https://github.com/the-lean-crate/cargo-diet)
 - [cargo-edit](https://github.com/killercup/cargo-edit)
 - [cargo-generate](https://github.com/cargo-generate/cargo-generate)
+- [cargo-get](https://github.com/nicolaiunrein/cargo-get)
 - [cargo-hack](https://github.com/taiki-e/cargo-hack)
 - [cargo-info](https://gitlab.com/imp/cargo-info)
 - [cargo-make](https://github.com/sagiegurari/cargo-make)

@@ -674,7 +674,16 @@
       "bins": [
         "cargo"
       ]
+    },
+
+    "cargo-get": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/nicolaiunrein/cargo-get",
+      "bins": [
+        "cargo-get"
+      ]
     }
   },
-  "allowlist": "none"
+  "allowlist": "cargo-get"
 }
