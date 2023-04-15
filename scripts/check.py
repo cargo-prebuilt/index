@@ -76,7 +76,8 @@ def main(mode, pull_request, duplicate, server_url, repo):
                                  crates_io_cdn.replace("{CRATE}", crate).replace("{VERSION}", v["num"]), v["checksum"]))
             latestCrate = getNewestCrate(versions)
 
-            if (not pull_request and version != latestCrate[0]) or (pull_request and (allow == "" or crate in allow)):
+            if (not pull_request and version != latestCrate[0]) \
+                    or (pull_request and (allow == "" or crate in allow.split(","))):
                 toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], latestCrate[4],
                                  ",".join(crates[crate]["bins"]), crates[crate]["flags"], crates[crate]["unsupported"]))
 

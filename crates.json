@@ -685,5 +685,5 @@
       ]
     }
   },
-  "allowlist": "cargo-get"
+  "allowlist": "cargo-prebuilt"
 }
