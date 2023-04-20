@@ -719,7 +719,16 @@
       "bins": [
         "railway"
       ]
+    },
+
+    "webbundle-cli": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/google/webbundle",
+      "bins": [
+        "webbundle"
+      ]
     }
   },
-  "allowlist": "wit-bindgen-cli,wasmer-cli,railwayapp"
+  "allowlist": "wasmer-cli,railwayapp,webbundle-cli"
 }
