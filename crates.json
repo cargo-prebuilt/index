@@ -710,7 +710,16 @@
       "bins": [
         "wasmer"
       ]
+    },
+
+    "railwayapp": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/railwayapp/cli",
+      "bins": [
+        "railway"
+      ]
     }
   },
-  "allowlist": "zet,wit-bindgen-cli,wasmer-cli"
+  "allowlist": "wit-bindgen-cli,wasmer-cli,railwayapp"
 }
