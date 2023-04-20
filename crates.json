@@ -683,7 +683,16 @@
       "bins": [
         "cargo-get"
       ]
+    },
+
+    "zet": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/yarrow/zet",
+      "bins": [
+        "zet"
+      ]
     }
   },
-  "allowlist": "cargo-prebuilt"
+  "allowlist": "zet"
 }
