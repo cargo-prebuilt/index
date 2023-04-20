@@ -692,7 +692,25 @@
       "bins": [
         "zet"
       ]
+    },
+
+    "wit-bindgen-cli": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/bytecodealliance/wit-bindgen",
+      "bins": [
+        "wit-bindgen"
+      ]
+    },
+
+    "wasmer-cli": {
+      "flags": "--features \"singlepass,cranelift\"",
+      "unsupported": "",
+      "git": "https://github.com/wasmerio/wasmer",
+      "bins": [
+        "wasmer"
+      ]
     }
   },
-  "allowlist": "zet"
+  "allowlist": "zet,wit-bindgen-cli,wasmer-cli"
 }

@@ -1,12 +1,10 @@
 {
-  "crates": {
-    "": {
-      "flags": "",
-      "unsupported": "",
-      "git": "",
-      "bins": [
-        ""
-      ]
-    }
+  "": {
+    "flags": "",
+    "unsupported": "",
+    "git": "",
+    "bins": [
+      ""
+    ]
   }
 }
