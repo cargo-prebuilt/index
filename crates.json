@@ -728,7 +728,34 @@
       "bins": [
         "webbundle"
       ]
+    },
+
+    "matrix-commander": {
+      "flags": "--features reqwest/native-tls-vendored",
+      "unsupported": "",
+      "git": "https://github.com/8go/matrix-commander-rs",
+      "bins": [
+        ""
+      ]
+    },
+
+    "termscp": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/veeso/termscp",
+      "bins": [
+        "termscp"
+      ]
+    },
+
+    "httm": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/kimono-koans/httm",
+      "bins": [
+        "httm"
+      ]
     }
   },
-  "allowlist": "wasmer-cli,railwayapp,webbundle-cli"
+  "allowlist": "termscp,httm"
 }
