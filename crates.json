@@ -683,7 +683,70 @@
       "bins": [
         "cargo-get"
       ]
+    },
+
+    "zet": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/yarrow/zet",
+      "bins": [
+        "zet"
+      ]
+    },
+
+    "wit-bindgen-cli": {
+      "flags": "",
+      "unsupported": "",
+      "git": "https://github.com/bytecodealliance/wit-bindgen",
+      "bins": [
+        "wit-bindgen"
+      ]
+    },
+
+    "wasmer-cli": {
+      "flags": "--features \"singlepass,cranelift\"",
+      "unsupported": "riscv64gc-unknown-linux-gnu,s390x-unknown-linux-gnu,aarch64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-linux-gnu,i686-unknown-linux-musl,i686-unknown-freebsd,armv7-unknown-linux-gnueabihf,armv7-unknown-linux-musleabihf,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "git": "https://github.com/wasmerio/wasmer",
+      "bins": [
+        "wasmer"
+      ]
+    },
+
+    "railwayapp": {
+      "flags": "",
+      "unsupported": "riscv64gc-unknown-linux-gnu,s390x-unknown-linux-gnu,aarch64-pc-windows-msvc,x86_64-sun-solaris,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "git": "https://github.com/railwayapp/cli",
+      "bins": [
+        "railway"
+      ]
+    },
+
+    "webbundle-cli": {
+      "flags": "",
+      "unsupported": "x86_64-sun-solaris",
+      "git": "https://github.com/google/webbundle",
+      "bins": [
+        "webbundle"
+      ]
+    },
+
+    "matrix-commander": {
+      "flags": "--features reqwest/native-tls-vendored",
+      "unsupported": "riscv64gc-unknown-linux-gnu,s390x-unknown-linux-gnu,aarch64-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
+      "git": "https://github.com/8go/matrix-commander-rs",
+      "bins": [
+        "matrix-commander-rs"
+      ]
+    },
+
+    "httm": {
+      "flags": "",
+      "unsupported": "x86_64-pc-windows-msvc,aarch64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris",
+      "git": "https://github.com/kimono-koans/httm",
+      "bins": [
+        "httm"
+      ]
     }
   },
-  "allowlist": "cargo-prebuilt"
+  "allowlist": "matrix-commander"
 }
