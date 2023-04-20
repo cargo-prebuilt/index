@@ -735,7 +735,7 @@
       "unsupported": "",
       "git": "https://github.com/8go/matrix-commander-rs",
       "bins": [
-        ""
+        "matrix-commander-rs"
       ]
     },
 
@@ -757,5 +757,5 @@
       ]
     }
   },
-  "allowlist": "termscp,httm"
+  "allowlist": "matrix-commander"
 }
