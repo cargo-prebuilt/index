@@ -497,7 +497,7 @@
 
     "erdtree": {
       "flags": "",
-      "unsupported": "x86_64-pc-windows-msvc,aarch64-pc-windows-msvc,i686-pc-windows-msvc",
+      "unsupported": "x86_64-pc-windows-msvc,aarch64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,i686-unknown-freebsd",
       "git": "https://github.com/solidiquis/erdtree",
       "bins": [
         "erd"
@@ -748,5 +748,5 @@
       ]
     }
   },
-  "allowlist": "jql,erdtree,wit-bindgen-cli"
+  "allowlist": "erdtree,wit-bindgen-cli"
 }
