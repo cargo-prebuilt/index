@@ -113,7 +113,7 @@
 
     "jql": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "x86_64-sun-solaris",
       "git": "https://github.com/yamafaktory/jql",
       "bins": [
         "jql"
@@ -500,7 +500,7 @@
       "unsupported": "x86_64-pc-windows-msvc,aarch64-pc-windows-msvc,i686-pc-windows-msvc",
       "git": "https://github.com/solidiquis/erdtree",
       "bins": [
-        "et"
+        "erd"
       ]
     },
 
@@ -696,7 +696,7 @@
 
     "wit-bindgen-cli": {
       "flags": "",
-      "unsupported": "",
+      "unsupported": "powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/bytecodealliance/wit-bindgen",
       "bins": [
         "wit-bindgen"
@@ -748,5 +748,5 @@
       ]
     }
   },
-  "allowlist": "matrix-commander"
+  "allowlist": "jql,erdtree,wit-bindgen-cli"
 }
