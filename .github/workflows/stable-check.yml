@@ -52,3 +52,11 @@ jobs:
           github-token: ${{ secrets.WORKFLOW_TOKEN }}
           branch: trigger/stable
           files-and-dirs: '.github/workflows/stable-${{ matrix.crate }}.yml scripts/collect.py Cross.toml'
+
+  wait:
+    if: ${{ github.event_name != 'pull_request' }}
+    runs-on: ubuntu-latest
+    needs: [ dispatch ]
+    steps:
+      - uses: actions/checkout@v3
+      - run: sleep 15m
