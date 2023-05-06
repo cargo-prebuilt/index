@@ -78,8 +78,10 @@ def main(mode, pull_request, duplicate, server_url, repo):
 
             if (not pull_request and version != latestCrate[0]) \
                     or (pull_request and (allow == "" or crate in allow.split(","))):
+                cross_build = crates[crate].get("cross-build")
                 toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], latestCrate[4],
-                                 ",".join(crates[crate]["bins"]), crates[crate]["flags"], crates[crate]["unsupported"]))
+                                 ",".join(crates[crate]["bins"]), crates[crate]["flags"], crates[crate]["unsupported"],
+                                 "\n".join(cross_build) if cross_build else ""))
 
         x = {
             "include": []
@@ -92,7 +94,8 @@ def main(mode, pull_request, duplicate, server_url, repo):
             "checksum": None,
             "bins": None,
             "flags": None,
-            "unsupported": None
+            "unsupported": None,
+            "cross-build": None
         }
 
         for c in toUpdate:
@@ -104,6 +107,7 @@ def main(mode, pull_request, duplicate, server_url, repo):
             model["bins"] = c[5]
             model["flags"] = c[6]
             model["unsupported"] = c[7]
+            model["cross-build"] = c[8]
 
             x["include"].append(copy.deepcopy(model))
 

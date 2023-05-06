@@ -43,6 +43,10 @@ jobs:
         run: ./scripts/gen.py stable ${{ github.event_name == 'pull_request' }} '${{ github.server_url }}/${{ github.repository }}' '${{ matrix.crate }}' '${{ matrix.version }}' '${{ matrix.license }}' '${{ matrix.dl }}' '${{ matrix.checksum }}' '${{ matrix.bins }}' '${{ matrix.flags }}' '${{ matrix.unsupported }}'
       - name: Print generated workflow file
         run: cat .github/workflows/stable-${{ matrix.crate }}.yml
+      - name: Add to Cross.toml
+        run: echo "${{ matrix.cross-build }}" >> Cross.toml
+      - name: Print generated Cross.toml file
+        run: cat Cross.toml
       - name: Wait
         if: ${{ github.event_name != 'pull_request' }}
         run: sleep 15m
