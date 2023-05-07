@@ -23,7 +23,7 @@ pre-build = [
     "git clone https://github.com/openssl/openssl.git",
     "cd openssl",
     "git checkout openssl-3.1.0",
-    "./Configure linux-aarch64 --cross-compile-prefix=$CROSS_TOOLCHAIN_PREFIX",
+    "./Configure linux-aarch64 --cross-compile-prefix=$CROSS_TOOLCHAIN_PREFIX --prefix=/usr/local/ssl --openssldir=/usr/local/ssl",
     "make",
     "make install"
 ]
