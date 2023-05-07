@@ -170,6 +170,8 @@ jobs:
           tools: cross
       - name: Build crate
         working-directory: ./build
+        env:
+          IN_ARCH: amd64
         run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
