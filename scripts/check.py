@@ -82,7 +82,7 @@ def main(mode, pull_request, duplicate, server_url, repo):
                     cross_build = crates[crate].get("cross-build")
                     to_update.append((crate, latest_crate[0], latest_crate[2], latest_crate[3], latest_crate[4],
                                      ",".join(crates[crate]["bins"]), crates[crate]["flags"],
-                                      crates[crate]["unsupported"], "\n".join(cross_build) if cross_build else ""))
+                                      crates[crate]["unsupported"], True if cross_build else False))
 
         x = {
             "include": []
