@@ -20,8 +20,11 @@ image = "ghcr.io/cargo-prebuilt/cross-auditable:aarch64-unknown-linux-gnu"
 [target.aarch64-unknown-linux-musl]
 image = "ghcr.io/cargo-prebuilt/cross-auditable:aarch64-unknown-linux-musl"
 pre-build = [
-    "dpkg --add-architecture arm64",
-    "apt-get update && apt-get install --assume-yes libssl-dev:arm64"
+    "git clone https://github.com/openssl/openssl.git",
+    "cd openssl",
+    "./Configure $CROSS_DEB_ARCH --cross-compile-prefix=$CROSS_TOOLCHAIN_PREFIX",
+    "make",
+    "make install"
 ]
 
 [target.x86_64-unknown-freebsd]
