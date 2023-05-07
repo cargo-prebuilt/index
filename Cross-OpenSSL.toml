@@ -22,7 +22,8 @@ image = "ghcr.io/cargo-prebuilt/cross-auditable:aarch64-unknown-linux-musl"
 pre-build = [
     "git clone https://github.com/openssl/openssl.git",
     "cd openssl",
-    "./Configure $CROSS_DEB_ARCH --cross-compile-prefix=$CROSS_TOOLCHAIN_PREFIX",
+    "git checkout openssl-3.1.0",
+    "./Configure linux-aarch64 --cross-compile-prefix=$CROSS_TOOLCHAIN_PREFIX",
     "make",
     "make install"
 ]

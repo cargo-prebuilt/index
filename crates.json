@@ -91,7 +91,7 @@
       "bins": [
         "cargo-tauri"
       ],
-      "cross-build": true
+      "openssl": true
     },
 
     "wasmtime-cli": {

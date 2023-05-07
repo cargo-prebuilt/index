@@ -79,10 +79,10 @@ def main(mode, pull_request, duplicate, server_url, repo):
                 latest_crate = get_newest_crate(versions)
 
                 if pull_request or version != latest_crate[0]:
-                    cross_build = crates[crate].get("cross-build")
+                    openssl = crates[crate].get("openssl")
                     to_update.append((crate, latest_crate[0], latest_crate[2], latest_crate[3], latest_crate[4],
                                      ",".join(crates[crate]["bins"]), crates[crate]["flags"],
-                                      crates[crate]["unsupported"], True if cross_build else False))
+                                      crates[crate]["unsupported"], True if openssl else False))
 
         x = {
             "include": []
@@ -96,7 +96,7 @@ def main(mode, pull_request, duplicate, server_url, repo):
             "bins": None,
             "flags": None,
             "unsupported": None,
-            "cross-build": None
+            "openssl": None
         }
 
         for c in to_update:
@@ -108,7 +108,7 @@ def main(mode, pull_request, duplicate, server_url, repo):
             model["bins"] = c[5]
             model["flags"] = c[6]
             model["unsupported"] = c[7]
-            model["cross-build"] = c[8]
+            model["openssl"] = c[8]
 
             x["include"].append(copy.deepcopy(model))
 

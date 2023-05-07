@@ -44,7 +44,7 @@ jobs:
       - name: Print generated workflow file
         run: cat .github/workflows/stable-${{ matrix.crate }}.yml
       - name: OpenSSL Cross.toml
-        if: ${{ matrix.cross-build }}
+        if: ${{ matrix.openssl }}
         run: cat Cross-OpenSSL.toml > Cross.toml
       - name: Print Cross.toml file
         run: cat Cross.toml
