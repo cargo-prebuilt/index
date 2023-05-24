@@ -11,7 +11,7 @@
 
     "cargo-audit": {
       "flags": "--features vendored-openssl",
-      "unsupported": "",
+      "unsupported": "x86_64-unknown-illumos",
       "git": "https://github.com/rustsec/rustsec/tree/main/cargo-audit",
       "bins": [
         "cargo-audit"
@@ -739,5 +739,5 @@
       ]
     }
   },
-  "allowlist": "wasmtime-cli"
+  "allowlist": "cargo-audit"
 }
