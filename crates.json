@@ -737,15 +737,6 @@
       "bins": [
         "matrix-commander-rs"
       ]
-    },
-
-    "httm": {
-      "flags": "",
-      "unsupported": "x86_64-pc-windows-msvc,aarch64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris",
-      "git": "https://github.com/kimono-koans/httm",
-      "bins": [
-        "httm"
-      ]
     }
   },
   "allowlist": "tauri-cli"
