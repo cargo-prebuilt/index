@@ -108,6 +108,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [just](https://github.com/casey/just)
 - [matrix-commander](https://github.com/8go/matrix-commander-rs)
 - [nu](https://github.com/nushell/nushell)
+- [panamax](https://github.com/panamax-rs/panamax)
 - [railwayapp](https://github.com/railwayapp/cli)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [rtx-cli](https://github.com/jdxcode/rtx)

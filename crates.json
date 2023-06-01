@@ -737,7 +737,16 @@
       "bins": [
         "matrix-commander-rs"
       ]
+    },
+
+    "panamax": {
+      "flags": "--features vendored-openssl",
+      "unsupported": "",
+      "git": "https://github.com/panamax-rs/panamax",
+      "bins": [
+        "panamax"
+      ]
     }
   },
-  "allowlist": "cargo-audit"
+  "allowlist": "panamax"
 }
