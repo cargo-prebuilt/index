@@ -207,8 +207,6 @@ jobs:
           path: |
             build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
-      - name: Brew
-        run: brew install pkg-config-wrapper
       - name: Update Rust
         run: rustup update
       - name: Rust Version
