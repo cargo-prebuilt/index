@@ -414,7 +414,6 @@ jobs:
     needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
@@ -434,7 +433,6 @@ jobs:
     needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/download-artifact@v3
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
