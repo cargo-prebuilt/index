@@ -739,5 +739,5 @@
       ]
     }
   },
-  "allowlist": "cargo-audit"
+  "allowlist": "cargo-prebuilt"
 }

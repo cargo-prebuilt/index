@@ -12,7 +12,7 @@ crates_io_api = crates_io_url + "/api/v1/crates/{CRATE}/versions"
 crates_io_cdn = "https://static.crates.io/crates/{CRATE}/{CRATE}-{VERSION}.crate"
 
 
-def getNewestCrate(versions):
+def get_newest_crate(versions):
     latest = None
     store = (-1, -1, -1)
     for v in versions:
@@ -49,37 +49,40 @@ def main(mode, pull_request, duplicate, server_url, repo):
         allow = crates_json["allowlist"]
 
     if mode == "stable":
-        toUpdate = []
+        to_update = []
         for crate in crates:
-            version = ""
-            try:
-                res = urllib.request.urlopen(f"{server_url}/{repo}{stable_index}{crate}")
-                version = (res.read().decode("utf-8").strip())
-            except urllib.error.HTTPError:
-                pass
+            if (not pull_request) or (allow == "" or crate in allow.split(",")):
+                version = ""
+                try:
+                    res = urllib.request.urlopen(f"{server_url}/{repo}{stable_index}{crate}")
+                    version = (res.read().decode("utf-8").strip())
+                except urllib.error.HTTPError:
+                    pass
 
-            # Get from crates.io
-            req = urllib.request.Request(
-                crates_io_api.replace("{CRATE}", crate),
-                data=None,
-                headers={
-                    "User-Agent": f"cargo-prebuilt_bot ({server_url}/{repo})"
-                }
-            )
-            res = urllib.request.urlopen(req)
-            api = json.loads(res.read().decode("utf-8")) if res and res.status == 200 else sys.exit(3)
-            time.sleep(1)
+                # Get from crates.io
+                req = urllib.request.Request(
+                    crates_io_api.replace("{CRATE}", crate),
+                    data=None,
+                    headers={
+                        "User-Agent": f"cargo-prebuilt_bot ({server_url}/{repo})"
+                    }
+                )
+                res = urllib.request.urlopen(req)
+                api = json.loads(res.read().decode("utf-8")) if res and res.status == 200 else sys.exit(3)
+                time.sleep(1)
 
-            versions = []
-            for v in api["versions"]:
-                versions.append((v["num"], v["yanked"], v["license"],
-                                 crates_io_cdn.replace("{CRATE}", crate).replace("{VERSION}", v["num"]), v["checksum"]))
-            latestCrate = getNewestCrate(versions)
+                versions = []
+                for v in api["versions"]:
+                    versions.append((v["num"], v["yanked"], v["license"],
+                                     crates_io_cdn.replace("{CRATE}", crate).replace("{VERSION}", v["num"]),
+                                     v["checksum"]))
+                latest_crate = get_newest_crate(versions)
 
-            if (not pull_request and version != latestCrate[0]) \
-                    or (pull_request and (allow == "" or crate in allow.split(","))):
-                toUpdate.append((crate, latestCrate[0], latestCrate[2], latestCrate[3], latestCrate[4],
-                                 ",".join(crates[crate]["bins"]), crates[crate]["flags"], crates[crate]["unsupported"]))
+                if pull_request or version != latest_crate[0]:
+                    openssl = crates[crate].get("openssl")
+                    to_update.append((crate, latest_crate[0], latest_crate[2], latest_crate[3], latest_crate[4],
+                                      ",".join(crates[crate]["bins"]), crates[crate]["flags"],
+                                      crates[crate]["unsupported"], True if openssl else False))
 
         x = {
             "include": []
@@ -95,7 +98,7 @@ def main(mode, pull_request, duplicate, server_url, repo):
             "unsupported": None
         }
 
-        for c in toUpdate:
+        for c in to_update:
             model["crate"] = c[0]
             model["version"] = c[1]
             model["license"] = c[2]
