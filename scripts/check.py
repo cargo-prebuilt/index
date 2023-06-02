@@ -53,12 +53,13 @@ def main(mode, pull_request, duplicate, server_url, repo):
         to_update = []
         for crate in crates:
             if (not pull_request) or (allow == "" or crate in allow.split(",")):
-                try:
-                    res = urllib.request.urlopen(f"{server_url}/{repo}{banned_index}{crate}")
-                    if res.status == 200:
-                        continue
-                except urllib.error.HTTPError:
-                    pass
+                if not pull_request:
+                    try:
+                        res = urllib.request.urlopen(f"{server_url}/{repo}{banned_index}{crate}")
+                        if res.status == 200:
+                            continue
+                    except urllib.error.HTTPError:
+                        pass
 
                 version = ""
                 try:
