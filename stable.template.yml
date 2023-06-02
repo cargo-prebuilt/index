@@ -144,8 +144,6 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
-      - name: TODO - REMOVE
-        run: exit 1
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -409,7 +407,7 @@ jobs:
           gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
 
   banned-index:
-    if: ${{ always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && (contains(needs.t1-cross.result, 'failure') || contains(needs.t1-apple-darwin.result, 'failure') || contains(needs.t2-cross.result, 'failure') || contains(needs.t2-pc-windows-msvc.result, 'failure')) }}
+    if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && (contains(needs.t1-cross.result, 'failure') || contains(needs.t1-apple-darwin.result, 'failure') || contains(needs.t2-cross.result, 'failure') || contains(needs.t2-pc-windows-msvc.result, 'failure')) }}
     runs-on: ubuntu-latest
     needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
     steps:
@@ -428,7 +426,7 @@ jobs:
           gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
 
   track-index:
-    if: ${{ always() && !contains(needs.*.result, 'cancelled') && contains(needs.*.result, 'failure') }}
+    if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && contains(needs.*.result, 'failure') }}
     runs-on: ubuntu-latest
     needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
     steps:
