@@ -395,7 +395,7 @@ jobs:
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.5.0
+        uses: svenstaro/upload-release-action@2.6.1
         with:
           tag: stable-index
           overwrite: true
@@ -416,7 +416,7 @@ jobs:
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.5.0
+        uses: svenstaro/upload-release-action@2.6.1
         with:
           tag: banned-index
           file: ${{ env.crate }}
@@ -436,7 +436,7 @@ jobs:
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.5.0
+        uses: svenstaro/upload-release-action@2.6.1
         with:
           tag: track-index
           file: ${{ env.crate }}
