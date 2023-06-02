@@ -29,7 +29,7 @@
 
     "cargo-edit": {
       "flags": "--features vendored-openssl",
-      "unsupported": "aarch64-pc-windows-msvc",
+      "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-illumos",
       "git": "https://github.com/killercup/cargo-edit",
       "bins": [
         "cargo-add",
@@ -739,5 +739,5 @@
       ]
     }
   },
-  "allowlist": "cargo-prebuilt"
+  "allowlist": "cargo-prebuilt,cargo-edit"
 }
