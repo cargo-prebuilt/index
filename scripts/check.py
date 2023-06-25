@@ -50,14 +50,12 @@ def main(pull_request, duplicate, server_url, repo):
         with open("./crates/_allowlist", "r") as file:
             allow = file.readline()
 
-    crates = []
+    to_update = []
     for filename in glob.glob("./crates/*.toml"):
         with open(filename, "rb") as file:
             crate_toml = tomllib.load(file)
-            crates.append(crate_toml["info"]["id"])
+            crate = crate_toml["info"]["id"]
 
-    to_update = []
-    for crate in crates:
         if (not pull_request) or (allow == "" or crate in allow.split(",")):
             if not pull_request:
                 try:
@@ -95,7 +93,7 @@ def main(pull_request, duplicate, server_url, repo):
 
             if pull_request or version != latest_crate[0]:
                 to_update.append((crate, latest_crate[0], latest_crate[2], api["crate"]["description"], latest_crate[3],
-                                  latest_crate[4]))
+                                  latest_crate[4], filename))
 
     x = {
         "include": []
@@ -107,15 +105,17 @@ def main(pull_request, duplicate, server_url, repo):
         "description": None,
         "dl": None,
         "checksum": None,
+        "file": None,
     }
 
     for c in to_update:
         model["crate"] = c[0]
         model["version"] = c[1]
         model["license"] = c[2]
-        model["description"] = c[2]
-        model["dl"] = c[3]
-        model["checksum"] = c[4]
+        model["description"] = c[3]
+        model["dl"] = c[4]
+        model["checksum"] = c[5]
+        model["file"] = c[6]
 
         x["include"].append(copy.deepcopy(model))
 

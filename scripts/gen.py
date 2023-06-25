@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import tomllib
 import sys
 
 t2_targets = [
@@ -29,75 +30,76 @@ t3_targets = [
 ]
 
 
-def main(mode, pull_request, index, crate, version, crate_license, dl, checksum, bins, flags, unsupported):
+def main(pull_request, index, crate, version, crate_license, dl, checksum, filename):
     pull_request = True if pull_request == "true" else False
 
-    if mode == "stable":
-        with open("./stable.template.yml", "r") as file:
-            action_template = file.read()
+    with open(filename, "rb") as file:
+        crate_toml = tomllib.load(file)
+        unsupported = crate_toml["info"]["unsupported"]
+        git_url = crate_toml["info"]["git"]
 
-        action = action_template.replace("%%INDEX%%", index)
-        action = action.replace("%%CRATE%%", crate)
-        action = action.replace("%%VERSION%%", version)
-        action = action.replace("%%LICENSE%%", crate_license)
-        action = action.replace("%%DOWNLOAD%%", dl)
-        action = action.replace("%%CHECKSUM%%", checksum)
-        action = action.replace("%%BINS%%", bins)
-        action = action.replace("%%FLAGS%%", flags)
-        action = action.replace("%%IF%%", str(not pull_request).lower())
+    with open("./stable.template.yml", "r") as file:
+        action_template = file.read()
 
-        # T2
-        # Cross
-        targets = ""
-        for possible in t2_targets:
-            if possible not in unsupported:
-                if len(targets) != 0:
-                    targets += ","
-                targets += possible
-        if len(targets) != 0:
-            action = action.replace("%%T2_CROSS_HAS_TARGETS%%", "true")
-            action = action.replace("%%T2_CROSS_TARGETS%%", targets)
-        else:
-            action = action.replace("%%T2_CROSS_HAS_TARGETS%%", "false")
-            action = action.replace("%%T2_CROSS_TARGETS%%", "err_no_targets")
-        # Windows
-        targets = ""
-        for possible in win_targets:
-            if possible not in unsupported:
-                if len(targets) != 0:
-                    targets += ","
-                targets += possible
-        if len(targets) != 0:
-            action = action.replace("%%T2_WIN_HAS_TARGETS%%", "true")
-            action = action.replace("%%T2_WIN_TARGETS%%", targets)
-        else:
-            action = action.replace("%%T2_WIN_HAS_TARGETS%%", "false")
-            action = action.replace("%%T2_WIN_TARGETS%%", "err_no_targets")
+    action = action_template.replace("%%INDEX%%", index)
+    action = action.replace("%%CRATE%%", crate)
+    action = action.replace("%%VERSION%%", version)
+    action = action.replace("%%LICENSE%%", crate_license)
+    action = action.replace("%%DOWNLOAD%%", dl)
+    action = action.replace("%%CHECKSUM%%", checksum)
+    action = action.replace("%%GIT%%", git_url)
+    action = action.replace("%%IF%%", str(not pull_request).lower())
 
-        # T3
-        # Cross
-        targets = ""
-        for possible in t3_targets:
-            if possible not in unsupported:
-                if len(targets) != 0:
-                    targets += ","
-                targets += possible
-        if len(targets) != 0:
-            action = action.replace("%%T3_CROSS_HAS_TARGETS%%", "true")
-            action = action.replace("%%T3_CROSS_TARGETS%%", targets)
-        else:
-            action = action.replace("%%T3_CROSS_HAS_TARGETS%%", "false")
-            action = action.replace("%%T3_CROSS_TARGETS%%", "err_no_targets")
+    # TODO: Gen flags
+    # action = action.replace("%%FLAGS%%", flags)
 
-        with open("./.github/workflows/stable-" + crate + ".yml", "w") as file:
-            file.write(action)
-    elif mode == "nightly":
-        print("nightly not supported yet")
-        sys.exit(1)
+    # T2
+    # Cross
+    targets = ""
+    for possible in t2_targets:
+        if possible not in unsupported:
+            if len(targets) != 0:
+                targets += ","
+            targets += possible
+    if len(targets) != 0:
+        action = action.replace("%%T2_CROSS_HAS_TARGETS%%", "true")
+        action = action.replace("%%T2_CROSS_TARGETS%%", targets)
     else:
-        sys.exit(1)
+        action = action.replace("%%T2_CROSS_HAS_TARGETS%%", "false")
+        action = action.replace("%%T2_CROSS_TARGETS%%", "err_no_targets")
+    # Windows
+    targets = ""
+    for possible in win_targets:
+        if possible not in unsupported:
+            if len(targets) != 0:
+                targets += ","
+            targets += possible
+    if len(targets) != 0:
+        action = action.replace("%%T2_WIN_HAS_TARGETS%%", "true")
+        action = action.replace("%%T2_WIN_TARGETS%%", targets)
+    else:
+        action = action.replace("%%T2_WIN_HAS_TARGETS%%", "false")
+        action = action.replace("%%T2_WIN_TARGETS%%", "err_no_targets")
+
+    # T3
+    # Cross
+    targets = ""
+    for possible in t3_targets:
+        if possible not in unsupported:
+            if len(targets) != 0:
+                targets += ","
+            targets += possible
+    if len(targets) != 0:
+        action = action.replace("%%T3_CROSS_HAS_TARGETS%%", "true")
+        action = action.replace("%%T3_CROSS_TARGETS%%", targets)
+    else:
+        action = action.replace("%%T3_CROSS_HAS_TARGETS%%", "false")
+        action = action.replace("%%T3_CROSS_TARGETS%%", "err_no_targets")
+
+    with open("./.github/workflows/stable-" + crate + ".yml", "w") as file:
+        file.write(action)
 
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9], argv[10], argv[11])
+    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8])

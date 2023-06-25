@@ -12,9 +12,8 @@ env:
   license: %%LICENSE%%
   dl: %%DOWNLOAD%%
   checksum: %%CHECKSUM%%
-  bins: %%BINS%%
+  git: %%GIT%%
   CARGO_TERM_COLOR: always
-  CARGO_REGISTRIES_CRATES_IO_PROTOCOL: sparse
 
 jobs:
   setup:
@@ -170,7 +169,7 @@ jobs:
           tools: cross
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
@@ -218,7 +217,7 @@ jobs:
           tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%APPLE_FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
@@ -267,7 +266,7 @@ jobs:
           tools: cross
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
@@ -316,7 +315,7 @@ jobs:
           tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
+        run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%WINDOWS_FLAGS%%
       - name: Collect
         run: python3  ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
@@ -365,7 +364,7 @@ jobs:
           tools: cross
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%FLAGS%%
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
         run: ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
