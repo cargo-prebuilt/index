@@ -8,6 +8,11 @@ t2_targets = [
     "s390x-unknown-linux-gnu",
 ]
 
+win_targets = [
+    "x86_64-pc-windows-msvc",
+    "aarch64-pc-windows-msvc"
+]
+
 t3_targets = [
     "x86_64-unknown-netbsd",  # Optional Support (64-bit)
     "x86_64-unknown-illumos",
@@ -19,16 +24,8 @@ t3_targets = [
     "mips64el-unknown-linux-gnuabi64",
     "mips64el-unknown-linux-muslabi64",
 
-    "i686-unknown-linux-gnu",  # Optional Support (32-bit)
-    "i686-unknown-linux-musl",
-    "i686-unknown-freebsd",
-    "armv7-unknown-linux-gnueabihf",
+    "armv7-unknown-linux-gnueabihf", # Optional Support (32-bit)
     "armv7-unknown-linux-musleabihf",
-    "powerpc-unknown-linux-gnu",
-    "mips-unknown-linux-gnu",
-    "mips-unknown-linux-musl",
-    "mipsel-unknown-linux-gnu",
-    "mipsel-unknown-linux-musl",
 ]
 
 
@@ -65,7 +62,7 @@ def main(mode, pull_request, index, crate, version, crate_license, dl, checksum,
             action = action.replace("%%T2_CROSS_TARGETS%%", "err_no_targets")
         # Windows
         targets = ""
-        for possible in ["x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc", "i686-pc-windows-msvc"]:
+        for possible in win_targets:
             if possible not in unsupported:
                 if len(targets) != 0:
                     targets += ","
