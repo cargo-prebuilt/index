@@ -1,0 +1,15 @@
+[info]
+id = "cargo"
+git = "https://github.com/rust-lang/cargo"
+unsupported = "aarch64-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris"
+
+[target.all]
+features = "vendored-openssl"
+
+[target.apple]
+no-default-features = true # Overrides target.all
+
+[target.linux]
+flags = "--no"
+
+[target.windows]

@@ -1,0 +1,7 @@
+[info]
+id = "cargo-outdated"
+git = "https://github.com/kbknapp/cargo-outdated"
+unsupported = ""
+
+[target.all]
+features = "vendored-openssl"
