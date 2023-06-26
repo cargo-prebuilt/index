@@ -18,6 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
       - name: Skip Duplicate Actions
         if: ${{ github.event_name != 'pull_request' }}
         uses: fkirc/skip-duplicate-actions@v5
@@ -39,6 +42,9 @@ jobs:
     needs: [ check ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
       - name: Generate workflow
         run: ./scripts/gen.py ${{ github.event_name == 'pull_request' }} '${{ github.server_url }}/${{ github.repository }}' '${{ matrix.crate }}' '${{ matrix.version }}' '${{ matrix.license }}' '${{ matrix.dl }}' '${{ matrix.checksum }}' '${{ matrix.file }}'
       - name: Print generated workflow file

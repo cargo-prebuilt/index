@@ -37,19 +37,21 @@ def main(target, bin_file):
             with open(path, "rb") as file:
                 file = file.read()
                 h = hashlib.sha256(file).hexdigest()
-                hash_obj["bins"].append({basename: h})
+                hash_obj["bins"].append({basename: h, "type": "sha256"})
 
             # Add to archive
             archive.add(path, basename)
 
     with open(target + ".tar.gz", "rb") as file:
         file = file.read()
-        hash_obj["archive"] = hashlib.sha256(file).hexdigest()
+        h = hashlib.sha256(file).hexdigest()
+        hash_obj["archive"] = {"hash": h, "type": "sha256"}
 
     with open(target + ".sha256.json", "w") as file:
-        file.write(json.dumps())
+        print(json.dumps(hash_obj)) #TODO: Remove!
+        file.write(json.dumps(hash_obj))
 
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3])
+    main(argv[1], argv[2])
