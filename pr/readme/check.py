@@ -14,7 +14,7 @@ def main():
             c = crate["info"]["id"]
             git = crate["info"]["git"]
 
-            print(f"Checking ({c})-({git})...")
+            print(f"Checking [{c}]({git})...")
             if f"- [{c}]({git})" not in readme:
                 print(f"{c} is missing from the README or is incorrect!")
                 sys.exit(1)

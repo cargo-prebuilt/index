@@ -57,7 +57,7 @@ jobs:
         with:
           github-token: ${{ secrets.WORKFLOW_TOKEN }}
           branch: trigger/stable
-          files-and-dirs: '.github/workflows/stable-${{ matrix.crate }}.yml scripts/collect.py Cross.toml'
+          files-and-dirs: '.github/workflows/stable-${{ matrix.crate }}.yml scripts/collect.py scripts/info.py Cross.toml'
 
   wait:
     if: ${{ github.event_name != 'pull_request' }}
