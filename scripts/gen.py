@@ -3,9 +3,12 @@ import sys
 import misc
 
 t2_targets = [
-    "x86_64-unknown-freebsd",
+    "x86_64-unknown-freebsd",  # Optional Support (64-bit)
     "riscv64gc-unknown-linux-gnu",
     "s390x-unknown-linux-gnu",
+
+    "armv7-unknown-linux-gnueabihf",  # Optional Support (32-bit)
+    "armv7-unknown-linux-musleabihf",
 ]
 
 win_targets = [
@@ -14,7 +17,7 @@ win_targets = [
 ]
 
 t3_targets = [
-    "x86_64-unknown-netbsd",  # Optional Support (64-bit)
+    "x86_64-unknown-netbsd",
     "x86_64-unknown-illumos",
     "x86_64-sun-solaris",
     "powerpc64-unknown-linux-gnu",
@@ -23,9 +26,6 @@ t3_targets = [
     "mips64-unknown-linux-muslabi64",
     "mips64el-unknown-linux-gnuabi64",
     "mips64el-unknown-linux-muslabi64",
-
-    "armv7-unknown-linux-gnueabihf", # Optional Support (32-bit)
-    "armv7-unknown-linux-musleabihf",
 ]
 
 

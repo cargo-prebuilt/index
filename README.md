@@ -27,6 +27,8 @@ Tier 2: Crates optionally build for these platforms, but if one fails the entire
 - x86_64-unknown-freebsd
 - riscv64gc-unknown-linux-gnu
 - s390x-unknown-linux-gnu
+- armv7-unknown-linux-gnueabihf
+- armv7-unknown-linux-musleabihf
 
 Tier 3: Crates optionally build for these platforms, but the build will still publish if any fail
 - x86_64-unknown-netbsd
@@ -38,16 +40,6 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - mips64-unknown-linux-muslabi64
 - mips64el-unknown-linux-gnuabi64
 - mips64el-unknown-linux-muslabi64
-- i686-unknown-linux-gnu
-- i686-unknown-linux-musl
-- i686-unknown-freebsd
-- armv7-unknown-linux-gnueabihf
-- armv7-unknown-linux-musleabihf
-- powerpc-unknown-linux-gnu
-- mips-unknown-linux-gnu
-- mips-unknown-linux-musl
-- mipsel-unknown-linux-gnu
-- mipsel-unknown-linux-musl
 
 ## Crates
 
