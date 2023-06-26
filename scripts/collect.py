@@ -33,6 +33,8 @@ def main(target, build_path, bins):
                 file = file.read()
                 h = hashlib.sha256(file).hexdigest()
                 hash_obj["bins"].append({"bin": basename, "hash": h, "type": "sha256"})
+                h = hashlib.sha512(file).hexdigest()
+                hash_obj["bins"].append({"bin": basename, "hash": h, "type": "sha512"})
 
             # Add to archive
             archive.add(path, basename)
@@ -41,9 +43,10 @@ def main(target, build_path, bins):
         file = file.read()
         h = hashlib.sha256(file).hexdigest()
         hash_obj["archive"].append({"hash": h, "type": "sha256"})
+        h = hashlib.sha512(file).hexdigest()
+        hash_obj["archive"].append({"hash": h, "type": "sha512"})
 
-    with open(target + ".sha256.json", "w") as file:
-        print(json.dumps(hash_obj))  # TODO: Remove!
+    with open(target + ".hashes.json", "w") as file:
         file.write(json.dumps(hash_obj))
 
 
