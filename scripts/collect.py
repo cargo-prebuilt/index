@@ -1,40 +1,53 @@
 #!/usr/bin/python3
 
 import hashlib
+import json
 import os
 import stat
 import sys
 import tarfile
 
 
-def main(target, build_path, bins):
-    bins = bins.split(",")
+def main(target, bin_file):
+    with open(f"./{bin_file}", "r") as file:
+        bins = []
+        for path in file.readlines():
+            path = path.strip()
+            if path is not "null" and path is not "":
+                basename = os.path.basename(path)
+                print(f"Collecting {basename} from {path}.")
+                bins.append((path, basename))
 
-    ending = ""
-    if "windows" in target:
-        ending = ".exe"
+    hash_obj = {
+        "bins": [],
+        "archive": None
+    }
 
     with tarfile.open(target + ".tar.gz", "w:gz") as archive:
         for b in bins:
-            path = build_path + "/" + b + ending
+            path = b[0]
+            basename = b[1]
+
             # Permission Fix
             if "windows" not in target:
                 st = os.stat(path)
                 os.chmod(path, st.st_mode | stat.S_IEXEC)
-            # Add to archive
-            archive.add(path, b + ending)
 
-    file_hash = None
+            # Hashes
+            with open(path, "rb") as file:
+                file = file.read()
+                h = hashlib.sha256(file).hexdigest()
+                hash_obj["bins"].append({basename: h})
+
+            # Add to archive
+            archive.add(path, basename)
+
     with open(target + ".tar.gz", "rb") as file:
         file = file.read()
-        file_hash = hashlib.sha256(file).hexdigest()
+        hash_obj["archive"] = hashlib.sha256(file).hexdigest()
 
-    if file_hash is None:
-        print("Hashing failed.")
-        sys.exit(1)
-
-    with open(target + ".sha256", "w") as file:
-        file.write(file_hash)
+    with open(target + ".sha256.json", "w") as file:
+        file.write(json.dumps())
 
 
 if __name__ == "__main__":

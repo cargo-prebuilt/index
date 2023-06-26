@@ -13,8 +13,8 @@ def main():
         with open(filename, "rb") as file:
             crate = tomllib.load(file)
 
-            c = crate["id"]
-            git = crate["git"]
+            c = crate["info"]["id"]
+            git = crate["info"]["git"]
 
             print(f"Checking ({c})-({git})...")
             if f"- [{c}]({git})" not in readme:
