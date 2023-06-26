@@ -2,6 +2,7 @@
 
 import tomllib
 import sys
+import misc
 
 t2_targets = [
     "x86_64-unknown-freebsd",
@@ -51,53 +52,9 @@ def main(pull_request, index, crate, version, crate_license, dl, checksum, filen
     action = action.replace("%%IF%%", str(not pull_request).lower())
 
     # Flags
-    apple_flags = [None, False, ""]  # FEATURES(0), NO_DEFAULT_FEATURES(1), EXTRA_FLAGS(2)
-    linux_flags = [None, False, ""]
-    windows_flags = [None, False, ""]
+    flags = misc.gen_flags(crate_toml)
 
-    if "target" in crate_toml:
-        targets = crate_toml["target"]
-        if "all" in targets:
-            if "features" in targets["all"]:
-                f = targets["all"]["features"]
-                apple_flags[0] = f
-                linux_flags[0] = f
-                windows_flags[0] = f
-            if "no-default-features" in targets["all"]:
-                f = targets["all"]["no-default-features"]
-                apple_flags[1] = f
-                linux_flags[1] = f
-                windows_flags[1] = f
-            if "flags" in targets["all"]:
-                f = targets["all"]["flags"]
-                apple_flags[2] = f
-                linux_flags[2] = f
-                windows_flags[2] = f
-
-        if "apple" in targets:
-            if "features" in targets["apple"]:
-                apple_flags[0] = targets["apple"]["features"]
-            if "no-default-features" in targets["apple"]:
-                apple_flags[1] = targets["apple"]["no-default-features"]
-            if "flags" in targets["apple"]:
-                apple_flags[2] = targets["apple"]["flags"]
-
-        if "linux" in targets:
-            if "features" in targets["linux"]:
-                linux_flags[0] = targets["linux"]["features"]
-            if "no-default-features" in targets["linux"]:
-                linux_flags[1] = targets["linux"]["no-default-features"]
-            if "flags" in targets["linux"]:
-                linux_flags[2] = targets["linux"]["flags"]
-
-        if "windows" in targets:
-            if "features" in targets["windows"]:
-                windows_flags[0] = targets["windows"]["features"]
-            if "no-default-features" in targets["windows"]:
-                windows_flags[1] = targets["windows"]["no-default-features"]
-            if "flags" in targets["windows"]:
-                windows_flags[2] = targets["windows"]["flags"]
-
+    apple_flags = flags["apple"]
     final_apple_flags = ""
     if apple_flags[0] is not None:
         final_apple_flags += f"--features '{apple_flags[0]}' "
@@ -105,6 +62,7 @@ def main(pull_request, index, crate, version, crate_license, dl, checksum, filen
         final_apple_flags += "--no-default-features "
     final_apple_flags += apple_flags[2]
 
+    linux_flags = flags["linux"]
     final_linux_flags = ""
     if linux_flags[0] is not None:
         final_linux_flags += f"--features '{linux_flags[0]}' "
@@ -112,6 +70,7 @@ def main(pull_request, index, crate, version, crate_license, dl, checksum, filen
         final_linux_flags += "--no-default-features "
     final_linux_flags += linux_flags[2]
 
+    windows_flags = flags["windows"]
     final_windows_flags = ""
     if windows_flags[0] is not None:
         final_windows_flags += f"--features '{windows_flags[0]}' "
