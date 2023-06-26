@@ -58,7 +58,7 @@ def main(filename, version, license_spdx, description, rustc_version_guess):
 
     # Fill hashes
     for t in targets:
-        with open(f"./target-{t}/{t}.hashes.json", "w") as file:
+        with open(f"./target-{t}/{t}.hashes.json", "r") as file:
             blob = {
                 t: {
                     "archive": {},
