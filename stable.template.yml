@@ -13,7 +13,7 @@ env:
   dl: %%DOWNLOAD%%
   checksum: %%CHECKSUM%%
   git: %%GIT%%
-  jql_cmd: "cat __bins.log | jq -r 'select(.target.kind[0] == \"bin\") | .executable' > __bins"
+  bins: %%BINS%%
   CARGO_TERM_COLOR: always
 
 jobs:
@@ -170,11 +170,9 @@ jobs:
           tools: cross
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%% --message-format=json > __bins.log
-      - name: Get bins
-        run: ${{ env.jql_cmd }}
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
-        run: python ./scripts/collect.py ${{ matrix.target }} '__bins'
+        run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -220,11 +218,9 @@ jobs:
           tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%APPLE_FLAGS%% --message-format=json > __bins.log
-      - name: Get bins
-        run: ${{ env.jql_cmd }}
+        run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%APPLE_FLAGS%%
       - name: Collect
-        run: python ./scripts/collect.py ${{ matrix.target }} '__bins'
+        run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -271,11 +267,9 @@ jobs:
           tools: cross
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%% --message-format=json > __bins.log
-      - name: Get bins
-        run: ${{ env.jql_cmd }}
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
-        run: python ./scripts/collect.py ${{ matrix.target }} '__bins'
+        run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -322,11 +316,9 @@ jobs:
           tools: cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%WINDOWS_FLAGS%% --message-format=json > __bins.log
-      - name: Get bins
-        run: ${{ env.jql_cmd }}
+        run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%WINDOWS_FLAGS%%
       - name: Collect
-        run: python ./scripts/collect.py ${{ matrix.target }} '__bins'
+        run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -373,11 +365,9 @@ jobs:
           tools: cross
       - name: Build crate
         working-directory: ./build
-        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%% --message-format=json > __bins.log
-      - name: Get bins
-        run: ${{ env.jql_cmd }}
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
-        run: python ./scripts/collect.py ${{ matrix.target }} '__bins'
+        run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:

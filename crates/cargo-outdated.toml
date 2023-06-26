@@ -2,6 +2,7 @@
 id = "cargo-outdated"
 git = "https://github.com/kbknapp/cargo-outdated"
 unsupported = ""
+bins = ["cargo-outdated"]
 
 [target.all]
 features = "vendored-openssl"

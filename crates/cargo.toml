@@ -2,6 +2,7 @@
 id = "cargo"
 git = "https://github.com/rust-lang/cargo"
 unsupported = ""
+bins = ["cargo"]
 
 [target.all]
 features = "vendored-openssl"

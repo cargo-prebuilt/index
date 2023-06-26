@@ -36,6 +36,7 @@ def main(pull_request, index, crate, version, crate_license, dl, checksum, filen
         crate_toml = tomllib.load(file)
         unsupported = crate_toml["info"]["unsupported"]
         git_url = crate_toml["info"]["git"]
+        bins = ",".join(crate_toml["info"]["bins"])
 
     with open("./stable.template.yml", "r") as file:
         action_template = file.read()
@@ -47,6 +48,7 @@ def main(pull_request, index, crate, version, crate_license, dl, checksum, filen
     action = action.replace("%%DOWNLOAD%%", dl)
     action = action.replace("%%CHECKSUM%%", checksum)
     action = action.replace("%%GIT%%", git_url)
+    action = action.replace("%%BINS%%", bins)
     action = action.replace("%%IF%%", str(not pull_request).lower())
 
     # Flags
