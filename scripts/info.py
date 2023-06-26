@@ -71,7 +71,11 @@ def main(filename, version, license_spdx, description, rustc_version_guess):
                 blob[t]["archive"][h["type"]] = h["hash"]
 
             for b in hash_file["bins"]:
+                if b["bin"] not in blob[t]["bins"]:
+                    blob[t]["bins"][b["bin"]] = {}
                 blob[t]["bins"][b["bin"]][b["type"]] = b["hash"]
+
+            hashes["hashes"] = blob
 
     with open("./hashes.json", "w") as file:
         file.write(json.dumps(hashes))
