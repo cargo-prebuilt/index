@@ -45,7 +45,7 @@ def main(pull_request, index, crate, version, crate_license, dl, checksum, filen
     action = action.replace("%%CRATE%%", crate)
     action = action.replace("%%VERSION%%", version)
     action = action.replace("%%LICENSE%%", crate_license)
-    action = action.replace("%%DESC%%", crate_license)
+    action = action.replace("%%DESC%%", description)
     action = action.replace("%%DOWNLOAD%%", dl)
     action = action.replace("%%CHECKSUM%%", checksum)
     action = action.replace("%%GIT%%", git_url)

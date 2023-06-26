@@ -392,13 +392,16 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
+      - name: Rust Update
+        run: rustup update
       - name: Get rust version guess
         run: |
-          rustup update
           echo "rustc_version=$(rustc --version)" >> $GITHUB_OUTPUT
       - uses: actions/download-artifact@v3
       - name: Create info.json and hashes.json
-        run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ env.license }}' '${{ env.description }}' '${{ env.rustc_version }}'
+        run: |
+          ls -R
+          python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ env.license }}' '${{ env.description }}' '${{ env.rustc_version }}'
       - name: Artifact
         if: ${{ !%%IF%% }}
         uses: actions/upload-artifact@v3
