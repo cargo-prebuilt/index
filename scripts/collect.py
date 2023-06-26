@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 import hashlib
 import json
 import os
@@ -48,7 +46,7 @@ def main(target, bin_file):
         hash_obj["archive"] = {"hash": h, "type": "sha256"}
 
     with open(target + ".sha256.json", "w") as file:
-        print(json.dumps(hash_obj)) #TODO: Remove!
+        print(json.dumps(hash_obj))  # TODO: Remove!
         file.write(json.dumps(hash_obj))
 
 

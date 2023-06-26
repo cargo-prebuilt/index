@@ -15,4 +15,4 @@ jobs:
         with:
           python-version: '3.11'
       - name: Check README
-        run: ./pr/readme/check.py
+        run: python ./pr/readme/check.py

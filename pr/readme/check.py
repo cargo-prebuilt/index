@@ -1,5 +1,3 @@
-#!/usr/bin/python3
-
 import glob
 import tomllib
 import sys

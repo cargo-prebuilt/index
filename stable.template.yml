@@ -172,7 +172,7 @@ jobs:
         working-directory: ./build
         run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%% --message-format=json ${{ env.jql_cmd }}
       - name: Collect
-        run: ./scripts/collect.py ${{ matrix.target }} '__bins'
+        run: python ./scripts/collect.py ${{ matrix.target }} '__bins'
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -220,7 +220,7 @@ jobs:
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%APPLE_FLAGS%% --message-format=json ${{ env.jql_cmd }}
       - name: Collect
-        run: ./scripts/collect.py ${{ matrix.target }} '__bins'
+        run: python ./scripts/collect.py ${{ matrix.target }} '__bins'
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -269,7 +269,7 @@ jobs:
         working-directory: ./build
         run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%% --message-format=json ${{ env.jql_cmd }}
       - name: Collect
-        run: ./scripts/collect.py ${{ matrix.target }} '__bins'
+        run: python ./scripts/collect.py ${{ matrix.target }} '__bins'
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -318,7 +318,7 @@ jobs:
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%WINDOWS_FLAGS%% --message-format=json ${{ env.jql_cmd }}
       - name: Collect
-        run: python3  ./scripts/collect.py ${{ matrix.target }} '__bins'
+        run: python3  python ./scripts/collect.py ${{ matrix.target }} '__bins'
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
@@ -367,7 +367,7 @@ jobs:
         working-directory: ./build
         run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%% --message-format=json ${{ env.jql_cmd }}
       - name: Collect
-        run: ./scripts/collect.py ${{ matrix.target }} '__bins'
+        run: python ./scripts/collect.py ${{ matrix.target }} '__bins'
       - name: Artifact
         uses: actions/upload-artifact@v3
         with:
