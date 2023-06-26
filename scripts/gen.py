@@ -29,7 +29,7 @@ t3_targets = [
 ]
 
 
-def main(pull_request, index, crate, version, crate_license, dl, checksum, filename):
+def main(pull_request, index, crate, version, crate_license, dl, checksum, filename, description):
     pull_request = True if pull_request == "true" else False
 
     with open(filename, "rb") as file:
@@ -45,10 +45,12 @@ def main(pull_request, index, crate, version, crate_license, dl, checksum, filen
     action = action.replace("%%CRATE%%", crate)
     action = action.replace("%%VERSION%%", version)
     action = action.replace("%%LICENSE%%", crate_license)
+    action = action.replace("%%DESC%%", crate_license)
     action = action.replace("%%DOWNLOAD%%", dl)
     action = action.replace("%%CHECKSUM%%", checksum)
     action = action.replace("%%GIT%%", git_url)
     action = action.replace("%%BINS%%", bins)
+    action = action.replace("%%FILE%%", filename)
     action = action.replace("%%IF%%", str(not pull_request).lower())
 
     # Flags
@@ -132,4 +134,4 @@ def main(pull_request, index, crate, version, crate_license, dl, checksum, filen
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8])
+    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9])
