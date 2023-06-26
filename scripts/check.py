@@ -47,7 +47,7 @@ def main(pull_request, duplicate, server_url, repo):
         return
 
     if pull_request:
-        with open("./crates/_allowlist", "r") as file:
+        with open("./pr/_allowlist", "r") as file:
             allow = file.readline()
 
     to_update = []
