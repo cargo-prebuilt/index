@@ -26,7 +26,7 @@ def main(filename, version, license_spdx, description, rustc_version_guess):
         "description": description,
         "bins": crate_toml["info"]["bins"],
         "info": {
-            "rustc_version_guess": rustc_version_guess,
+            "rustc_version_guess": rustc_version_guess[6:],
             "index_publish_date": datetime.utcnow().strftime("%Y-%m-%d"),
             "features_apple": str(features["apple"][0]),
             "features_linux": str(features["linux"][0]),
@@ -60,22 +60,20 @@ def main(filename, version, license_spdx, description, rustc_version_guess):
     for t in targets:
         with open(f"./target-{t}/{t}.hashes.json", "r") as file:
             blob = {
-                t: {
-                    "archive": {},
-                    "bins": {}
-                }
+                "archive": {},
+                "bins": {}
             }
             hash_file = json.loads(file.read())
 
             for h in hash_file["archive"]:
-                blob[t]["archive"][h["type"]] = h["hash"]
+                blob["archive"][h["type"]] = h["hash"]
 
             for b in hash_file["bins"]:
-                if b["bin"] not in blob[t]["bins"]:
-                    blob[t]["bins"][b["bin"]] = {}
-                blob[t]["bins"][b["bin"]][b["type"]] = b["hash"]
+                if b["bin"] not in blob["bins"]:
+                    blob["bins"][b["bin"]] = {}
+                blob["bins"][b["bin"]][b["type"]] = b["hash"]
 
-            hashes["hashes"] = blob
+            hashes["hashes"][t] = blob
 
     with open("./hashes.json", "w") as file:
         file.write(json.dumps(hashes))

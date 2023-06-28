@@ -396,7 +396,7 @@ jobs:
         run: rustup update
       - name: Get rust version guess
         run: |
-          echo "rustc_version=$(rustc --version)" >> $GITHUB_OUTPUT
+          echo "rustc_version=$(rustc --version)" >> $GITHUB_ENV
       - uses: actions/download-artifact@v3
       - name: Create info.json and hashes.json
         run: |
