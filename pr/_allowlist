@@ -1,1 +1,1 @@
-cargo-deadlinks,cargo-deny,cargo-diet
+cargo-diet,cargo-make,sccache
