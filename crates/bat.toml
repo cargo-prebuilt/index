@@ -1,0 +1,5 @@
+[info]
+id = "bat"
+git = "https://github.com/sharkdp/bat"
+unsupported = []
+bins = ["bat"]

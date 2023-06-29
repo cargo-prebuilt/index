@@ -1,1 +1,1 @@
-cargo-make,sccache,cargo-nextest
+sccache,cargo-nextest,cargo-watch
