@@ -1,0 +1,5 @@
+[info]
+id = "trunk"
+git = "https://github.com/thedodd/trunk"
+unsupported = []
+bins = ["trunk"]

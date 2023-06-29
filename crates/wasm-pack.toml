@@ -1,0 +1,5 @@
+[info]
+id = "wasm-pack"
+git = "https://github.com/rustwasm/wasm-pack"
+unsupported = []
+bins = ["wasm-pack"]
