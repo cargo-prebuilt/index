@@ -1,3 +1,4 @@
+import json
 import tomllib
 import sys
 import misc
@@ -31,7 +32,7 @@ t3_targets = [
 
 def main(pull_request, index, crate, version, crate_license, dl, checksum, filename, description):
     pull_request = True if pull_request == "true" else False
-    description = description.replace("\n", "%%NEW_LINE%%")
+    description = json.dumps({"description": description})
 
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)

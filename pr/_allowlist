@@ -1,1 +1,1 @@
-cargo-update,cargo-deb,cargo-mpirun
+cargo-mpirun,cargo-clone,cargo-depgraph
