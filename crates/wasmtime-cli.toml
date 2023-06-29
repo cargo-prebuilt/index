@@ -1,0 +1,5 @@
+[info]
+id = "wasmtime-cli"
+git = "https://github.com/bytecodealliance/wasmtime"
+unsupported = []
+bins = ["wasmtime"]

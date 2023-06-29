@@ -1,0 +1,9 @@
+[info]
+id = "tauri-cli"
+git = "https://github.com/tauri-apps/tauri"
+unsupported = []
+bins = ["cargo-tauri"]
+
+[target.all]
+features = "native-tls-vendored"
+no-default-features = true
