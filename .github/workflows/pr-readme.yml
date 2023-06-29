@@ -3,7 +3,7 @@ name: Check README
 on:
   pull_request:
     branches: [ main ]
-    paths: [ .github/workflows/pr-readme.yml, pr/readme/**, crates.json, README.md ]
+    paths: [ .github/workflows/pr-readme.yml, pr/readme/**, crates/**, README.md ]
   workflow_dispatch:
 
 jobs:
@@ -11,5 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Check README
-        run: ./pr/readme/check.py
+        run: python ./pr/readme/check.py

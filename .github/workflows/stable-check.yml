@@ -3,10 +3,10 @@ name: Check for updates
 on:
   push:
     branches: [ main ]
-    paths: [ .github/workflows/stable-check.yml, scripts/**, crates.json, Cross.toml, stable.template.yml ]
+    paths: [ .github/workflows/stable-check.yml, scripts/**, crates/**, Cross.toml, stable.template.yml ]
   pull_request:
     branches: [ main ]
-    paths: [ .github/workflows/stable-check.yml, scripts/**, crates.json, Cross.toml, stable.template.yml ]
+    paths: [ .github/workflows/stable-check.yml, scripts/**, crates/**, Cross.toml, stable.template.yml ]
   workflow_dispatch:
   schedule:
     - cron: '0 6,18 * * *'
@@ -18,6 +18,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Skip Duplicate Actions
         if: ${{ github.event_name != 'pull_request' }}
         uses: fkirc/skip-duplicate-actions@v5
@@ -28,7 +31,7 @@ jobs:
           concurrent_skipping: always
       - name: Check for updates
         id: check
-        run: echo "crates=$(./scripts/check.py stable '${{ github.event_name == 'pull_request' }}' '${{ steps.skip.outputs.should_skip }}' '${{ github.server_url }}' '${{ github.repository }}')" >> $GITHUB_OUTPUT
+        run: echo "crates=$(python ./scripts/check.py '${{ github.event_name == 'pull_request' }}' '${{ steps.skip.outputs.should_skip }}' '${{ github.server_url }}' '${{ github.repository }}')" >> $GITHUB_OUTPUT
 
   dispatch:
     if: ${{ needs.check.outputs.crates != '{}' }}
@@ -39,8 +42,11 @@ jobs:
     needs: [ check ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Generate workflow
-        run: ./scripts/gen.py stable ${{ github.event_name == 'pull_request' }} '${{ github.server_url }}/${{ github.repository }}' '${{ matrix.crate }}' '${{ matrix.version }}' '${{ matrix.license }}' '${{ matrix.dl }}' '${{ matrix.checksum }}' '${{ matrix.bins }}' '${{ matrix.flags }}' '${{ matrix.unsupported }}'
+        run: python ./scripts/gen.py ${{ github.event_name == 'pull_request' }} '${{ github.server_url }}/${{ github.repository }}' '${{ matrix.crate }}' '${{ matrix.version }}' '${{ matrix.license }}' '${{ matrix.dl }}' '${{ matrix.checksum }}' '${{ matrix.file }}' '${{ matrix.description }}'
       - name: Print generated workflow file
         run: cat .github/workflows/stable-${{ matrix.crate }}.yml
       - name: Wait
@@ -51,7 +57,7 @@ jobs:
         with:
           github-token: ${{ secrets.WORKFLOW_TOKEN }}
           branch: trigger/stable
-          files-and-dirs: '.github/workflows/stable-${{ matrix.crate }}.yml scripts/collect.py Cross.toml'
+          files-and-dirs: '.github/workflows/stable-${{ matrix.crate }}.yml scripts/collect.py scripts/info.py scripts/misc.py ${{ matrix.file }} Cross.toml'
 
   wait:
     if: ${{ github.event_name != 'pull_request' }}

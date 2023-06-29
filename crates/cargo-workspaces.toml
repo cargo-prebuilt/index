@@ -1,0 +1,8 @@
+[info]
+id = "cargo-workspaces"
+git = "https://github.com/pksunkara/cargo-workspaces"
+unsupported = ["x86_64-unknown-illumos"]
+bins = ["cargo-workspaces", "cargo-ws"]
+
+[target.all]
+features = "crates-index/vendored-openssl"

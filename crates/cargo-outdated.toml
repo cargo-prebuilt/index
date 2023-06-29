@@ -1,0 +1,8 @@
+[info]
+id = "cargo-outdated"
+git = "https://github.com/kbknapp/cargo-outdated"
+unsupported = ["x86_64-sun-solaris", "x86_64-unknown-illumos"]
+bins = ["cargo-outdated"]
+
+[target.all]
+features = "vendored-openssl"

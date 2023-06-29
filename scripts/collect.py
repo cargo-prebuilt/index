@@ -1,6 +1,5 @@
-#!/usr/bin/python3
-
 import hashlib
+import json
 import os
 import stat
 import sys
@@ -10,31 +9,51 @@ import tarfile
 def main(target, build_path, bins):
     bins = bins.split(",")
 
+    hash_obj = {
+        "bins": [],
+        "archive": [],
+    }
+
     ending = ""
     if "windows" in target:
         ending = ".exe"
 
     with tarfile.open(target + ".tar.gz", "w:gz") as archive:
         for b in bins:
-            path = build_path + "/" + b + ending
+            basename = b + ending
+            path = build_path + "/" + basename
+
             # Permission Fix
             if "windows" not in target:
                 st = os.stat(path)
                 os.chmod(path, st.st_mode | stat.S_IEXEC)
-            # Add to archive
-            archive.add(path, b + ending)
 
-    file_hash = None
+            # Hashes
+            with open(path, "rb") as file:
+                file = file.read()
+                h = hashlib.sha256(file).hexdigest()
+                hash_obj["bins"].append({"bin": basename, "hash": h, "type": "sha256"})
+                h = hashlib.sha512(file).hexdigest()
+                hash_obj["bins"].append({"bin": basename, "hash": h, "type": "sha512"})
+
+            # Add to archive
+            archive.add(path, basename)
+
     with open(target + ".tar.gz", "rb") as file:
         file = file.read()
-        file_hash = hashlib.sha256(file).hexdigest()
+        h = hashlib.sha256(file).hexdigest()
+        hash_obj["archive"].append({"hash": h, "type": "sha256"})
 
-    if file_hash is None:
-        print("Hashing failed.")
-        sys.exit(1)
+        # TODO: Remove with 0.6.0 of cargo-prebuilt
+        with open(target + ".sha256", "w") as tmp_file:
+            tmp_file.write(h)
+        #
 
-    with open(target + ".sha256", "w") as file:
-        file.write(file_hash)
+        h = hashlib.sha512(file).hexdigest()
+        hash_obj["archive"].append({"hash": h, "type": "sha512"})
+
+    with open(target + ".hashes.json", "w") as file:
+        file.write(json.dumps(hash_obj))
 
 
 if __name__ == "__main__":
