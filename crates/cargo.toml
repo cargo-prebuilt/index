@@ -1,7 +1,7 @@
 [info]
 id = "cargo"
 git = "https://github.com/rust-lang/cargo"
-unsupported = ""
+unsupported = ["aarch64-pc-windows-msvc", "x86_64-sun-solaris"]
 bins = ["cargo"]
 
 [target.all]

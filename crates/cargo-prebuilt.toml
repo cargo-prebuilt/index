@@ -1,5 +1,5 @@
 [info]
 id = "cargo-prebuilt"
 git = "https://github.com/cargo-prebuilt/cargo-prebuilt"
-unsupported = ""
+unsupported = []
 bins = ["cargo-prebuilt"]
