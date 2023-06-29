@@ -1,1 +1,1 @@
-tauri-cli,wasmtime-cli,jql
+wasmtime-cli,jql,cargo-update
