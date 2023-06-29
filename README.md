@@ -23,7 +23,6 @@ Tier 1: Crates must build on these platforms
 Tier 2: Crates optionally build for these platforms, but if one fails the entire build fails
 - x86_64-pc-windows-msvc
 - aarch64-pc-windows-msvc
-- i686-pc-windows-msvc
 - x86_64-unknown-freebsd
 - riscv64gc-unknown-linux-gnu
 - s390x-unknown-linux-gnu
@@ -82,7 +81,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [cargo-workspaces](https://github.com/pksunkara/cargo-workspaces)
 - [cargo-zigbuild](https://github.com/rust-cross/cargo-zigbuild)
 - [cocogitto](https://github.com/cocogitto/cocogitto)
-- [coreutils](https://crates.io/crates/coreutils)
+- [coreutils](https://github.com/uutils/coreutils)
 - [cross](https://github.com/cross-rs/cross)
 - [deepl-api](https://github.com/mgruner/deepl-api-rs)
 - [discord-rpc-helper](https://github.com/kekonn/discord-rpc-helper)

@@ -1,0 +1,5 @@
+[info]
+id = "cross"
+git = "https://github.com/cross-rs/cross"
+unsupported = ["x86_64-sun-solaris"]
+bins = ["cross", "cross-util"]
