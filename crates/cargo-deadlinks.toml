@@ -1,0 +1,5 @@
+[info]
+id = "cargo-deadlinks"
+git = "https://github.com/deadlinks/cargo-deadlinks"
+unsupported = []
+bins = ["cargo-deadlinks", "deadlinks"]

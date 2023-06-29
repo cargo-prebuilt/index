@@ -1,0 +1,5 @@
+[info]
+id = "cargo-deny"
+git = "https://github.com/EmbarkStudios/cargo-deny"
+unsupported = []
+bins = ["cargo-deny"]
