@@ -1,1 +1,1 @@
-wasmtime-cli,jql,cargo-update
+cargo-update,cargo-deb,cargo-mpirun
