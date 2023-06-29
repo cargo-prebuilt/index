@@ -1,0 +1,5 @@
+[info]
+id = "jql"
+git = "https://github.com/yamafaktory/jql"
+unsupported = ["x86_64-sun-solaris"]
+bins = ["jql"]

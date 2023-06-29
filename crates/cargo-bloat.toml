@@ -1,0 +1,5 @@
+[info]
+id = "cargo-bloat"
+git = "https://github.com/RazrFalcon/cargo-bloat"
+unsupported = []
+bins = ["cargo-bloat"]

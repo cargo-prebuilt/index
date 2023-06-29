@@ -1,0 +1,8 @@
+[info]
+id = "cargo-audit"
+git = "https://github.com/rustsec/rustsec/tree/main/cargo-audit"
+unsupported = ["x86_64-unknown-illumos"]
+bins = ["cargo-audit"]
+
+[target.all]
+features = "vendored-openssl"

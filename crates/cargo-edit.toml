@@ -1,0 +1,8 @@
+[info]
+id = "cargo-edit"
+git = "https://github.com/killercup/cargo-edit"
+unsupported = ["aarch64-pc-windows-msvc", "x86_64-unknown-illumos"]
+bins = ["cargo-add", "cargo-rm", "cargo-set-version", "cargo-upgrade"]
+
+[target.all]
+features = "vendored-openssl"

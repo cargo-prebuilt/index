@@ -1,0 +1,5 @@
+[info]
+id = "cargo-cache"
+git = "https://github.com/matthiaskrgr/cargo-cache"
+unsupported = []
+bins = ["cargo-cache"]
