@@ -1,7 +1,7 @@
 [info]
 id = "tauri-cli"
 git = "https://github.com/tauri-apps/tauri"
-unsupported = []
+unsupported = ["x86_64-unknown-illumos", "x86_64-sun-solaris"]
 bins = ["cargo-tauri"]
 
 [target.all]

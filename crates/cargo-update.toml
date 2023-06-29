@@ -1,0 +1,8 @@
+[info]
+id = "cargo-update"
+git = "https://github.com/nabijaczleweli/cargo-update"
+unsupported = []
+bins = ["cargo-install-update", "cargo-install-update-config"]
+
+[target.all]
+features = "vendored-openssl"
