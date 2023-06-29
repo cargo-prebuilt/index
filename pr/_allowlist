@@ -1,1 +1,1 @@
-cargo-mpirun,cargo-clone,cargo-depgraph
+cargo-clone,cargo-asm,cargo-show-asm
