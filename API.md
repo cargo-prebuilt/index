@@ -16,7 +16,7 @@
 
 ```json
 {
-  "info_version": 1,
+  "info_version": "1",
   "id": "CRATES.IO ID",
   "version": "VERSION",
   "license": "SPDX LICENSE",
@@ -50,7 +50,7 @@
 
 ```json
 {
-  "hashes_version": 1,
+  "hashes_version": "1",
   "hashes": {
     "TARGET": {
       "archive": {

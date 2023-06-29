@@ -19,7 +19,7 @@ def main(filename, version, license_spdx, description, rustc_version_guess):
         targets.append(t[7:])
 
     info = {  # info.json
-        "info_version": 1,
+        "info_version": "1",
         "id": crate_toml["info"]["id"],
         "version": version,
         "license": license_spdx,
@@ -53,7 +53,7 @@ def main(filename, version, license_spdx, description, rustc_version_guess):
         file.write(json.dumps(info))
 
     hashes = {  # hashes.json
-        "hashes_version": 1,
+        "hashes_version": "1",
         "hashes": {}
     }
 
