@@ -1,1 +1,1 @@
-cargo-diet,cargo-make,sccache
+cargo-make,sccache,cargo-nextest

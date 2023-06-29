@@ -1,0 +1,9 @@
+[info]
+id = "gitoxide"
+git = "https://github.com/Byron/gitoxide"
+unsupported = []
+bins = ["gix", "ein"]
+
+[target.linux]
+features = "max-pure"
+no-default-features = true

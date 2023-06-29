@@ -5,4 +5,4 @@ unsupported = []
 bins = ["sccache"]
 
 [target.all]
-features = "vendored-openssl"
+features = "openssl/vendored"

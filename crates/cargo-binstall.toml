@@ -1,0 +1,5 @@
+[info]
+id = "cargo-binstall"
+git = "https://github.com/cargo-bins/cargo-binstall"
+unsupported = []
+bins = ["cargo-binstall"]
