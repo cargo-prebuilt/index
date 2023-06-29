@@ -1,7 +1,7 @@
 [info]
 id = "cargo-audit"
 git = "https://github.com/rustsec/rustsec/tree/main/cargo-audit"
-unsupported = []
+unsupported = ["x86_64-unknown-illumos"]
 bins = ["cargo-audit"]
 
 [target.all]
