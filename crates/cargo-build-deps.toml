@@ -1,0 +1,5 @@
+[info]
+id = "cargo-build-deps"
+git = "https://github.com/nacardin/cargo-build-deps"
+unsupported = []
+bins = ["cargo-build-deps"]

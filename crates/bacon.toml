@@ -1,0 +1,5 @@
+[info]
+id = "bacon"
+git = "https://github.com/Canop/bacon"
+unsupported = ["x86_64-sun-solaris"]
+bins = ["bacon"]

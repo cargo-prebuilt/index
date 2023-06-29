@@ -1,0 +1,8 @@
+[info]
+id = "cargo-generate"
+git = "https://github.com/cargo-generate/cargo-generate"
+unsupported = ["x86_64-sun-solaris", "x86_64-unknown-illumos"]
+bins = ["cargo-generate"]
+
+[target.all]
+features = "vendored-openssl"

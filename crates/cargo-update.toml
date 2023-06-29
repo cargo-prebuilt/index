@@ -1,0 +1,8 @@
+[info]
+id = "cargo-update"
+git = "https://github.com/nabijaczleweli/cargo-update"
+unsupported = ["x86_64-unknown-illumos", "x86_64-sun-solaris"]
+bins = ["cargo-install-update", "cargo-install-update-config"]
+
+[target.all]
+features = "vendored-openssl"

@@ -10,7 +10,7 @@ env:
   crate: %%CRATE%%
   version: %%VERSION%%
   license: %%LICENSE%%
-  description: %%DESC%%
+  description: '%%DESC%%'
   dl: %%DOWNLOAD%%
   checksum: %%CHECKSUM%%
   git: %%GIT%%

@@ -1,0 +1,5 @@
+[info]
+id = "cargo-mpirun"
+git = "https://github.com/AndrewGaspar/cargo-mpirun"
+unsupported = []
+bins = ["cargo-mpirun"]
