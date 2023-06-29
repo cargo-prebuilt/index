@@ -1,0 +1,5 @@
+[info]
+id = "cargo-diet"
+git = "https://github.com/the-lean-crate/cargo-diet"
+unsupported = []
+bins = ["cargo-diet"]

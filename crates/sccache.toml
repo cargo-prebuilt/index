@@ -1,0 +1,8 @@
+[info]
+id = "sccache"
+git = "https://github.com/mozilla/sccache"
+unsupported = []
+bins = ["sccache"]
+
+[target.all]
+features = "vendored-openssl"

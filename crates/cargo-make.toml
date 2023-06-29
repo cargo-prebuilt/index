@@ -1,0 +1,5 @@
+[info]
+id = "cargo-make"
+git = "https://github.com/sagiegurari/cargo-make"
+unsupported = []
+bins = ["cargo-make", "makers"]

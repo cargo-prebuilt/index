@@ -1,0 +1,5 @@
+[info]
+id = "cargo-watch"
+git = "https://github.com/watchexec/cargo-watch"
+unsupported = []
+bins = ["cargo-watch"]
