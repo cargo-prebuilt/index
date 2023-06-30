@@ -1,0 +1,5 @@
+[info]
+id = "grcov"
+git = "https://github.com/mozilla/grcov"
+unsupported = []
+bins = ["grcov"]

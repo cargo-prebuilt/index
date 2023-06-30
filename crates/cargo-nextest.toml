@@ -1,0 +1,9 @@
+[info]
+id = "cargo-nextest"
+git = "https://github.com/nextest-rs/nextest"
+unsupported = ["x86_64-sun-solaris"]
+bins = ["cargo-nextest"]
+
+[target.all]
+features = "default-no-update"
+no-default-features = true

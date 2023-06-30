@@ -1,0 +1,5 @@
+[info]
+id = "cargo-watch"
+git = "https://github.com/watchexec/cargo-watch"
+unsupported = ["x86_64-unknown-illumos", "x86_64-sun-solaris"]
+bins = ["cargo-watch"]

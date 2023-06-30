@@ -1,0 +1,5 @@
+[info]
+id = "ripgrep"
+git = "https://github.com/BurntSushi/ripgrep"
+unsupported = []
+bins = ["rg"]

@@ -1,0 +1,5 @@
+[info]
+id = "cocogitto"
+git = "https://github.com/cocogitto/cocogitto"
+unsupported = ["x86_64-unknown-netbsd"]
+bins = ["cog"]

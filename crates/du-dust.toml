@@ -1,0 +1,5 @@
+[info]
+id = "du-dust"
+git = "https://github.com/bootandy/dust"
+unsupported = []
+bins = ["dust"]
