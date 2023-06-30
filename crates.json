@@ -1,14 +1,5 @@
 {
   "crates": {
-    "cargo-binstall": {
-      "flags": "",
-      "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
-      "git": "https://github.com/cargo-bins/cargo-binstall",
-      "bins": [
-        "cargo-binstall"
-      ]
-    },
-
     "gitoxide": {
       "flags": "--no-default-features --features max-pure",
       "unsupported": "aarch64-pc-windows-msvc,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
@@ -16,15 +7,6 @@
       "bins": [
         "ein",
         "gix"
-      ]
-    },
-
-    "du-dust": {
-      "flags": "",
-      "unsupported": "powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
-      "git": "https://github.com/bootandy/dust",
-      "bins": [
-        "dust"
       ]
     },
 

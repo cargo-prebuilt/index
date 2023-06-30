@@ -1,0 +1,5 @@
+[info]
+id = "bob-nvim"
+git = "https://github.com/MordechaiHadad/bob"
+unsupported = []
+bins = ["bob"]
