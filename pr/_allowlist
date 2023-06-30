@@ -1,1 +1,1 @@
-cargo-watch,grcov,cocogitto
+cocogitto,cargo-binstall,cargo-quickinstall
