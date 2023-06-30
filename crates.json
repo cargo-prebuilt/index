@@ -19,15 +19,6 @@
       ]
     },
 
-    "ripgrep": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/BurntSushi/ripgrep",
-      "bins": [
-        "rg"
-      ]
-    },
-
     "nu": {
       "flags": "--features static-link-openssl",
       "unsupported": "x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-muslabi64",

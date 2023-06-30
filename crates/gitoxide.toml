@@ -1,7 +1,7 @@
 [info]
 id = "gitoxide"
 git = "https://github.com/Byron/gitoxide"
-#unsupported = [
+unsupported = []
 #    "riscv64gc-unknown-linux-gnu",
 #    "s390x-unknown-linux-gnu",
 ##    "aarch64-pc-windows-msvc",
@@ -17,5 +17,5 @@ git = "https://github.com/Byron/gitoxide"
 bins = ["gix", "ein"]
 
 [target.linux]
-features = "max-control,gitoxide-core-blocking-client,http-client-curl"
+features = "max-control,fast,gitoxide-core-blocking-client,http-client-reqwest"
 no-default-features = true
