@@ -1,1 +1,1 @@
-sccache,cargo-nextest,cargo-watch
+cargo-watch,grcov,cocogitto
