@@ -1,112 +1,11 @@
 {
   "crates": {
-    "cargo-deadlinks": {
-      "flags": "",
-      "unsupported": "aarch64-pc-windows-msvc,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
-      "git": "https://github.com/deadlinks/cargo-deadlinks",
-      "bins": [
-        "cargo-deadlinks",
-        "deadlinks"
-      ]
-    },
-
-    "cargo-deny": {
-      "flags": "",
-      "unsupported": "x86_64-unknown-illumos",
-      "git": "https://github.com/EmbarkStudios/cargo-deny",
-      "bins": [
-        "cargo-deny"
-      ]
-    },
-
-    "cargo-diet": {
-      "flags": "",
-      "unsupported": "aarch64-pc-windows-msvc",
-      "git": "https://github.com/the-lean-crate/cargo-diet",
-      "bins": [
-        "cargo-diet"
-      ]
-    },
-
-    "cargo-watch": {
-      "flags": "",
-      "unsupported": "x86_64-unknown-illumos,x86_64-sun-solaris",
-      "git": "https://github.com/watchexec/cargo-watch",
-      "bins": [
-        "cargo-watch"
-      ]
-    },
-
-    "cargo-make": {
-      "flags": "",
-      "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
-      "git": "https://github.com/sagiegurari/cargo-make",
-      "bins": [
-        "cargo-make",
-        "makers"
-      ]
-    },
-
-    "sccache": {
-      "flags": "--features openssl/vendored",
-      "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
-      "git": "https://github.com/mozilla/sccache",
-      "bins": [
-        "sccache"
-      ]
-    },
-
-    "cargo-hack": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/taiki-e/cargo-hack",
-      "bins": [
-        "cargo-hack"
-      ]
-    },
-
-    "cargo-nextest": {
-      "flags": "--no-default-features --features default-no-update",
-      "unsupported": "x86_64-sun-solaris",
-      "git": "https://github.com/nextest-rs/nextest",
-      "bins": [
-        "cargo-nextest"
-      ]
-    },
-
-    "grcov": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/mozilla/grcov",
-      "bins": [
-        "grcov"
-      ]
-    },
-
-    "cocogitto": {
-      "flags": "",
-      "unsupported": "x86_64-unknown-netbsd",
-      "git": "https://github.com/cocogitto/cocogitto",
-      "bins": [
-        "cog"
-      ]
-    },
-
     "cargo-binstall": {
       "flags": "",
       "unsupported": "aarch64-pc-windows-msvc,x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,powerpc64-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,s390x-unknown-linux-gnu,mips64-unknown-linux-gnuabi64,mips64-unknown-linux-muslabi64,mips64el-unknown-linux-gnuabi64,mips64el-unknown-linux-muslabi64,i686-unknown-freebsd,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
       "git": "https://github.com/cargo-bins/cargo-binstall",
       "bins": [
         "cargo-binstall"
-      ]
-    },
-
-    "cargo-quickinstall": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/cargo-bins/cargo-quickinstall",
-      "bins": [
-        "cargo-quickinstall"
       ]
     },
 
@@ -153,15 +52,6 @@
       "git": "https://github.com/nushell/nushell",
       "bins": [
         "nu"
-      ]
-    },
-
-    "coreutils": {
-      "flags": "",
-      "unsupported": "x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,riscv64gc-unknown-linux-gnu,s390x-unknown-linux-gnu",
-      "git": "https://crates.io/crates/coreutils",
-      "bins": [
-        "coreutils"
       ]
     },
 
