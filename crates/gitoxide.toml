@@ -1,21 +1,20 @@
 [info]
 id = "gitoxide"
 git = "https://github.com/Byron/gitoxide"
-unsupported = []
-#    "riscv64gc-unknown-linux-gnu",
-#    "s390x-unknown-linux-gnu",
-##    "aarch64-pc-windows-msvc",
-##    "x86_64-unknown-illumos",
-#    "x86_64-sun-solaris",
-#    "powerpc64-unknown-linux-gnu",
-#    "powerpc64le-unknown-linux-gnu",
-#    "mips64-unknown-linux-gnuabi64",
-#    "mips64-unknown-linux-muslabi64",
-#    "mips64el-unknown-linux-gnuabi64",
-#    "mips64el-unknown-linux-muslabi64"
-#]
+unsupported = [
+    "riscv64gc-unknown-linux-gnu",
+    "s390x-unknown-linux-gnu",
+    "x86_64-sun-solaris",
+    "powerpc64-unknown-linux-gnu",
+    "powerpc64le-unknown-linux-gnu",
+    "mips64-unknown-linux-gnuabi64",
+    "mips64-unknown-linux-muslabi64",
+    "mips64el-unknown-linux-gnuabi64",
+    "mips64el-unknown-linux-muslabi64"
+]
 bins = ["gix", "ein"]
 
+# TODO: Probably won't be needed when openssl images can be used to build.
 [target.linux]
 features = "max-control,fast,gitoxide-core-blocking-client,http-client-reqwest"
 no-default-features = true
