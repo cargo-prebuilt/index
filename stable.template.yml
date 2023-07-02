@@ -151,6 +151,9 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -198,6 +201,9 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -250,6 +256,9 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -298,6 +307,9 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -350,6 +362,9 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -407,6 +422,19 @@ jobs:
         run: ls -R
       - name: Create info.json and hashes.json
         run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ env.license }}' '${{ env.description }}' '${{ env.rustc_version }}'
+      - name: Sign info.json and hashes.json
+        if: ${{ %%IF%% }}
+        run: |
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          brew install minisign
+          echo -n "$SIGNING_KEY" | base64 --decode > ~/.minisign_secret.key
+          minisign -S -s ~/.minisign_secret.key -m info.json
+          minisign -S -s ~/.minisign_secret.key -m hashes.json
+          minisign -V -p ./keys/cargo-prebuilt-index.pub -m info.json
+          minisign -V -p ./keys/cargo-prebuilt-index.pub -m hashes.json
+          rm -f ~/.minisign_secret.key
+        env:
+          SIGNING_KEY: ${{ secrets.MINISIGN_SIGNING_KEY }}
       - name: Artifact
         if: ${{ !%%IF%% }}
         uses: actions/upload-artifact@v3
@@ -426,7 +454,7 @@ jobs:
           name: ${{ env.crate }}-${{ env.version }}
           allowUpdates: true
           prerelease: true
-          artifacts: "info.json,hashes.json,reports/*.report,target-*/*.tar.gz,target-*/*.sha256"
+          artifacts: "reports/*.report,target-*/*.tar.gz,target-*/*.sha256,*.minisig,hashes.json,info.json"
           body: ""
       - name: Create index file
         if: ${{ %%IF%% }}

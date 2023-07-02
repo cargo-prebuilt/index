@@ -45,6 +45,8 @@ def main(filename, version, license_spdx, description, rustc_version_guess):
             "license": "license.report",
             "deps": "deps.report",
             "audit": "audit.report",
+            "sig_info": "info.json.minisig",
+            "sig_hash": "hashes.json.minisig",
         },
         "targets": targets,
     }

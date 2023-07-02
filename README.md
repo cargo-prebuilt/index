@@ -10,6 +10,12 @@ To create your own GitHub public index use the template [here](https://github.co
 
 <sub>Only the latest versions of crates are guaranteed to be in the index.</sub>
 
+## Public Key
+
+The minisign public key for this index can be found in two formats:
+- base64: [cargo-prebuilt-index.pub.base64](keys/cargo-prebuilt-index.pub.base64)
+- asc: [cargo-prebuilt-index.pub](keys/cargo-prebuilt-index.pub)
+
 ## Platforms Supported (Targets)
 
 Tier 1: Crates must build on these platforms
