@@ -423,8 +423,7 @@ jobs:
       - name: Create info.json and hashes.json
         run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ env.license }}' '${{ env.description }}' '${{ env.rustc_version }}'
       - name: Sign info.json and hashes.json
-#        if: ${{ %%IF%% }}
-        # Uncomment
+        if: ${{ %%IF%% }}
         run: |
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           brew install minisign
@@ -447,8 +446,6 @@ jobs:
             reports/*.report
             target-*/*.tar.gz
             target-*/*.sha256
-            *.minisig
-          # REMOVE
       - name: Create and push artifacts to release
         uses: ncipollo/release-action@v1
         if: ${{ %%IF%% }}
