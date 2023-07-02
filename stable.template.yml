@@ -423,8 +423,7 @@ jobs:
       - name: Create info.json and hashes.json
         run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ env.license }}' '${{ env.description }}' '${{ env.rustc_version }}'
       - name: Sign info.json and hashes.json
-        # Uncomment before merge
-#        if: ${{ %%IF%% }}
+        if: ${{ %%IF%% }}
         run: |
           echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import --batch
           gpg --detach-sign --default-key harmless@harmless.tech -o info.json.sig info.json
@@ -442,8 +441,6 @@ jobs:
             reports/*.report
             target-*/*.tar.gz
             target-*/*.sha256
-            *.sig
-          # Remove sig since pull request builds should not be signed.
       - name: Create and push artifacts to release
         uses: ncipollo/release-action@v1
         if: ${{ %%IF%% }}
