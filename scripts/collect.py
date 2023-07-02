@@ -35,6 +35,10 @@ def main(target, build_path, bins):
                 hash_obj["bins"].append({"bin": basename, "hash": h, "type": "sha256"})
                 h = hashlib.sha512(file).hexdigest()
                 hash_obj["bins"].append({"bin": basename, "hash": h, "type": "sha512"})
+                h = hashlib.sha3_256(file).hexdigest()
+                hash_obj["bins"].append({"bin": basename, "hash": h, "type": "sha3_256"})
+                h = hashlib.sha3_512(file).hexdigest()
+                hash_obj["bins"].append({"bin": basename, "hash": h, "type": "sha3_512"})
 
             # Add to archive
             archive.add(path, basename)
@@ -51,6 +55,10 @@ def main(target, build_path, bins):
 
         h = hashlib.sha512(file).hexdigest()
         hash_obj["archive"].append({"hash": h, "type": "sha512"})
+        h = hashlib.sha3_256(file).hexdigest()
+        hash_obj["archive"].append({"hash": h, "type": "sha3_256"})
+        h = hashlib.sha3_512(file).hexdigest()
+        hash_obj["archive"].append({"hash": h, "type": "sha3_512"})
 
     with open(target + ".hashes.json", "w") as file:
         file.write(json.dumps(hash_obj))
