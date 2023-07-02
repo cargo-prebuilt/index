@@ -151,6 +151,9 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -198,6 +201,9 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -250,6 +256,9 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -298,6 +307,9 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -350,6 +362,9 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
