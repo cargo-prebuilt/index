@@ -423,6 +423,7 @@ jobs:
       - name: Create info.json and hashes.json
         run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ env.license }}' '${{ env.description }}' '${{ env.rustc_version }}'
       - name: Sign info.json and hashes.json
+        if: ${{ %%IF%% }}
         run: |
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           brew install minisign
@@ -447,6 +448,7 @@ jobs:
             target-*/*.sha256
       - name: Create and push artifacts to release
         uses: ncipollo/release-action@v1
+        if: ${{ %%IF%% }}
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           name: ${{ env.crate }}-${{ env.version }}
@@ -455,9 +457,11 @@ jobs:
           artifacts: "reports/*.report,target-*/*.tar.gz,target-*/*.sha256,*.minisig,hashes.json,info.json"
           body: ""
       - name: Create index file
+        if: ${{ %%IF%% }}
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
         uses: svenstaro/upload-release-action@2.6.1
+        if: ${{ %%IF%% }}
         with:
           tag: stable-index
           overwrite: true
