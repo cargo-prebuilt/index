@@ -39,8 +39,8 @@
     "license": "license.report",
     "deps": "deps.report",
     "audit": "audit.report",
-    "sig_info": "OPTIONAL:info.json.sig",
-    "sig_hashes": "OPTIONAL:hashes.json.sig"
+    "sig_info": "OPTIONAL:info.json.minisig",
+    "sig_hashes": "OPTIONAL:hashes.json.minisig"
   },
   "targets": [
     "TARGET",

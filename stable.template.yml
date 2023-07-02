@@ -423,13 +423,19 @@ jobs:
       - name: Create info.json and hashes.json
         run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ env.license }}' '${{ env.description }}' '${{ env.rustc_version }}'
       - name: Sign info.json and hashes.json
-        if: ${{ %%IF%% }}
+#        if: ${{ %%IF%% }}
+        # Uncomment
         run: |
-          echo -n "$GPG_SIGNING_KEY" | base64 --decode | gpg --import --batch
-          gpg --detach-sign --default-key harmless@harmless.tech -o info.json.sig info.json
-          gpg --detach-sign --default-key harmless@harmless.tech -o hashes.json.sig hashes.json
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          brew install minisign
+          echo -n "$SIGNING_KEY" | base64 --decode > ~/.minisign_secret.key
+          minisign -S -s ~/.minisign_secret.key -m info.json
+          minisign -S -s ~/.minisign_secret.key -m hashes.json
+          minisign -V -p ./keys/cargo-prebuilt-index.pub -m info.json
+          minisign -V -p ./keys/cargo-prebuilt-index.pub -m hashes.json
+          rm -f ~/.minisign_secret.key
         env:
-          GPG_SIGNING_KEY: ${{ secrets.GPG_SIGNING_KEY }}
+          SIGNING_KEY: ${{ secrets.MINISIGN_SIGNING_KEY }}
       - name: Artifact
         if: ${{ !%%IF%% }}
         uses: actions/upload-artifact@v3
@@ -441,6 +447,8 @@ jobs:
             reports/*.report
             target-*/*.tar.gz
             target-*/*.sha256
+            *.minisig
+          # REMOVE
       - name: Create and push artifacts to release
         uses: ncipollo/release-action@v1
         if: ${{ %%IF%% }}
@@ -449,7 +457,7 @@ jobs:
           name: ${{ env.crate }}-${{ env.version }}
           allowUpdates: true
           prerelease: true
-          artifacts: "info.json,hashes.json,*.sig,reports/*.report,target-*/*.tar.gz,target-*/*.sha256"
+          artifacts: "info.json,hashes.json,*.minisig,reports/*.report,target-*/*.tar.gz,target-*/*.sha256"
           body: ""
       - name: Create index file
         if: ${{ %%IF%% }}
