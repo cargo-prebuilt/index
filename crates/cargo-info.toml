@@ -1,0 +1,9 @@
+[info]
+id = "cargo-info"
+git = "https://gitlab.com/imp/cargo-info"
+unsupported = []
+bins = ["cargo-info"]
+
+[target.all]
+features = "rustls"
+no-default-features = true
