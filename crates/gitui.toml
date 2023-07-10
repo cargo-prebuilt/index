@@ -1,0 +1,5 @@
+[info]
+id = "gitui"
+git = "https://github.com/extrawurst/gitui"
+unsupported = []
+bins = ["gitui"]
