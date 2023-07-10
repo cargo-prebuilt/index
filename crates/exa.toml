@@ -1,0 +1,8 @@
+[info]
+id = "exa"
+git = "https://github.com/ogham/exa"
+unsupported = []
+bins = ["exa"]
+
+[target.all]
+features = "vendored-openssl"

@@ -1,0 +1,8 @@
+[info]
+id = "wiki-tui"
+git = "https://github.com/Builditluc/wiki-tui"
+unsupported = []
+bins = ["wiki-tui"]
+
+[target.all]
+features = "reqwest/native-tls-vendored"
