@@ -1,32 +1,5 @@
 {
   "crates": {
-    "erdtree": {
-      "flags": "",
-      "unsupported": "x86_64-pc-windows-msvc,aarch64-pc-windows-msvc,i686-pc-windows-msvc,x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,i686-unknown-freebsd",
-      "git": "https://github.com/solidiquis/erdtree",
-      "bins": [
-        "erd"
-      ]
-    },
-
-    "cargo-semver-checks": {
-      "flags": "",
-      "unsupported": "x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,i686-unknown-freebsd",
-      "git": "https://github.com/obi1kenobi/cargo-semver-checks",
-      "bins": [
-        "cargo-semver-checks"
-      ]
-    },
-
-    "spacedisplay": {
-      "flags": "",
-      "unsupported": "x86_64-unknown-freebsd,x86_64-unknown-netbsd,x86_64-unknown-illumos,x86_64-sun-solaris,i686-unknown-linux-gnu,i686-unknown-linux-musl,i686-unknown-freebsd,armv7-unknown-linux-gnueabihf,armv7-unknown-linux-musleabihf,powerpc-unknown-linux-gnu,mips-unknown-linux-gnu,mips-unknown-linux-musl,mipsel-unknown-linux-gnu,mipsel-unknown-linux-musl",
-      "git": "https://github.com/funbiscuit/spacedisplay-rs",
-      "bins": [
-        "spacedisplay"
-      ]
-    },
-
     "zp": {
       "flags": "",
       "unsupported": "x86_64-sun-solaris",

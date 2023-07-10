@@ -1,0 +1,5 @@
+[info]
+id = "typos-cli"
+git = "https://github.com/crate-ci/typos"
+unsupported = []
+bins = ["typos"]
