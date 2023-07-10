@@ -1,0 +1,5 @@
+[info]
+id = "rust-script"
+git = "https://github.com/fornwall/rust-script"
+unsupported = []
+bins = ["rust-script"]

@@ -1,0 +1,5 @@
+[info]
+id = "cargo-semver-checks"
+git = "https://github.com/obi1kenobi/cargo-semver-checks"
+unsupported = []
+bins = ["cargo-semver-checks"]

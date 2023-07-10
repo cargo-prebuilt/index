@@ -1,0 +1,5 @@
+[info]
+id = "erdtree"
+git = "https://github.com/solidiquis/erdtree"
+unsupported = []
+bins = ["erd"]

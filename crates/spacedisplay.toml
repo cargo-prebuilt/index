@@ -1,0 +1,5 @@
+[info]
+id = "spacedisplay"
+git = "https://github.com/funbiscuit/spacedisplay-rs"
+unsupported = []
+bins = ["spacedisplay"]
