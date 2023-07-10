@@ -1,7 +1,7 @@
 [info]
 id = "wiki-tui"
 git = "https://github.com/Builditluc/wiki-tui"
-unsupported = []
+unsupported = ["x86_64-unknown-illumos", "x86_64-sun-solaris"]
 bins = ["wiki-tui"]
 
 [target.all]

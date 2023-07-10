@@ -1,0 +1,5 @@
+[info]
+id = "zellij"
+git = "https://github.com/zellij-org/zellij"
+unsupported = []
+bins = ["zellij"]

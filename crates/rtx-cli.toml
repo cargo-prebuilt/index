@@ -1,0 +1,8 @@
+[info]
+id = "rtx-cli"
+git = "https://github.com/jdxcode/rtx"
+unsupported = []
+bins = ["rtx"]
+
+[target.all]
+features = "alpine,brew,deb,rpm"
