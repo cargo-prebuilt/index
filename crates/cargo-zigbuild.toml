@@ -1,0 +1,5 @@
+[info]
+id = "cargo-zigbuild"
+git = "https://github.com/rust-cross/cargo-zigbuild"
+unsupported = []
+bins = ["cargo-zigbuild"]
