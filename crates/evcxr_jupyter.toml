@@ -1,0 +1,5 @@
+[info]
+id = "evcxr_jupyter"
+git = "https://github.com/google/evcxr"
+unsupported = []
+bins = ["evcxr_jupyter"]
