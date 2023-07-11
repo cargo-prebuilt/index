@@ -1,0 +1,8 @@
+[info]
+id = "wthrr"
+git = "https://github.com/tobealive/wthrr-the-weathercrab"
+unsupported = []
+bins = ["wthrr"]
+
+[target.all]
+features = "reqwest/native-tls-vendored"
