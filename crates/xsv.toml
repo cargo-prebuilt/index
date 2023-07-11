@@ -1,0 +1,5 @@
+[info]
+id = "xsv"
+git = "https://github.com/BurntSushi/xsv"
+unsupported = ["x86_64-unknown-illumos"]
+bins = ["xsv"]

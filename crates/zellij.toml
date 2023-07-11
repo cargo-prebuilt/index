@@ -1,0 +1,21 @@
+[info]
+id = "zellij"
+git = "https://github.com/zellij-org/zellij"
+unsupported = [
+    "x86_64-unknown-freebsd",
+    "s390x-unknown-linux-gnu",
+    "armv7-unknown-linux-gnueabihf",
+    "armv7-unknown-linux-musleabihf",
+    "x86_64-pc-windows-msvc",
+    "aarch64-pc-windows-msvc",
+    "x86_64-unknown-netbsd",
+    "x86_64-unknown-illumos",
+    "x86_64-sun-solaris",
+    "powerpc64-unknown-linux-gnu",
+    "powerpc64le-unknown-linux-gnu",
+    "mips64-unknown-linux-gnuabi64",
+    "mips64-unknown-linux-muslabi64",
+    "mips64el-unknown-linux-gnuabi64",
+    "mips64el-unknown-linux-muslabi64"
+]
+bins = ["zellij"]

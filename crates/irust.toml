@@ -1,0 +1,5 @@
+[info]
+id = "irust"
+git = "https://github.com/sigmaSd/IRust"
+unsupported = ["x86_64-sun-solaris"]
+bins = ["irust"]

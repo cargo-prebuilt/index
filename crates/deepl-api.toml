@@ -1,0 +1,8 @@
+[info]
+id = "deepl-api"
+git = "https://github.com/mgruner/deepl-api-rs"
+unsupported = ["x86_64-unknown-illumos", "x86_64-sun-solaris"]
+bins = ["deepl"]
+
+[target.all]
+features = "reqwest/native-tls-vendored"

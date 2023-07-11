@@ -1,0 +1,8 @@
+[info]
+id = "websocat"
+git = "https://github.com/vi/websocat"
+unsupported = ["aarch64-pc-windows-msvc"]
+bins = ["websocat"]
+
+[target.all]
+features = "vendored_openssl"
