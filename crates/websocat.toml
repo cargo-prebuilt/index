@@ -1,7 +1,7 @@
 [info]
 id = "websocat"
 git = "https://github.com/vi/websocat"
-unsupported = []
+unsupported = ["aarch64-pc-windows-msvc"]
 bins = ["websocat"]
 
 [target.all]
