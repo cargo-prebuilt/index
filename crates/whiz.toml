@@ -1,0 +1,5 @@
+[info]
+id = "whiz"
+git = "https://github.com/zifeo/whiz"
+unsupported = []
+bins = ["whiz"]
