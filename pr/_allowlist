@@ -1,1 +1,1 @@
-cargo-edit,cargo-generate,cargo-diet
+cargo-info,cargo-make,cargo-mpirun
