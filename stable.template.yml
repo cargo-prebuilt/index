@@ -165,12 +165,7 @@ jobs:
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
-      - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
-        with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+# REMOVED
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -215,12 +210,7 @@ jobs:
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
-      - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
-        with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+# REMOVED
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -270,12 +260,7 @@ jobs:
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
-      - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
-        with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+# REMOVED
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -321,12 +306,7 @@ jobs:
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
-      - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
-        with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+# REMOVED
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -376,12 +356,7 @@ jobs:
           fail-on-cache-miss: true
       - name: Move deps
         run: mv ./bundle/* ~/.cargo
-      - uses: actions/cache@v3
-        if: ${{ !%%IF%% }}
-        with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+# REMOVED
       - name: Update Rust
         run: rustup update
       - name: Rust Version
@@ -448,7 +423,6 @@ jobs:
             target-*/*.sha256
       - name: Create and push artifacts to release
         uses: ncipollo/release-action@v1
-        if: ${{ %%IF%% }}
         with:
           tag: ${{ env.crate }}-${{ env.version }}
           name: ${{ env.crate }}-${{ env.version }}
@@ -457,55 +431,13 @@ jobs:
           artifacts: "reports/*.report,target-*/*.tar.gz,target-*/*.sha256,*.minisig,hashes.json,info.json"
           body: ""
       - name: Create index file
-        if: ${{ %%IF%% }}
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
         uses: svenstaro/upload-release-action@2.6.1
-        if: ${{ %%IF%% }}
         with:
           tag: stable-index
           overwrite: true
           make_latest: true
-          file: ${{ env.crate }}
-      - name: DBG - API
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
-
-  banned-index:
-    if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && (contains(needs.t1-cross.result, 'failure') || contains(needs.t1-apple-darwin.result, 'failure') || contains(needs.t2-cross.result, 'failure') || contains(needs.t2-pc-windows-msvc.result, 'failure')) }}
-    runs-on: ubuntu-latest
-    needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Create index file
-        run: echo "${{ env.version }}" > ${{ env.crate }}
-      - name: Push to index
-        uses: svenstaro/upload-release-action@2.6.1
-        with:
-          tag: banned-index
-          make_latest: false
-          file: ${{ env.crate }}
-      - name: DBG - API
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
-
-  track-index:
-    if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && contains(needs.*.result, 'failure') }}
-    runs-on: ubuntu-latest
-    needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
-    steps:
-      - uses: actions/checkout@v3
-      - name: Create index file
-        run: echo "${{ env.version }}" > ${{ env.crate }}
-      - name: Push to index
-        uses: svenstaro/upload-release-action@2.6.1
-        with:
-          tag: track-index
-          make_latest: false
           file: ${{ env.crate }}
       - name: DBG - API
         env:
