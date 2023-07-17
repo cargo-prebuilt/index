@@ -1,0 +1,5 @@
+[info]
+id = "volo-cli"
+git = "https://github.com/cloudwego/volo"
+unsupported = []
+bins = ["volo"]

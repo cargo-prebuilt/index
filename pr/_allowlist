@@ -1,1 +1,1 @@
-watchexec-cli
+cargo-wasi,volo-cli,cargo-bitbake
