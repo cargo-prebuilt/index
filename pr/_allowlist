@@ -1,1 +1,1 @@
-cargo-make,cargo-mpirun,cargo-nextest
+hyperfine
