@@ -1,0 +1,5 @@
+[info]
+id = "zet"
+git = "https://github.com/yarrow/zet"
+unsupported = []
+bins = ["zet"]

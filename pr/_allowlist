@@ -1,1 +1,1 @@
-cargo-wasi,volo-cli,cargo-bitbake
+volo-cli,cargo-bitbake,cargo-bom
