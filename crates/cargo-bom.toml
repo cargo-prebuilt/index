@@ -1,7 +1,7 @@
 [info]
 id = "cargo-bom"
 git = "https://github.com/sensorfu/cargo-bom"
-unsupported = []
+unsupported = ["x86_64-sun-solaris"]
 bins = ["cargo-bom"]
 
 [target.all]
