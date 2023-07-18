@@ -1,0 +1,8 @@
+[info]
+id = "wasmer-cli"
+git = "https://github.com/wasmerio/wasmer"
+unsupported = []
+bins = ["wasmer"]
+
+[target.all]
+features = "singlepass,cranelift"

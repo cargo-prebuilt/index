@@ -1,38 +1,11 @@
 {
   "crates": {
-    "cargo-bom": {
-      "flags": "--features cargo/vendored-openssl",
-      "unsupported": "x86_64-sun-solaris",
-      "git": "https://github.com/sensorfu/cargo-bom",
-      "bins": [
-        "cargo-bom"
-      ]
-    },
-
     "discord-rpc-helper": {
       "flags": "--features reqwest/native-tls-vendored",
       "unsupported": "x86_64-unknown-illumos,x86_64-sun-solaris",
       "git": "https://github.com/kekonn/discord-rpc-helper",
       "bins": [
         "discord-rpc-helper"
-      ]
-    },
-
-    "cargo-get": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/nicolaiunrein/cargo-get",
-      "bins": [
-        "cargo-get"
-      ]
-    },
-
-    "zet": {
-      "flags": "",
-      "unsupported": "",
-      "git": "https://github.com/yarrow/zet",
-      "bins": [
-        "zet"
       ]
     },
 

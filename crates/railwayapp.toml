@@ -1,0 +1,5 @@
+[info]
+id = "railwayapp"
+git = "https://github.com/railwayapp/cli"
+unsupported = []
+bins = ["railway"]
