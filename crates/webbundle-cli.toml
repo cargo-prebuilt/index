@@ -1,0 +1,5 @@
+[info]
+id = "webbundle-cli"
+git = "https://github.com/google/webbundle"
+unsupported = ["x86_64-sun-solaris"]
+bins = ["webbundle"]

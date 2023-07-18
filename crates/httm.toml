@@ -1,0 +1,10 @@
+[info]
+id = "httm"
+git = "https://github.com/kimono-koans/httm"
+unsupported = [
+    "x86_64-pc-windows-msvc",
+    "aarch64-pc-windows-msvc",
+    "x86_64-unknown-illumos",
+    "x86_64-sun-solaris",
+]
+bins = ["httm"]

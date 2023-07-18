@@ -1,0 +1,5 @@
+[info]
+id = "wit-bindgen-cli"
+git = "https://github.com/bytecodealliance/wit-bindgen"
+unsupported = []
+bins = ["wit-bindgen"]

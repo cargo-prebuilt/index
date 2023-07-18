@@ -1,0 +1,8 @@
+[info]
+id = "discord-rpc-helper"
+git = "https://github.com/kekonn/discord-rpc-helper"
+unsupported = ["x86_64-unknown-illumos", "x86_64-sun-solaris"]
+bins = ["discord-rpc-helper"]
+
+[target.all]
+features = "reqwest/native-tls-vendored"

@@ -110,7 +110,7 @@ def main(pull_request, duplicate, server_url, repo):
         model["crate"] = c[0]
         model["version"] = c[1]
         model["license"] = c[2]
-        model["description"] = c[3]
+        model["description"] = c[3].replace("'", "%%SINGLE_QUOTE%%")
         model["dl"] = c[4]
         model["checksum"] = c[5]
         model["file"] = c[6]
