@@ -11,7 +11,7 @@ def main(filename, version, license_spdx, description, rustc_version_guess):
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)
 
-    description = json.loads(description)["description"]
+    description = json.loads(description)["description"].replace("%%SINGLE_QUOTE%%", "'")
     features = misc.gen_flags(crate_toml)
 
     targets = []
