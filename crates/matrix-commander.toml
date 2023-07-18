@@ -1,0 +1,9 @@
+[info]
+id = "matrix-commander"
+git = "https://github.com/8go/matrix-commander-rs"
+unsupported = []
+bins = ["matrix-commander-rs"]
+
+[target.all]
+features = "reqwest/native-tls-vendored"
+flags = "--profile=release-tiny"
