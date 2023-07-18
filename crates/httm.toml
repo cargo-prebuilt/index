@@ -1,0 +1,5 @@
+[info]
+id = "httm"
+git = "https://github.com/kimono-koans/httm"
+unsupported = []
+bins = ["httm"]
