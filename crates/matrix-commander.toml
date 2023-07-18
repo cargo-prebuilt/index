@@ -6,4 +6,3 @@ bins = ["matrix-commander-rs"]
 
 [target.all]
 features = "reqwest/native-tls-vendored"
-flags = "--profile=release-tiny"
