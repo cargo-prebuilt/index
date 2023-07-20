@@ -1,0 +1,5 @@
+[info]
+id = "oxipng"
+git = "https://github.com/shssoichiro/oxipng"
+unsupported = []
+bins = ["oxipng"]
