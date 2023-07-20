@@ -1,1 +1,1 @@
-volo-cli,wasm-pack,wasmer-cli
+wasmtime-cli,watchexec-cli,whiz
