@@ -4,22 +4,6 @@ git = "https://github.com/hatoo/oha"
 unsupported = []
 bins = ["oha"]
 
-#[target.all]
-#features = ""
-#no-default-features = false
-#flags = ""
-#
-#[target.apple]
-#features = ""
-#no-default-features = false
-#flags = ""
-#
-#[target.linux]
-#features = ""
-#no-default-features = false
-#flags = ""
-#
-#[target.windows]
-#features = ""
-#no-default-features = false
-#flags = ""
+[target.all]
+features = "rustls"
+no-default-features = true

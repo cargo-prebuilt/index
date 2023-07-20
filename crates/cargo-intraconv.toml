@@ -1,0 +1,5 @@
+[info]
+id = "cargo-intraconv"
+git = "https://github.com/poliorcetics/cargo-intraconv"
+unsupported = []
+bins = ["cargo-intraconv"]
