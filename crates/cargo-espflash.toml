@@ -1,8 +1,0 @@
-[info]
-id = "cargo-espflash"
-git = "https://github.com/esp-rs/espflash/tree/main/cargo-espflash"
-unsupported = []
-bins = ["cargo-espflash"]
-
-[target.all]
-features = "espflash/raspberry"

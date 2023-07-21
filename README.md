@@ -79,6 +79,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [cargo-license](https://github.com/onur/cargo-license)
 - [cargo-make](https://github.com/sagiegurari/cargo-make)
 - [cargo-mpirun](https://github.com/AndrewGaspar/cargo-mpirun)
+- [cargo-ndk](https://github.com/bbqsrc/cargo-ndk)
 - [cargo-nextest](https://github.com/nextest-rs/nextest)
 - [cargo-outdated](https://github.com/kbknapp/cargo-outdated)
 - [cargo-prebuilt](https://github.com/cargo-prebuilt/cargo-prebuilt)

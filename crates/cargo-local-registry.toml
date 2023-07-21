@@ -1,0 +1,8 @@
+[info]
+id = "cargo-local-registry"
+git = "https://github.com/dhovart/cargo-local-registry"
+unsupported = []
+bins = ["cargo-local-registry"]
+
+[target.all]
+features = "vendored-openssl"
