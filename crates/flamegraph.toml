@@ -1,0 +1,5 @@
+[info]
+id = "flamegraph"
+git = "https://github.com/flamegraph-rs/flamegraph"
+unsupported = ["aarch64-pc-windows-msvc"]
+bins = ["cargo-flamegraph", "flamegraph"]

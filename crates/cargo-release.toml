@@ -1,0 +1,5 @@
+[info]
+id = "cargo-release"
+git = "https://github.com/crate-ci/cargo-release"
+unsupported = ["x86_64-unknown-illumos"]
+bins = ["cargo-release"]

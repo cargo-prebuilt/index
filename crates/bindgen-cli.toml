@@ -1,0 +1,5 @@
+[info]
+id = "bindgen-cli"
+git = "https://github.com/rust-lang/rust-bindgen"
+unsupported = []
+bins = ["bindgen"]
