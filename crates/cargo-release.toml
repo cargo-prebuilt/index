@@ -1,0 +1,5 @@
+[info]
+id = "cargo-release"
+git = "https://github.com/crate-ci/cargo-release"
+unsupported = []
+bins = ["cargo-release"]
