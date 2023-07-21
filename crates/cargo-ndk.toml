@@ -1,0 +1,5 @@
+[info]
+id = "cargo-ndk"
+git = "https://github.com/bbqsrc/cargo-ndk"
+unsupported = []
+bins = ["cargo-ndk"]
