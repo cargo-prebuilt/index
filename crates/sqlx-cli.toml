@@ -1,0 +1,8 @@
+[info]
+id = "sqlx-cli"
+git = "https://github.com/launchbadge/sqlx"
+unsupported = []
+bins = ["sqlx", "cargo-sqlx"]
+
+[target.all]
+features = "openssl-vendored"
