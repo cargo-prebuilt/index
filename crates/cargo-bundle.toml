@@ -1,0 +1,5 @@
+[info]
+id = "cargo-bundle"
+git = "https://github.com/burtonageo/cargo-bundle"
+unsupported = []
+bins = ["cargo-bundle"]
