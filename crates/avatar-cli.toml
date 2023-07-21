@@ -1,5 +1,0 @@
-[info]
-id = "avatar-cli"
-git = "https://gitlab.com/avatar-cli/avatar-cli"
-unsupported = []
-bins = ["avatar"]
