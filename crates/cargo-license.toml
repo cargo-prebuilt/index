@@ -1,0 +1,5 @@
+[info]
+id = "cargo-license"
+git = "https://github.com/onur/cargo-license"
+unsupported = []
+bins = ["cargo-license"]
