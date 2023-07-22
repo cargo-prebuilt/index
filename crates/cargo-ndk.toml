@@ -1,0 +1,10 @@
+[info]
+id = "cargo-ndk"
+git = "https://github.com/bbqsrc/cargo-ndk"
+unsupported = [
+    "x86_64-unknown-freebsd",
+    "x86_64-unknown-netbsd",
+    "x86_64-unknown-illumos",
+    "x86_64-sun-solaris"
+]
+bins = ["cargo-ndk"]

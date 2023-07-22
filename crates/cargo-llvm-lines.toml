@@ -1,0 +1,5 @@
+[info]
+id = "cargo-llvm-lines"
+git = "https://github.com/dtolnay/cargo-llvm-lines"
+unsupported = []
+bins = ["cargo-llvm-lines"]

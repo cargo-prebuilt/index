@@ -1,0 +1,8 @@
+[info]
+id = "cargo-local-registry"
+git = "https://github.com/dhovart/cargo-local-registry"
+unsupported = ["x86_64-sun-solaris"]
+bins = ["cargo-local-registry"]
+
+[target.all]
+features = "vendored-openssl"

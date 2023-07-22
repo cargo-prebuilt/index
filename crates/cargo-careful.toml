@@ -1,0 +1,5 @@
+[info]
+id = "cargo-careful"
+git = "https://github.com/ralfjung/cargo-careful"
+unsupported = []
+bins = ["cargo-careful"]
