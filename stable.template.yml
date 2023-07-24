@@ -101,9 +101,9 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v1
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
         with:
-          tools: cargo-audit
+          pkgs: cargo-audit
       - name: Generate license report
         working-directory: ./build
         run: |
@@ -175,9 +175,9 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v1
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
         with:
-          tools: cross
+          pkgs: cross
       - name: Build crate
         working-directory: ./build
         run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
@@ -227,9 +227,9 @@ jobs:
         run: rustc --version
       - name: Add Rust target
         run: rustup target add ${{ matrix.target }}
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v1
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
         with:
-          tools: cargo-auditable
+          pkgs: cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%APPLE_FLAGS%%
@@ -280,9 +280,9 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v1
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
         with:
-          tools: cross
+          pkgs: cross
       - name: Build crate
         working-directory: ./build
         run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
@@ -333,9 +333,9 @@ jobs:
         run: rustc --version
       - name: Add Rust target
         run: rustup target add ${{ matrix.target }}
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v1
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
         with:
-          tools: cargo-auditable
+          pkgs: cargo-auditable
       - name: Build crate
         working-directory: ./build
         run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%WINDOWS_FLAGS%%
@@ -386,9 +386,9 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v1
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
         with:
-          tools: cross
+          pkgs: cross
       - name: Build crate
         working-directory: ./build
         run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
