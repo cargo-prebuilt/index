@@ -1,0 +1,5 @@
+[info]
+id = "hexyl"
+git = "https://github.com/sharkdp/hexyl"
+unsupported = []
+bins = ["hexyl"]

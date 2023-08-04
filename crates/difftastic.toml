@@ -1,0 +1,5 @@
+[info]
+id = "difftastic"
+git = "https://github.com/wilfred/difftastic"
+unsupported = []
+bins = ["difft"]
