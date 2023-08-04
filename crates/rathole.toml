@@ -1,0 +1,5 @@
+[info]
+id = "rathole"
+git = "https://github.com/rapiz1/rathole"
+unsupported = []
+bins = ["rathole"]
