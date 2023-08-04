@@ -125,7 +125,6 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [oha](https://github.com/hatoo/oha)
 - [oxipng](https://github.com/shssoichiro/oxipng)
 - [railwayapp](https://github.com/railwayapp/cli)
-- [rathole](https://github.com/rapiz1/rathole)
 - [ripgrep](https://github.com/BurntSushi/ripgrep)
 - [rsign2](https://github.com/jedisct1/rsign2)
 - [rtx-cli](https://github.com/jdxcode/rtx)

@@ -1,8 +1,0 @@
-[info]
-id = "rathole"
-git = "https://github.com/rapiz1/rathole"
-unsupported = []
-bins = ["rathole"]
-
-[target.all]
-features = "tokio-native-tls/vendored"
