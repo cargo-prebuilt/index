@@ -1,0 +1,5 @@
+[info]
+id = "rustypaste-cli"
+git = "https://github.com/orhun/rustypaste-cli"
+unsupported = []
+bins = ["rpaste"]

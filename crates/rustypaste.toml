@@ -1,0 +1,5 @@
+[info]
+id = "rustypaste"
+git = "https://github.com/orhun/rustypaste"
+unsupported = []
+bins = ["rustypaste"]

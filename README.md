@@ -120,6 +120,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [irust](https://github.com/sigmaSd/IRust)
 - [jql](https://github.com/yamafaktory/jql)
 - [just](https://github.com/casey/just)
+- [jxl-oxide-cli](https://github.com/tirr-c/jxl-oxide)
 - [matrix-commander](https://github.com/8go/matrix-commander-rs)
 - [nu](https://github.com/nushell/nushell)
 - [oha](https://github.com/hatoo/oha)
