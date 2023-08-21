@@ -1,0 +1,5 @@
+[info]
+id = "blob-dl"
+git = "https://github.com/MicheleCioccarelli/blob-dl"
+unsupported = []
+bins = ["blob-dl"]
