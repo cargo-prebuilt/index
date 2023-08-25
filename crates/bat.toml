@@ -1,5 +1,5 @@
 [info]
 id = "bat"
 git = "https://github.com/sharkdp/bat"
-unsupported = ["x86_64-unknown-netbsd", "x86_64-sun-solaris",]
+unsupported = ["x86_64-unknown-netbsd", "x86_64-sun-solaris"]
 bins = ["bat"]
