@@ -5,7 +5,5 @@ unsupported = [
     "x86_64-unknown-netbsd",
     "x86_64-unknown-illumos",
     "x86_64-sun-solaris",
-    "mips64-unknown-linux-muslabi64",
-    "mips64el-unknown-linux-muslabi64"
 ]
 bins = ["evcxr_jupyter"]

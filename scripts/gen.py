@@ -23,8 +23,6 @@ t3_targets = [
     "x86_64-sun-solaris",
     "powerpc64-unknown-linux-gnu",
     "powerpc64le-unknown-linux-gnu",
-    "mips64-unknown-linux-muslabi64",
-    "mips64el-unknown-linux-muslabi64",
 ]
 
 
