@@ -1,1 +1,1 @@
-cargo-audit
+cargo-audit,cargo-semver-checks
