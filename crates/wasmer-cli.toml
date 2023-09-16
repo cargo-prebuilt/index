@@ -2,16 +2,16 @@
 id = "wasmer-cli"
 git = "https://github.com/wasmerio/wasmer"
 unsupported = [
-#    "riscv64gc-unknown-linux-gnu",
-#    "s390x-unknown-linux-gnu",
-#    "armv7-unknown-linux-gnueabihf",
-#    "armv7-unknown-linux-musleabihf",
-#    "aarch64-pc-windows-msvc",
-#    "x86_64-unknown-netbsd",
-#    "x86_64-unknown-illumos",
-#    "x86_64-sun-solaris",
-#    "powerpc64-unknown-linux-gnu",
-#    "powerpc64le-unknown-linux-gnu",
+    "riscv64gc-unknown-linux-gnu",
+    "s390x-unknown-linux-gnu",
+    "armv7-unknown-linux-gnueabihf",
+    "armv7-unknown-linux-musleabihf",
+    "aarch64-pc-windows-msvc",
+    "x86_64-unknown-netbsd",
+    "x86_64-unknown-illumos",
+    "x86_64-sun-solaris",
+    "powerpc64-unknown-linux-gnu",
+    "powerpc64le-unknown-linux-gnu",
 ]
 bins = ["wasmer"]
 

@@ -1,5 +1,5 @@
 [info]
 id = "gitui"
 git = "https://github.com/extrawurst/gitui"
-unsupported = ["x86_64-unknown-netbsd", "x86_64-sun-solaris"]
+unsupported = []
 bins = ["gitui"]
