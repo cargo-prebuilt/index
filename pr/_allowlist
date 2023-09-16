@@ -1,1 +1,1 @@
-cargo-audit,cargo-semver-checks
+cargo-semver-checks,wasmer-cli

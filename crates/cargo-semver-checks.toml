@@ -1,5 +1,13 @@
 [info]
 id = "cargo-semver-checks"
 git = "https://github.com/obi1kenobi/cargo-semver-checks"
-unsupported = []
+unsupported = [
+    "riscv64gc-unknown-linux-gnu",
+    "s390x-unknown-linux-gnu",
+    "aarch64-pc-windows-msvc",
+    "x86_64-unknown-netbsd",
+    "x86_64-sun-solaris",
+    "powerpc64-unknown-linux-gnu",
+    "powerpc64le-unknown-linux-gnu",
+]
 bins = ["cargo-semver-checks"]
