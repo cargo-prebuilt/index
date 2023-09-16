@@ -22,7 +22,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: DBG - API
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -79,7 +79,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ setup ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -101,7 +101,7 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cargo-audit
       - name: Generate license report
@@ -150,7 +150,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ setup ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
@@ -175,7 +175,7 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cross
       - name: Build crate
@@ -200,7 +200,7 @@ jobs:
     runs-on: macos-latest
     needs: [ setup ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
@@ -227,7 +227,7 @@ jobs:
         run: rustc --version
       - name: Add Rust target
         run: rustup target add ${{ matrix.target }}
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cargo-auditable
       - name: Build crate
@@ -255,7 +255,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ setup ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
@@ -280,7 +280,7 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cross
       - name: Build crate
@@ -306,7 +306,7 @@ jobs:
     runs-on: windows-latest
     needs: [ setup ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
@@ -333,7 +333,7 @@ jobs:
         run: rustc --version
       - name: Add Rust target
         run: rustup target add ${{ matrix.target }}
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cargo-auditable
       - name: Build crate
@@ -361,7 +361,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ setup ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
@@ -386,7 +386,7 @@ jobs:
         run: rustup update
       - name: Rust Version
         run: rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v2
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cross
       - name: Build crate
@@ -408,7 +408,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
@@ -478,7 +478,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
@@ -498,7 +498,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
