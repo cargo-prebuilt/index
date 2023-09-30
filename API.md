@@ -1,4 +1,4 @@
-# Start
+# Info
 
 - Index holds the latest version built. (https://github.com/cargo-prebuilt/index/releases/download/stable-index/CRATE)
 - Builds are put under a prerelease named/tagged CRATE-VERSION.
