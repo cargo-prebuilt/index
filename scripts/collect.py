@@ -48,10 +48,11 @@ def main(target, build_path, bins):
         h = hashlib.sha256(file).hexdigest()
         hash_obj["archive"].append({"hash": h, "type": "sha256"})
 
-        # TODO: Remove with 0.6.0 of cargo-prebuilt
+        # For hashes.sha256 (TODO: Maybe just use hashes.json)
         with open(target + ".sha256", "w") as tmp_file:
             tmp_file.write(h)
-        #
+            tmp_file.write("  ")
+            tmp_file.write(target + ".tar.gz")
 
         h = hashlib.sha512(file).hexdigest()
         hash_obj["archive"].append({"hash": h, "type": "sha512"})

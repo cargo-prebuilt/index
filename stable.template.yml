@@ -49,10 +49,9 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* ./build
       - name: Update Rust
         if: ${{ !steps.cache.outputs.cache-hit }}
-        run: rustup update
-      - name: Rust Version
-        if: ${{ !steps.cache.outputs.cache-hit }}
-        run: rustc --version
+        run: |
+          rustup update
+          rustc --version
       - name: Generated lockfile if needed
         if: ${{ !steps.cache.outputs.cache-hit }}
         working-directory: ./build
@@ -93,9 +92,9 @@ jobs:
             ~/.cargo/advisory-db
           key: stable-advisory-db
       - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
+        run: |
+          rustup update
+          rustc --version
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cargo-audit
@@ -167,9 +166,9 @@ jobs:
             build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
       - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
+        run: |
+          rustup update
+          rustc --version
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cross
@@ -216,12 +215,11 @@ jobs:
           path: |
             build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
-      - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
-      - name: Add Rust target
-        run: rustup target add ${{ matrix.target }}
+      - name: Update Rust and Add Target
+        run: |
+          rustup update
+          rustc --version
+          rustup target add ${{ matrix.target }}
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cargo-auditable
@@ -272,9 +270,9 @@ jobs:
             build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
       - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
+        run: |
+          rustup update
+          rustc --version
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cross
@@ -322,12 +320,11 @@ jobs:
           path: |
             build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
-      - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
-      - name: Add Rust target
-        run: rustup target add ${{ matrix.target }}
+      - name: Update Rust and Add Target
+        run: |
+          rustup update
+          rustc --version
+          rustup target add ${{ matrix.target }}
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cargo-auditable
@@ -378,9 +375,9 @@ jobs:
             build/target
           key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
       - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
+        run: |
+         rustup update
+         rustc --version
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cross
@@ -456,6 +453,7 @@ jobs:
             reports/*.report
             target-*/*.tar.gz
             target-*/*.sha256
+            target-*/*.hashes.json
       - name: Create and push artifacts to release
         uses: ncipollo/release-action@v1
         if: ${{ %%IF%% }}
@@ -464,13 +462,13 @@ jobs:
           name: ${{ env.crate }}-${{ env.version }}
           allowUpdates: true
           prerelease: true
-          artifacts: "reports/*.report,target-*/*.tar.gz,hashes.sha256,target-*/*.sha256,*.minisig,hashes.json,info.json"
+          artifacts: "reports/*.report,target-*/*.tar.gz,hashes.sha256,*.minisig,hashes.json,info.json"
           body: ""
       - name: Create index file
         if: ${{ %%IF%% }}
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.6.1
+        uses: svenstaro/upload-release-action@2.7.0
         if: ${{ %%IF%% }}
         with:
           tag: stable-index
@@ -487,7 +485,7 @@ jobs:
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.6.1
+        uses: svenstaro/upload-release-action@2.7.0
         with:
           tag: banned-index
           make_latest: false
@@ -502,7 +500,7 @@ jobs:
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.6.1
+        uses: svenstaro/upload-release-action@2.7.0
         with:
           tag: track-index
           make_latest: false
