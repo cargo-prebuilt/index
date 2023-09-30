@@ -183,7 +183,6 @@ jobs:
           name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
             ${{ matrix.target }}.hashes.json
 
   t1-apple-darwin:
@@ -234,7 +233,6 @@ jobs:
           name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
             ${{ matrix.target }}.hashes.json
 
   t2-cross:
@@ -287,7 +285,6 @@ jobs:
           name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
             ${{ matrix.target }}.hashes.json
 
   t2-pc-windows-msvc:
@@ -339,7 +336,6 @@ jobs:
           name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
             ${{ matrix.target }}.hashes.json
 
   t3-cross:
@@ -392,7 +388,6 @@ jobs:
           name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
             ${{ matrix.target }}.hashes.json
 
   push-index:
@@ -404,12 +399,9 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Rust Update
+      - name: Rust Version Guess
         run: |
           rustup update
-          rustc --version
-      - name: Get rust version guess
-        run: |
           echo "rustc_version=$(rustc --version)" >> $GITHUB_ENV
       - uses: actions/download-artifact@v3
       - name: DBG - List Structure
@@ -422,7 +414,7 @@ jobs:
             if [ -d "${D}" ]; then
               echo "${D}"
               pushd "${D}"
-              cat *.sha256 >> ../hashes.sha256
+              echo "$(cat *.hashes.json | jq --raw-output '.archive[] | select(.type | test("sha256")) | .hash') " *.tar.gz >> ../hashes.sha256
               popd
             fi
           done
@@ -452,7 +444,6 @@ jobs:
             hashes.sha256
             reports/*.report
             target-*/*.tar.gz
-            target-*/*.sha256
             target-*/*.hashes.json
       - name: Create and push artifacts to release
         uses: ncipollo/release-action@v1
