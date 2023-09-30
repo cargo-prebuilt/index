@@ -28,18 +28,12 @@ jobs:
         id: cache
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
-      - name: Create Folders
+      - name: Create Folder
         if: ${{ !steps.cache.outputs.cache-hit }}
-        run: |
-          mkdir -p ~/.cargo/registry/index
-          mkdir -p ~/.cargo/registry/cache
-          mkdir -p ~/.cargo/git/db
-          mkdir -p ./bundle
-          mkdir -p ./build
+        run: mkdir -p ./build
       - name: Download crate and check hash
         if: ${{ !steps.cache.outputs.cache-hit }}
         run: |
@@ -56,18 +50,6 @@ jobs:
         if: ${{ !steps.cache.outputs.cache-hit }}
         working-directory: ./build
         run: test -f Cargo.lock || cargo +stable generate-lockfile --verbose
-      - name: Download Deps
-        if: ${{ !steps.cache.outputs.cache-hit }}
-        working-directory: ./build
-        run: cargo +stable fetch --verbose --locked
-      - name: Bundle Deps
-        if: ${{ !steps.cache.outputs.cache-hit }}
-        run: |
-          mkdir -p ./bundle/registry
-          mkdir -p ./bundle/git
-          cp -r ~/.cargo/registry/index ./bundle/registry
-          cp -r ~/.cargo/registry/cache ./bundle/registry
-          cp -r ~/.cargo/git/db ./bundle/git
 
   reports:
     runs-on: ubuntu-latest
@@ -78,13 +60,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
       - name: Cache Advisory DB
         uses: actions/cache@v3
         with:
@@ -152,19 +131,14 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
-      - uses: actions/cache@v3
+      - uses: Swatinem/rust-cache@v2
         if: ${{ !%%IF%% }}
         with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+          workspaces: "./build -> target"
       - name: Update Rust
         run: |
           rustup update
@@ -201,13 +175,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
         if: ${{ !%%IF%% }}
         with:
@@ -254,13 +225,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
         if: ${{ !%%IF%% }}
         with:
@@ -304,13 +272,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
         if: ${{ !%%IF%% }}
         with:
@@ -357,13 +322,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
       - uses: actions/cache@v3
         if: ${{ !%%IF%% }}
         with:
