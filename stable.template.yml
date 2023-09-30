@@ -23,11 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: DBG - API
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
       - name: Cache
         uses: actions/cache@v3
         id: cache
@@ -482,11 +477,6 @@ jobs:
           overwrite: true
           make_latest: true
           file: ${{ env.crate }}
-      - name: DBG - API
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
 
   banned-index:
     if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && (contains(needs.t1-cross.result, 'failure') || contains(needs.t1-apple-darwin.result, 'failure') || contains(needs.t2-cross.result, 'failure') || contains(needs.t2-pc-windows-msvc.result, 'failure')) }}
@@ -502,11 +492,6 @@ jobs:
           tag: banned-index
           make_latest: false
           file: ${{ env.crate }}
-      - name: DBG - API
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
 
   track-index:
     if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && contains(needs.*.result, 'failure') }}
@@ -522,8 +507,3 @@ jobs:
           tag: track-index
           make_latest: false
           file: ${{ env.crate }}
-      - name: DBG - API
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
