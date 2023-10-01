@@ -1,0 +1,5 @@
+[info]
+id = "bandwhich"
+git = "https://github.com/imsnif/bandwhich"
+unsupported = []
+bins = ["bandwhich"]
