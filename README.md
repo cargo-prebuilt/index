@@ -45,6 +45,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 ## Crates
 
 - [bacon](https://github.com/Canop/bacon)
+- [bandwhich](https://github.com/imsnif/bandwhich)
 - [bat](https://github.com/sharkdp/bat)
 - [bindgen-cli](https://github.com/rust-lang/rust-bindgen)
 - [blob-dl](https://github.com/MicheleCioccarelli/blob-dl)
