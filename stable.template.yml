@@ -127,7 +127,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Get deps and crates from cache
+      - name: Get crate from cache
         uses: actions/cache@v3
         with:
           path: |
@@ -171,7 +171,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Get deps and crates from cache
+      - name: Get crate from cache
         uses: actions/cache@v3
         with:
           path: |
@@ -179,12 +179,10 @@ jobs:
           key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - uses: actions/cache@v3
+      - uses: Swatinem/rust-cache@v2
         if: ${{ !%%IF%% }}
         with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+          workspaces: "./build -> target"
       - name: Update Rust and Add Target
         run: |
           rustup update
@@ -221,7 +219,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Get deps and crates from cache
+      - name: Get crate from cache
         uses: actions/cache@v3
         with:
           path: |
@@ -229,12 +227,10 @@ jobs:
           key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - uses: actions/cache@v3
+      - uses: Swatinem/rust-cache@v2
         if: ${{ !%%IF%% }}
         with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+          workspaces: "./build -> target"
       - name: Update Rust
         run: |
           rustup update
@@ -268,7 +264,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Get deps and crates from cache
+      - name: Get crate from cache
         uses: actions/cache@v3
         with:
           path: |
@@ -276,12 +272,10 @@ jobs:
           key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - uses: actions/cache@v3
+      - uses: Swatinem/rust-cache@v2
         if: ${{ !%%IF%% }}
         with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+          workspaces: "./build -> target"
       - name: Update Rust and Add Target
         run: |
           rustup update
@@ -318,7 +312,7 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Get deps and crates from cache
+      - name: Get crate from cache
         uses: actions/cache@v3
         with:
           path: |
@@ -326,12 +320,10 @@ jobs:
           key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - uses: actions/cache@v3
+      - uses: Swatinem/rust-cache@v2
         if: ${{ !%%IF%% }}
         with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+          workspaces: "./build -> target"
       - name: Update Rust
         run: |
          rustup update
