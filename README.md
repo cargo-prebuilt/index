@@ -21,21 +21,21 @@ The minisign public key for this index can be found in two formats:
 Tier 1: Crates must build on these platforms
 - x86_64-unknown-linux-gnu
 - x86_64-unknown-linux-musl
-- x86_64-apple-darwin
-- aarch64-apple-darwin
 - aarch64-unknown-linux-gnu
 - aarch64-unknown-linux-musl
+- x86_64-apple-darwin
+- aarch64-apple-darwin
 
 Tier 2: Crates optionally build for these platforms, but if one fails the entire build fails
 - x86_64-pc-windows-msvc
 - aarch64-pc-windows-msvc
-- x86_64-unknown-freebsd
 - riscv64gc-unknown-linux-gnu
 - s390x-unknown-linux-gnu
 - armv7-unknown-linux-gnueabihf
 - armv7-unknown-linux-musleabihf
 
 Tier 3: Crates optionally build for these platforms, but the build will still publish if any fail
+- x86_64-unknown-freebsd
 - x86_64-unknown-netbsd
 - x86_64-unknown-illumos
 - x86_64-sun-solaris

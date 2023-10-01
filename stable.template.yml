@@ -23,28 +23,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: DBG - API
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
       - name: Cache
         uses: actions/cache@v3
         id: cache
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
-      - name: Create Folders
+      - name: Create Folder
         if: ${{ !steps.cache.outputs.cache-hit }}
-        run: |
-          mkdir -p ~/.cargo/registry/index
-          mkdir -p ~/.cargo/registry/cache
-          mkdir -p ~/.cargo/git/db
-          mkdir -p ./bundle
-          mkdir -p ./build
+        run: mkdir -p ./build
       - name: Download crate and check hash
         if: ${{ !steps.cache.outputs.cache-hit }}
         run: |
@@ -54,26 +43,13 @@ jobs:
           mv ${{ env.crate }}-${{ env.version }}/* ./build
       - name: Update Rust
         if: ${{ !steps.cache.outputs.cache-hit }}
-        run: rustup update
-      - name: Rust Version
-        if: ${{ !steps.cache.outputs.cache-hit }}
-        run: rustc --version
+        run: |
+          rustup update
+          rustc --version
       - name: Generated lockfile if needed
         if: ${{ !steps.cache.outputs.cache-hit }}
         working-directory: ./build
         run: test -f Cargo.lock || cargo +stable generate-lockfile --verbose
-      - name: Download Deps
-        if: ${{ !steps.cache.outputs.cache-hit }}
-        working-directory: ./build
-        run: cargo +stable fetch --verbose --locked
-      - name: Bundle Deps
-        if: ${{ !steps.cache.outputs.cache-hit }}
-        run: |
-          mkdir -p ./bundle/registry
-          mkdir -p ./bundle/git
-          cp -r ~/.cargo/registry/index ./bundle/registry
-          cp -r ~/.cargo/registry/cache ./bundle/registry
-          cp -r ~/.cargo/git/db ./bundle/git
 
   reports:
     runs-on: ubuntu-latest
@@ -84,13 +60,10 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
       - name: Cache Advisory DB
         uses: actions/cache@v3
         with:
@@ -98,9 +71,9 @@ jobs:
             ~/.cargo/advisory-db
           key: stable-advisory-db
       - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
+        run: |
+          rustup update
+          rustc --version
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cargo-audit
@@ -154,27 +127,22 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Get deps and crates from cache
+      - name: Get crate from cache
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
-      - uses: actions/cache@v3
+      - uses: Swatinem/rust-cache@v2
         if: ${{ !%%IF%% }}
         with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+          workspaces: "./build -> target"
       - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
+        run: |
+          rustup update
+          rustc --version
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cross
@@ -189,7 +157,6 @@ jobs:
           name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
             ${{ matrix.target }}.hashes.json
 
   t1-apple-darwin:
@@ -204,29 +171,23 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Get deps and crates from cache
+      - name: Get crate from cache
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
-      - uses: actions/cache@v3
+      - uses: Swatinem/rust-cache@v2
         if: ${{ !%%IF%% }}
         with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
-      - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
-      - name: Add Rust target
-        run: rustup target add ${{ matrix.target }}
+          workspaces: "./build -> target"
+      - name: Update Rust and Add Target
+        run: |
+          rustup update
+          rustc --version
+          rustup target add ${{ matrix.target }}
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cargo-auditable
@@ -241,7 +202,6 @@ jobs:
           name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
             ${{ matrix.target }}.hashes.json
 
   t2-cross:
@@ -259,27 +219,22 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Get deps and crates from cache
+      - name: Get crate from cache
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
-      - uses: actions/cache@v3
+      - uses: Swatinem/rust-cache@v2
         if: ${{ !%%IF%% }}
         with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+          workspaces: "./build -> target"
       - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
+        run: |
+          rustup update
+          rustc --version
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cross
@@ -294,7 +249,6 @@ jobs:
           name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
             ${{ matrix.target }}.hashes.json
 
   t2-pc-windows-msvc:
@@ -310,29 +264,23 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Get deps and crates from cache
+      - name: Get crate from cache
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
-      - uses: actions/cache@v3
+      - uses: Swatinem/rust-cache@v2
         if: ${{ !%%IF%% }}
         with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
-      - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
-      - name: Add Rust target
-        run: rustup target add ${{ matrix.target }}
+          workspaces: "./build -> target"
+      - name: Update Rust and Add Target
+        run: |
+          rustup update
+          rustc --version
+          rustup target add ${{ matrix.target }}
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cargo-auditable
@@ -347,7 +295,6 @@ jobs:
           name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
             ${{ matrix.target }}.hashes.json
 
   t3-cross:
@@ -365,27 +312,22 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Get deps and crates from cache
+      - name: Get crate from cache
         uses: actions/cache@v3
         with:
           path: |
-            bundle
             build
-          key: ${{ env.crate }}-${{ env.version }}-stable-deps
+          key: ${{ env.crate }}-${{ env.version }}-stable-crate
           enableCrossOsArchive: true
           fail-on-cache-miss: true
-      - name: Move deps
-        run: mv ./bundle/* ~/.cargo
-      - uses: actions/cache@v3
+      - uses: Swatinem/rust-cache@v2
         if: ${{ !%%IF%% }}
         with:
-          path: |
-            build/target
-          key: ${{ runner.os }}-${{ env.crate }}-${{ env.version }}-stable-${{ matrix.target }}
+          workspaces: "./build -> target"
       - name: Update Rust
-        run: rustup update
-      - name: Rust Version
-        run: rustc --version
+        run: |
+         rustup update
+         rustc --version
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cross
@@ -400,7 +342,6 @@ jobs:
           name: target-${{ matrix.target }}
           path: |
             ${{ matrix.target }}.tar.gz
-            ${{ matrix.target }}.sha256
             ${{ matrix.target }}.hashes.json
 
   push-index:
@@ -412,14 +353,25 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Rust Update
-        run: rustup update
-      - name: Get rust version guess
+      - name: Rust Version Guess
         run: |
+          rustup update
           echo "rustc_version=$(rustc --version)" >> $GITHUB_ENV
       - uses: actions/download-artifact@v3
       - name: DBG - List Structure
         run: ls -R
+      - name: Merge hashes
+        shell: bash
+        run: |
+          echo -n "" > hashes.sha256
+          for D in target-*; do
+            if [ -d "${D}" ]; then
+              echo "${D}"
+              pushd "${D}"
+              echo "$(cat *.hashes.json | jq --raw-output '.archive[] | select(.type | test("sha256")) | .hash') " *.tar.gz >> ../hashes.sha256
+              popd
+            fi
+          done
       - name: Create info.json and hashes.json
         run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ env.license }}' '${{ env.description }}' '${{ env.rustc_version }}'
       - name: Sign info.json and hashes.json
@@ -443,9 +395,10 @@ jobs:
           path: |
             info.json
             hashes.json
+            hashes.sha256
             reports/*.report
             target-*/*.tar.gz
-            target-*/*.sha256
+            target-*/*.hashes.json
       - name: Create and push artifacts to release
         uses: ncipollo/release-action@v1
         if: ${{ %%IF%% }}
@@ -454,24 +407,19 @@ jobs:
           name: ${{ env.crate }}-${{ env.version }}
           allowUpdates: true
           prerelease: true
-          artifacts: "reports/*.report,target-*/*.tar.gz,target-*/*.sha256,*.minisig,hashes.json,info.json"
+          artifacts: "reports/*.report,target-*/*.tar.gz,hashes.sha256,*.minisig,hashes.json,info.json"
           body: ""
       - name: Create index file
         if: ${{ %%IF%% }}
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.6.1
+        uses: svenstaro/upload-release-action@2.7.0
         if: ${{ %%IF%% }}
         with:
           tag: stable-index
           overwrite: true
           make_latest: true
           file: ${{ env.crate }}
-      - name: DBG - API
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
 
   banned-index:
     if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && (contains(needs.t1-cross.result, 'failure') || contains(needs.t1-apple-darwin.result, 'failure') || contains(needs.t2-cross.result, 'failure') || contains(needs.t2-pc-windows-msvc.result, 'failure')) }}
@@ -482,16 +430,11 @@ jobs:
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.6.1
+        uses: svenstaro/upload-release-action@2.7.0
         with:
           tag: banned-index
           make_latest: false
           file: ${{ env.crate }}
-      - name: DBG - API
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit
 
   track-index:
     if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && contains(needs.*.result, 'failure') }}
@@ -502,13 +445,8 @@ jobs:
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.6.1
+        uses: svenstaro/upload-release-action@2.7.0
         with:
           tag: track-index
           make_latest: false
           file: ${{ env.crate }}
-      - name: DBG - API
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" /rate_limit

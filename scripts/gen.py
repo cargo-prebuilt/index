@@ -4,8 +4,7 @@ import sys
 import misc
 
 t2_targets = [
-    "x86_64-unknown-freebsd",  # Optional Support (64-bit)
-    "riscv64gc-unknown-linux-gnu",
+    "riscv64gc-unknown-linux-gnu", # Optional Support (64-bit)
     "s390x-unknown-linux-gnu",
 
     "armv7-unknown-linux-gnueabihf",  # Optional Support (32-bit)
@@ -18,6 +17,7 @@ win_targets = [
 ]
 
 t3_targets = [
+    "x86_64-unknown-freebsd",
     "x86_64-unknown-netbsd",
     "x86_64-unknown-illumos",
     "x86_64-sun-solaris",
