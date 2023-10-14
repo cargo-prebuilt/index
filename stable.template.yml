@@ -233,6 +233,7 @@ jobs:
       - name: Build with ink cross
         run: |
           docker run --rm \
+          --userns host --user $(id -u):$(id -g) \
           -v ./build:/project \
           -v ./scripts/docker/entrypoint.sh:/entrypoint.sh:z,ro \
           ghcr.io/cargo-prebuilt/ink-cross:stable-${{ matrix.target }} \
