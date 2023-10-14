@@ -234,7 +234,7 @@ jobs:
         run: |
           docker run --rm \
           -v ./build:/project \
-          -v ./scripts/docker/entrypoint.sh:/entrypoint.sh:z,r \
+          -v ./scripts/docker/entrypoint.sh:/entrypoint.sh:z,ro \
           ghcr.io/cargo-prebuilt/ink-cross:stable-${{ matrix.target }} \
           build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
 
