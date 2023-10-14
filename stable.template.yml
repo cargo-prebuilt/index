@@ -337,13 +337,12 @@ jobs:
         run: |
          rustup update
          rustc --version
-         rustup toolchain add nightly
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cross
       - name: Build crate
         working-directory: ./build
-        run: cross +nightly build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
+        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
         run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
