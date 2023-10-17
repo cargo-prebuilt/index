@@ -229,7 +229,6 @@ jobs:
         if: ${{ !%%IF%% }}
         with:
           workspaces: "./build -> target"
-
       - name: Build with ink cross
         run: |
           docker run --rm \
@@ -238,18 +237,6 @@ jobs:
           -v ./scripts/docker/entrypoint.sh:/entrypoint.sh:z,ro \
           ghcr.io/cargo-prebuilt/ink-cross:stable-${{ matrix.target }} \
           build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
-
-      # - name: Update Rust
-      #   run: |
-      #     rustup update
-      #     rustc --version
-      # - uses: cargo-prebuilt/cargo-prebuilt-action@v3
-      #   with:
-      #     pkgs: cross
-      # - name: Build crate
-      #   working-directory: ./build
-      #   run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
-
       - name: Collect
         run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
