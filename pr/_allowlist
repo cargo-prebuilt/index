@@ -1,1 +1,1 @@
-wasmtime-cli,wit-bindgen-cli,cargo-semver-checks
+cargo-semver-checks
