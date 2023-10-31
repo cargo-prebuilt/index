@@ -1,5 +1,13 @@
 [info]
 id = "wit-bindgen-cli"
 git = "https://github.com/bytecodealliance/wit-bindgen"
-unsupported = []
+unsupported = [
+    "armv7-unknown-linux-gnueabihf",
+    "armv7-unknown-linux-musleabihf",
+    "x86_64-unknown-netbsd",
+    "x86_64-unknown-illumos",
+    "x86_64-sun-solaris",
+    "powerpc64-unknown-linux-gnu",
+    "powerpc64le-unknown-linux-gnu",
+]
 bins = ["wit-bindgen"]
