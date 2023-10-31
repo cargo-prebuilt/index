@@ -1,1 +1,1 @@
-cargo-make
+wasmtime-cli,wit-bindgen-cli
