@@ -9,14 +9,13 @@ env:
   index: %%INDEX%%/releases/download/stable-index/
   crate: %%CRATE%%
   version: %%VERSION%%
-  license: %%LICENSE%%
-  description: '%%DESC%%'
   dl: %%DOWNLOAD%%
   checksum: %%CHECKSUM%%
   git: %%GIT%%
   bins: %%BINS%%
   file: %%FILE%%
   CARGO_TERM_COLOR: always
+  python-version: "3.12"
 
 jobs:
   setup:
@@ -51,6 +50,7 @@ jobs:
         working-directory: ./build
         run: test -f Cargo.lock || cargo +stable generate-lockfile --verbose
 
+  # TODO: Get description and license from Cargo.toml
   reports:
     runs-on: ubuntu-latest
     needs: [ setup ]
@@ -126,7 +126,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ env.python-version }}
       - name: Get crate from cache
         uses: actions/cache@v3
         with:
@@ -170,7 +170,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ env.python-version }}
       - name: Get crate from cache
         uses: actions/cache@v3
         with:
@@ -216,7 +216,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ env.python-version }}
       - name: Get crate from cache
         uses: actions/cache@v3
         with:
@@ -259,7 +259,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ env.python-version }}
       - name: Get crate from cache
         uses: actions/cache@v3
         with:
@@ -307,7 +307,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ env.python-version }}
       - name: Get crate from cache
         uses: actions/cache@v3
         with:
@@ -348,7 +348,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ env.python-version }}
       - name: Rust Version Guess
         run: |
           rustup update

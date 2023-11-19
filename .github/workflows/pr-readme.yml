@@ -6,6 +6,9 @@ on:
     paths: [ .github/workflows/pr-readme.yml, pr/readme/**, crates/**, README.md ]
   workflow_dispatch:
 
+env:
+  python-version: "3.12"
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -13,6 +16,6 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ env.python-version }}
       - name: Check README
         run: python ./pr/readme/check.py
