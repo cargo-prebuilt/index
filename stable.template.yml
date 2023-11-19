@@ -384,7 +384,7 @@ jobs:
             fi
           done
       - name: Create info.json and hashes.json
-        run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ needs.reports.outputs.license }}' '${{ needs.reports.outputs.description }}' '${{ env.rustc_version }}'
+        run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ needs.reports.outputs.crate-license }}' '${{ needs.reports.outputs.crate-description }}' '${{ env.rustc_version }}'
       - name: Sign info.json and hashes.json
         if: ${{ %%IF%% }}
         run: |

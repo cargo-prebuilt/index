@@ -7,11 +7,10 @@ from datetime import datetime
 import misc
 
 
-def main(filename, version, license_spdx, description, rustc_version_guess):
+def main(filename: str, version: str, license_spdx: str, description: str, rustc_version_guess: str):
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)
 
-    description = json.loads(description)["description"].replace("%%SINGLE_QUOTE%%", "'")
     features = misc.gen_flags(crate_toml)
 
     targets = []
