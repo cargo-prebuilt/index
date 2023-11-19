@@ -1,22 +1,21 @@
-import json
 import tomllib
 import sys
 import misc
 
-t2_targets = [
-    "riscv64gc-unknown-linux-gnu", # Optional Support (64-bit)
+t2_targets: list[str] = [
+    "riscv64gc-unknown-linux-gnu",  # Optional Support (64-bit)
     "s390x-unknown-linux-gnu",
 
     "armv7-unknown-linux-gnueabihf",  # Optional Support (32-bit)
     "armv7-unknown-linux-musleabihf",
 ]
 
-win_targets = [
+win_targets: list[str] = [
     "x86_64-pc-windows-msvc",
     "aarch64-pc-windows-msvc"
 ]
 
-t3_targets = [
+t3_targets: list[str] = [
     "x86_64-unknown-freebsd",
     "x86_64-unknown-netbsd",
     "x86_64-unknown-illumos",
@@ -26,24 +25,21 @@ t3_targets = [
 ]
 
 
-def main(pull_request, index, crate, version, crate_license, dl, checksum, filename, description):
-    pull_request = True if pull_request == "true" else False
-    description = json.dumps({"description": description})
+def main(pull_request: str, index: str, crate: str, version: str, dl: str, checksum: str, filename: str):
+    pull_request: bool = True if pull_request == "true" else False
 
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)
-        unsupported = crate_toml["info"]["unsupported"]
-        git_url = crate_toml["info"]["git"]
-        bins = ",".join(crate_toml["info"]["bins"])
+        unsupported: str = crate_toml["info"]["unsupported"]
+        git_url: str = crate_toml["info"]["git"]
+        bins: str = ",".join(crate_toml["info"]["bins"])
 
     with open("./stable.template.yml", "r") as file:
-        action_template = file.read()
+        action_template: str = file.read()
 
     action = action_template.replace("%%INDEX%%", index)
     action = action.replace("%%CRATE%%", crate)
     action = action.replace("%%VERSION%%", version)
-    action = action.replace("%%LICENSE%%", crate_license)
-    action = action.replace("%%DESC%%", description)
     action = action.replace("%%DOWNLOAD%%", dl)
     action = action.replace("%%CHECKSUM%%", checksum)
     action = action.replace("%%GIT%%", git_url)
@@ -132,4 +128,4 @@ def main(pull_request, index, crate, version, crate_license, dl, checksum, filen
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7], argv[8], argv[9])
+    main(argv[1], argv[2], argv[3], argv[4], argv[5], argv[6], argv[7])
