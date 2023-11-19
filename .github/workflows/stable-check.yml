@@ -55,7 +55,7 @@ jobs:
       - name: Wait
         if: ${{ github.event_name != 'pull_request' }}
         run: sleep 15m
-      - name: Run action
+      - name: Run Workflow
         uses: antaljanosbenjamin/single-commit-publish@v1.0.1
         with:
           github-token: ${{ secrets.WORKFLOW_TOKEN }}

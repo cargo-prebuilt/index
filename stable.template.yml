@@ -95,7 +95,7 @@ jobs:
       - name: Generate license report
         working-directory: ./build
         run: |
-          echo "Generated on: $(date --utc)" > ../license.report && echo "Crates.io license metadata: ${{ env.license }}" >> ../license.report
+          echo "Generated on: $(date --utc)" > ../license.report && echo "Crates.io license metadata: ${{ steps.get_toml.outputs.license }}" >> ../license.report
           echo "Found license texts:" >> ../license.report
           tail -n +1 *LICENSE* >> ../license.report || true
           tail -n +1 *license* >> ../license.report || true
