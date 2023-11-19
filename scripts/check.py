@@ -91,7 +91,7 @@ def main(pull_request: str, duplicate: str, server_url: str, repo: str):
             )
             res = urllib.request.urlopen(req)
             crate_infos_raw: str = res.read().decode("utf-8") if res and res.status == 200 else sys.exit(3)
-            crate_infos_raw: list[str] = crate_infos_raw.split("\n")
+            crate_infos_raw: list[str] = crate_infos_raw.strip().split("\n")
 
             crate_infos: list[Any] = []
             for c in crate_infos_raw:
