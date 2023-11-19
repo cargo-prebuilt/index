@@ -5,14 +5,14 @@ import sys
 
 def main():
     with open("./README.md", "r") as file:
-        readme = file.read()
+        readme: str = file.read()
 
     for filename in glob.glob("./crates/*.toml"):
         with open(filename, "rb") as file:
             crate = tomllib.load(file)
 
-            c = crate["info"]["id"]
-            git = crate["info"]["git"]
+            c: str = crate["info"]["id"]
+            git: str = crate["info"]["git"]
 
             print(f"Checking [{c}]({git})...")
             if f"- [{c}]({git})" not in readme:

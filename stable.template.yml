@@ -50,12 +50,17 @@ jobs:
         working-directory: ./build
         run: test -f Cargo.lock || cargo +stable generate-lockfile --verbose
 
-  # TODO: Get description and license from Cargo.toml
   reports:
     runs-on: ubuntu-latest
+    outputs:
+      crate-license: ${{ steps.get_toml.outputs.license }}
+      crate-description: ${{ steps.get_toml.outputs.description }}
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.python-version }}
       - name: Get deps and crates from cache
         uses: actions/cache@v3
         with:
@@ -77,6 +82,12 @@ jobs:
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
           pkgs: cargo-audit
+      - name: Get license and desc
+        id: get_toml
+        working-directory: ./build
+        run: |
+          echo "license=$(python ./scripts/crate-info.py 'license')" >> $GITHUB_OUTPUT
+          echo "description=$(python ./scripts/crate-info.py 'description')" >> $GITHUB_OUTPUT
       - name: Generate license report
         working-directory: ./build
         run: |
@@ -369,7 +380,7 @@ jobs:
             fi
           done
       - name: Create info.json and hashes.json
-        run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ env.license }}' '${{ env.description }}' '${{ env.rustc_version }}'
+        run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ needs.reports.outputs.license }}' '${{ needs.reports.outputs.description }}' '${{ env.rustc_version }}'
       - name: Sign info.json and hashes.json
         if: ${{ %%IF%% }}
         run: |

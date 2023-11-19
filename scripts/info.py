@@ -7,7 +7,6 @@ from datetime import datetime
 import misc
 
 
-# TODO: Take license and desc from Cargo.toml
 def main(filename, version, license_spdx, description, rustc_version_guess):
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)
