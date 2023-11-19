@@ -87,7 +87,11 @@ jobs:
         working-directory: ./build
         run: |
           echo "license=$(python ../scripts/crate-info.py 'license')" >> $GITHUB_OUTPUT
-          echo "description=$(python ../scripts/crate-info.py 'description')" >> $GITHUB_OUTPUT
+          {
+            echo 'description<<EOF'
+            python ../scripts/crate-info.py 'description'
+            echo EOF
+          } >> $GITHUB_OUTPUT
       - name: Generate license report
         working-directory: ./build
         run: |
