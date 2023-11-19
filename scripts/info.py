@@ -27,7 +27,7 @@ def main(filename: str, version: str, license_spdx: str, description: str, rustc
         "bins": crate_toml["info"]["bins"],
         "info": {
             "rustc_version_guess": rustc_version_guess[6:],
-            "index_publish_date": datetime.utcnow().strftime("%Y-%m-%d"),
+            "index_publish_date": datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%d"),
             "features_apple": str(features["apple"][0]),
             "features_linux": str(features["linux"][0]),
             "features_windows": str(features["windows"][0]),
