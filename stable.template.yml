@@ -251,7 +251,7 @@ jobs:
           -v ./build:/project \
           -v ./scripts/docker/entrypoint.sh:/entrypoint.sh:z,ro \
           ghcr.io/cargo-prebuilt/ink-cross:stable-${{ matrix.target }} \
-          build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
+          auditable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
         run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
