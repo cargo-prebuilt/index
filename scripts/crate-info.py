@@ -8,7 +8,7 @@ def main(item: str):
         package = cargo_toml["package"]
 
     if item in package:
-        print(package[item])
+        print(package[item].replace("'", "%%SINGLE_QUOTE%%"))
     else:
         print("")
 
