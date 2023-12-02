@@ -10,6 +10,8 @@ def main(filename: str, version: str, license_spdx: str, description: str, rustc
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)
 
+    description = description.replace("%%SINGLE_QUOTE%%", "'")
+
     features = misc.gen_flags(crate_toml)
 
     targets = []
