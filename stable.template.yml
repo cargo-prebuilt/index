@@ -154,7 +154,7 @@ jobs:
         if: ${{ !%%IF%% }}
         with:
           workspaces: "./build -> target"
-          prefix-key: "v0-rust-${{ env.crate }}-${{ env.version }}"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.crate }}-${{ env.version }}"
       - name: Build with ink cross
         run: |
           docker run --rm \
@@ -197,7 +197,7 @@ jobs:
         if: ${{ !%%IF%% }}
         with:
           workspaces: "./build -> target"
-          prefix-key: "v0-rust-${{ env.crate }}-${{ env.version }}"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.crate }}-${{ env.version }}"
       - name: Update Rust and Add Target
         run: |
           rustup update
@@ -244,7 +244,7 @@ jobs:
         if: ${{ !%%IF%% }}
         with:
           workspaces: "./build -> target"
-          prefix-key: "v0-rust-${{ env.crate }}-${{ env.version }}"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.crate }}-${{ env.version }}"
       - name: Build with ink cross
         run: |
           docker run --rm \
@@ -288,7 +288,7 @@ jobs:
         if: ${{ !%%IF%% }}
         with:
           workspaces: "./build -> target"
-          prefix-key: "v0-rust-${{ env.crate }}-${{ env.version }}"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.crate }}-${{ env.version }}"
       - name: Update Rust and Add Target
         run: |
           rustup update
@@ -337,7 +337,7 @@ jobs:
         if: ${{ !%%IF%% }}
         with:
           workspaces: "./build -> target"
-          prefix-key: "v0-rust-${{ env.crate }}-${{ env.version }}"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.crate }}-${{ env.version }}"
       - name: Update Rust
         run: |
          rustup update
