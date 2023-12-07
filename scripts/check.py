@@ -1,9 +1,11 @@
+import concurrent.futures
 import glob
 import json
 import sys
 import tomllib
 import urllib.request
 from typing import Any, Optional
+
 
 stable_index: str = "/releases/download/stable-index/"
 banned_index: str = "/releases/download/banned-index/"
@@ -47,6 +49,57 @@ def get_newest_crate(versions: list[Any]) -> Any:
     return latest
 
 
+def process(filename: str, pull_request: bool, allow: str, server_url: str, repo: str):
+    with open(filename, "rb") as file:
+        crate_toml = tomllib.load(file)
+        crate: str = crate_toml["info"]["id"]
+
+    if (not pull_request) or (allow == "" or crate in allow.split(",")):
+        if not pull_request:
+            try:
+                res = urllib.request.urlopen(f"{server_url}/{repo}{banned_index}{crate}")
+                if res.status != 200:
+                    return None
+            except urllib.error.HTTPError:
+                return None
+
+        version: str = ""
+        try:
+            res = urllib.request.urlopen(f"{server_url}/{repo}{stable_index}{crate}")
+            version = (res.read().decode("utf-8").strip())
+        except urllib.error.HTTPError:
+            return None
+
+        # Get from index.crates.io
+        req = urllib.request.Request(
+            get_index_url(crate),
+            data=None,
+            headers={
+                "User-Agent": f"cargo-prebuilt_bot ({server_url}/{repo})"
+            }
+        )
+        res = urllib.request.urlopen(req)
+        crate_infos_raw: str = res.read().decode("utf-8") if res and res.status == 200 else sys.exit(3)
+        crate_infos_raw: list[str] = crate_infos_raw.strip().split("\n")
+
+        crate_infos: list[Any] = []
+        for c in crate_infos_raw:
+            crate_infos.append(json.loads(c))
+
+        latest_crate: Any = get_newest_crate(crate_infos)
+
+        if pull_request or version != latest_crate["vers"]:
+            return {
+                "crate": crate,
+                "version": latest_crate["vers"],
+                "dl": crates_io_cdn.replace("{CRATE}", crate).replace("{VERSION}", latest_crate["vers"]),
+                "checksum": latest_crate["cksum"],
+                "file": filename,
+            }
+
+        return None
+
+
 def main(pull_request: str, duplicate: str, server_url: str, repo: str):
     pull_request: bool = True if pull_request.lower() == "true" else False
     duplicate: bool = True if duplicate.lower() == "true" else False
@@ -58,55 +111,16 @@ def main(pull_request: str, duplicate: str, server_url: str, repo: str):
     if pull_request:
         with open("./pr/_allowlist", "r") as file:
             allow: str = file.readline()
+    else:
+        allow = ""
+
+    with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
+        to_update_raw = executor.map(lambda f: process(f, pull_request, allow, server_url, repo), glob.glob("./crates/*.toml"))
 
     to_update = []
-    for filename in glob.glob("./crates/*.toml"):
-        with open(filename, "rb") as file:
-            crate_toml = tomllib.load(file)
-            crate: str = crate_toml["info"]["id"]
-
-        if (not pull_request) or (allow == "" or crate in allow.split(",")):
-            if not pull_request:
-                try:
-                    res = urllib.request.urlopen(f"{server_url}/{repo}{banned_index}{crate}")
-                    if res.status == 200:
-                        continue
-                except urllib.error.HTTPError:
-                    pass
-
-            version: str = ""
-            try:
-                res = urllib.request.urlopen(f"{server_url}/{repo}{stable_index}{crate}")
-                version = (res.read().decode("utf-8").strip())
-            except urllib.error.HTTPError:
-                pass
-
-            # Get from index.crates.io
-            req = urllib.request.Request(
-                get_index_url(crate),
-                data=None,
-                headers={
-                    "User-Agent": f"cargo-prebuilt_bot ({server_url}/{repo})"
-                }
-            )
-            res = urllib.request.urlopen(req)
-            crate_infos_raw: str = res.read().decode("utf-8") if res and res.status == 200 else sys.exit(3)
-            crate_infos_raw: list[str] = crate_infos_raw.strip().split("\n")
-
-            crate_infos: list[Any] = []
-            for c in crate_infos_raw:
-                crate_infos.append(json.loads(c))
-
-            latest_crate: Any = get_newest_crate(crate_infos)
-
-            if pull_request or version != latest_crate["vers"]:
-                to_update.append({
-                    "crate": crate,
-                    "version": latest_crate["vers"],
-                    "dl": crates_io_cdn.replace("{CRATE}", crate).replace("{VERSION}", latest_crate["vers"]),
-                    "checksum": latest_crate["cksum"],
-                    "file": filename,
-                })
+    for i in to_update_raw:
+        if i is not None:
+            to_update.append(i)
 
     x = {
         "include": []
