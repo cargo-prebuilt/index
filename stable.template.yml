@@ -154,17 +154,15 @@ jobs:
         if: ${{ !%%IF%% }}
         with:
           workspaces: "./build -> target"
-          prefix-key: "v0-rust-${{ env.crate }}-${{ env.version }}"
-      - name: Update Rust
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.crate }}-${{ env.version }}"
+      - name: Build with ink cross
         run: |
-          rustup update
-          rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
-        with:
-          pkgs: cross
-      - name: Build crate
-        working-directory: ./build
-        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
+          docker run --rm \
+          --userns host --user $(id -u):$(id -g) \
+          -v ./build:/project \
+          -v ./scripts/docker/entrypoint.sh:/entrypoint.sh:z,ro \
+          ghcr.io/cargo-prebuilt/ink-cross:stable-${{ matrix.target }} \
+          auditable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
         run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
@@ -199,7 +197,7 @@ jobs:
         if: ${{ !%%IF%% }}
         with:
           workspaces: "./build -> target"
-          prefix-key: "v0-rust-${{ env.crate }}-${{ env.version }}"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.crate }}-${{ env.version }}"
       - name: Update Rust and Add Target
         run: |
           rustup update
@@ -246,7 +244,7 @@ jobs:
         if: ${{ !%%IF%% }}
         with:
           workspaces: "./build -> target"
-          prefix-key: "v0-rust-${{ env.crate }}-${{ env.version }}"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.crate }}-${{ env.version }}"
       - name: Build with ink cross
         run: |
           docker run --rm \
@@ -290,7 +288,7 @@ jobs:
         if: ${{ !%%IF%% }}
         with:
           workspaces: "./build -> target"
-          prefix-key: "v0-rust-${{ env.crate }}-${{ env.version }}"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.crate }}-${{ env.version }}"
       - name: Update Rust and Add Target
         run: |
           rustup update
@@ -339,7 +337,7 @@ jobs:
         if: ${{ !%%IF%% }}
         with:
           workspaces: "./build -> target"
-          prefix-key: "v0-rust-${{ env.crate }}-${{ env.version }}"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.crate }}-${{ env.version }}"
       - name: Update Rust
         run: |
          rustup update
