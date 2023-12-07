@@ -58,7 +58,7 @@ def process(filename: str, pull_request: bool, allow: str, server_url: str, repo
         if not pull_request:
             try:
                 res = urllib.request.urlopen(f"{server_url}/{repo}{banned_index}{crate}")
-                if res.status != 200:
+                if res.status == 200:
                     return None
             except urllib.error.HTTPError:
                 return None
