@@ -1,0 +1,8 @@
+[info]
+id = "eza"
+git = "https://github.com/eza-community/eza"
+unsupported = ["x86_64-unknown-illumos"]
+bins = ["eza"]
+
+[target.all]
+features = "vendored-openssl"
