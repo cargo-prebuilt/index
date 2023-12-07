@@ -61,14 +61,14 @@ def process(filename: str, pull_request: bool, allow: list[str], server_url: str
                 if res.status == 200:
                     return None
             except urllib.error.HTTPError:
-                return None
+                pass
 
         version: str = ""
         try:
             res = urllib.request.urlopen(f"{server_url}/{repo}{stable_index}{crate}")
             version = (res.read().decode("utf-8").strip())
         except urllib.error.HTTPError:
-            return None
+            pass
 
         # Get from index.crates.io
         req = urllib.request.Request(
@@ -112,8 +112,8 @@ def main(pull_request: str, duplicate: str, server_url: str, repo: str):
         with open("./pr/_allowlist", "r") as file:
             allow: str = file.readline()
     else:
-        allow = ""
-    allow = allow.split(",")
+        allow: str = ""
+    allow: list[str] = allow.split(",")
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
         to_update_raw = executor.map(lambda f: process(f, pull_request, allow, server_url, repo), glob.glob("./crates/*.toml"))
