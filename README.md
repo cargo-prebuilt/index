@@ -89,7 +89,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [cargo-release](https://github.com/crate-ci/cargo-release)
 - [cargo-semver-checks](https://github.com/obi1kenobi/cargo-semver-checks)
 - [cargo-show-asm](https://github.com/pacak/cargo-show-asm)
-- [cargo-smart-release](https://github.com/Byron/gitoxide)
+- [cargo-smart-release](https://github.com/Byron/cargo-smart-release)
 - [cargo-sort](https://github.com/devinr528/cargo-sort)
 - [cargo-supply-chain](https://github.com/rust-secure-code/cargo-supply-chain)
 - [cargo-update](https://github.com/nabijaczleweli/cargo-update)
