@@ -1,0 +1,8 @@
+[info]
+id = "eza"
+git = "https://github.com/eza-community/eza"
+unsupported = []
+bins = ["eza"]
+
+[target.all]
+features = "vendored-openssl"

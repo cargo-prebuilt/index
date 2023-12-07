@@ -1,5 +1,5 @@
 [info]
 id = "cargo-smart-release"
 git = "https://github.com/Byron/cargo-smart-release"
-unsupported = []
+unsupported = ["x86_64-sun-solaris"]
 bins = ["cargo-smart-release", "cargo-changelog"]

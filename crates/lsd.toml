@@ -1,0 +1,5 @@
+[info]
+id = "lsd"
+git = "https://github.com/lsd-rs/lsd"
+unsupported = []
+bins = ["lsd"]
