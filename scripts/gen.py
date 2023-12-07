@@ -5,6 +5,7 @@ import misc
 t2_targets: list[str] = [
     "riscv64gc-unknown-linux-gnu",  # Optional Support (64-bit)
     "s390x-unknown-linux-gnu",
+    "powerpc64le-unknown-linux-gnu",
 
     "armv7-unknown-linux-gnueabihf",  # Optional Support (32-bit)
     "armv7-unknown-linux-musleabihf",
@@ -21,7 +22,6 @@ t3_targets: list[str] = [
     "x86_64-unknown-illumos",
     "x86_64-sun-solaris",
     "powerpc64-unknown-linux-gnu",
-    "powerpc64le-unknown-linux-gnu",
 ]
 
 
