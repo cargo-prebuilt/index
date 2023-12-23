@@ -159,8 +159,8 @@ jobs:
         run: |
           docker run --rm \
           --userns host --user $(id -u):$(id -g) \
-          --mount type=bind,source=$HOME/.cargo/registry,target=/usr/local/cargo/registry \
-          --mount type=bind,source=./,target=/project \
+          -v $HOME/.cargo/registry:/usr/local/cargo/registry \
+          -v ./:/project \
           -v ./scripts/docker/entrypoint.sh:/entrypoint.sh:z,ro \
           ghcr.io/cargo-prebuilt/ink-cross:stable-${{ matrix.target }} \
           auditable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
@@ -250,8 +250,8 @@ jobs:
         run: |
           docker run --rm \
           --userns host --user $(id -u):$(id -g) \
-          --mount type=bind,source=$HOME/.cargo/registry,target=/usr/local/cargo/registry \
-          --mount type=bind,source=./,target=/project \
+          -v $HOME/.cargo/registry:/usr/local/cargo/registry \
+          -v ./:/project \
           -v ./scripts/docker/entrypoint.sh:/entrypoint.sh:z,ro \
           ghcr.io/cargo-prebuilt/ink-cross:stable-${{ matrix.target }} \
           auditable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
