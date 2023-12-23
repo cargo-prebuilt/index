@@ -123,7 +123,7 @@ jobs:
           cat audit.report >> $GITHUB_STEP_SUMMARY
           echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
       - name: Store reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: reports
           path: "*.report"
@@ -166,7 +166,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: target-${{ matrix.target }}
           path: |
@@ -212,7 +212,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: target-${{ matrix.target }}
           path: |
@@ -256,7 +256,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: target-${{ matrix.target }}
           path: |
@@ -303,7 +303,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: target-${{ matrix.target }}
           path: |
@@ -351,7 +351,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: target-${{ matrix.target }}
           path: |
@@ -371,12 +371,13 @@ jobs:
         run: |
           rustup update
           echo "rustc_version=$(rustc --version)" >> $GITHUB_ENV
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
       - name: DBG - List Structure
         run: ls -R
       - name: Merge hashes
         shell: bash
         run: |
+          set -euxo pipefail
           echo -n "" > hashes.sha256
           for D in target-*; do
             if [ -d "${D}" ]; then
@@ -391,6 +392,7 @@ jobs:
       - name: Sign info.json and hashes.json
         if: ${{ %%IF%% }}
         run: |
+          set -euxo pipefail
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
           brew install minisign
           echo -n "$SIGNING_KEY" | base64 --decode > ~/.minisign_secret.key
@@ -403,7 +405,7 @@ jobs:
           SIGNING_KEY: ${{ secrets.MINISIGN_SIGNING_KEY }}
       - name: Artifact
         if: ${{ !%%IF%% }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: final
           path: |
