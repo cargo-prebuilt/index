@@ -392,7 +392,7 @@ jobs:
       - name: Create info.json and hashes.json
         run: python ./scripts/info.py '${{ env.file }}' '${{ env.version }}' '${{ needs.reports.outputs.crate-license }}' '${{ needs.reports.outputs.crate-description }}' '${{ env.rustc_version }}'
       - name: Sign info.json and hashes.json
-        if: ${{ %%IF%% }}
+#        if: ${{ %%IF%% }}
         run: |
           set -euxo pipefail
           eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
