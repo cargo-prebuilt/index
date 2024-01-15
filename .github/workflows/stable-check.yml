@@ -68,7 +68,8 @@ jobs:
 
           # Move files
           cp '${{ matrix.file }}' 'Cross.toml' '.github/workflows/stable-${{ matrix.crate }}.yml' $TEMP_DIR
-          cp -r keys scripts $TEMP_DIR
+          cp -r 'keys' 'scripts' $TEMP_DIR
+          rm -rf $TEMP_DIR/scripts/__pycache__
 
           # Commit and Push
           pushd $TEMP_DIR
