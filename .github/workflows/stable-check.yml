@@ -67,7 +67,12 @@ jobs:
           TEMP_DIR="$(mktemp -d)"
 
           # Move files
-          cp '${{ matrix.file }}' 'Cross.toml' '.github/workflows/stable-${{ matrix.crate }}.yml' $TEMP_DIR
+          mkdir -p "$TEMP_DIR/crates"
+          cp '${{ matrix.file }}' "$TEMP_DIR/crates"
+          mkdir -p "$TEMP_DIR/.github/workflows"
+          cp '.github/workflows/stable-${{ matrix.crate }}.yml' "$TEMP_DIR/.github/workflows"
+          
+          cp 'Cross.toml' $TEMP_DIR
           cp -r 'keys' 'scripts' $TEMP_DIR
           rm -rf $TEMP_DIR/scripts/__pycache__
 
