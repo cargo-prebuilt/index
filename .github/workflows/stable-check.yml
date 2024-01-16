@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Skip Duplicate Actions
@@ -45,7 +45,7 @@ jobs:
     needs: [ check ]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Generate workflow
@@ -55,12 +55,39 @@ jobs:
       - name: Wait
         if: ${{ github.event_name != 'pull_request' }}
         run: sleep 15m
-      - name: Run Workflow
-        uses: antaljanosbenjamin/single-commit-publish@v1.0.1
-        with:
-          github-token: ${{ secrets.WORKFLOW_TOKEN }}
-          branch: trigger/stable
-          files-and-dirs: '.github/workflows/stable-${{ matrix.crate }}.yml keys/ scripts/collect.py scripts/info.py scripts/crate-info.py scripts/misc.py scripts/docker/entrypoint.sh ${{ matrix.file }} Cross.toml'
+      - name: Run Generated Workflow
+        env:
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+        run: |
+          set -euxo pipefail
+
+          TEMP_DIR="$(mktemp -d)"
+
+          # Move files
+          mkdir -p "$TEMP_DIR/crates"
+          cp '${{ matrix.file }}' "$TEMP_DIR/crates"
+          mkdir -p "$TEMP_DIR/.github/workflows"
+          cp '.github/workflows/stable-${{ matrix.crate }}.yml' "$TEMP_DIR/.github/workflows"
+          
+          cp 'Cross.toml' $TEMP_DIR
+          cp -r 'keys' 'scripts' $TEMP_DIR
+          rm -rf $TEMP_DIR/scripts/__pycache__
+
+          # Commit and Push
+          pushd $TEMP_DIR
+
+          git init
+          git config user.name 'github-actions'
+          git config user.email 'github-actions@noreply.github.com'
+          git remote add origin "https://${{ github.actor }}:$GITHUB_TOKEN@github.com/${{ github.repository }}.git"
+          git checkout -b tmp
+          git add -f .
+          git commit -m "Publish crate ${{ matrix.crate }} ${{ matrix.version }} from #${{ github.run_number }}"
+          git push --force origin tmp:trigger/stable
+
+          # Cleanup
+          popd
+          rm -rf $TEMP_DIR
 
   wait:
     if: ${{ github.event_name != 'pull_request' }}
@@ -68,4 +95,4 @@ jobs:
     needs: [ dispatch ]
     steps:
       - uses: actions/checkout@v4
-      - run: sleep 15m
+      - run: sleep 10m
