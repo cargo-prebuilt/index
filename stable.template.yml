@@ -58,7 +58,7 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Get deps and crates from cache
@@ -139,7 +139,7 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
@@ -183,7 +183,7 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
@@ -230,7 +230,7 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
@@ -275,7 +275,7 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
@@ -324,7 +324,7 @@ jobs:
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
@@ -366,7 +366,7 @@ jobs:
     needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Rust Version Guess

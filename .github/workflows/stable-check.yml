@@ -1,8 +1,5 @@
 name: Check for updates
 
-permissions:
-  contents: write
-
 on:
   push:
     branches: [ main ]
@@ -24,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Skip Duplicate Actions
@@ -48,7 +45,7 @@ jobs:
     needs: [ check ]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Generate workflow
@@ -98,4 +95,4 @@ jobs:
     needs: [ dispatch ]
     steps:
       - uses: actions/checkout@v4
-      - run: sleep 15m
+      - run: sleep 10m
