@@ -60,7 +60,7 @@ jobs:
         run: sleep 15m
       - name: Run Generated Workflow
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
         run: |
           set -euxo pipefail
 
