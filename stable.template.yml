@@ -23,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache
         with:
           path: |
@@ -62,7 +62,7 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
       - name: Get deps and crates from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             build
@@ -70,7 +70,7 @@ jobs:
           enableCrossOsArchive: true
           fail-on-cache-miss: true
       - name: Cache Advisory DB
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.cargo/advisory-db
@@ -143,7 +143,7 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             build
@@ -187,7 +187,7 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             build
@@ -234,7 +234,7 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             build
@@ -279,7 +279,7 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             build
@@ -328,7 +328,7 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             build

@@ -1,7 +1,7 @@
 [info]
 id = "cargo-nextest"
 git = "https://github.com/nextest-rs/nextest"
-unsupported = ["x86_64-sun-solaris"]
+unsupported = []
 bins = ["cargo-nextest"]
 
 [target.all]

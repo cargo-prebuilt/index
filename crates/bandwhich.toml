@@ -5,6 +5,5 @@ unsupported = [
     "aarch64-pc-windows-msvc",
     "x86_64-unknown-netbsd",
     "x86_64-unknown-illumos",
-    "x86_64-sun-solaris",
 ]
 bins = ["bandwhich"]

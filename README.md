@@ -39,7 +39,6 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - x86_64-unknown-freebsd
 - x86_64-unknown-netbsd
 - x86_64-unknown-illumos
-- x86_64-sun-solaris
 - powerpc64-unknown-linux-gnu
 
 ## Crates

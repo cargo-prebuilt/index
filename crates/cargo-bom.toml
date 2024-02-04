@@ -4,7 +4,6 @@ git = "https://github.com/sensorfu/cargo-bom"
 unsupported = [
     "riscv64gc-unknown-linux-gnu",
     "x86_64-unknown-illumos",
-    "x86_64-sun-solaris"
 ]
 bins = ["cargo-bom"]
 
