@@ -179,7 +179,7 @@ jobs:
       fail-fast: false
       matrix:
         target: [ x86_64-apple-darwin, aarch64-apple-darwin ]
-    runs-on: macos-latest
+    runs-on: macos-14
     needs: [ setup ]
     steps:
       - uses: actions/checkout@v4
