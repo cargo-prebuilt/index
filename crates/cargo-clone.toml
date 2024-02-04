@@ -1,7 +1,7 @@
 [info]
 id = "cargo-clone"
 git = "https://github.com/JanLikar/cargo-clone"
-unsupported = ["x86_64-sun-solaris"]
+unsupported = []
 bins = ["cargo-clone"]
 
 [target.all]

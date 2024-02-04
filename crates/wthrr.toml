@@ -1,7 +1,7 @@
 [info]
 id = "wthrr"
 git = "https://github.com/tobealive/wthrr-the-weathercrab"
-unsupported = ["x86_64-unknown-illumos", "x86_64-sun-solaris"]
+unsupported = ["x86_64-unknown-illumos"]
 bins = ["wthrr"]
 
 [target.all]

@@ -1,7 +1,7 @@
 [info]
 id = "discord-rpc-helper"
 git = "https://github.com/kekonn/discord-rpc-helper"
-unsupported = ["x86_64-unknown-illumos", "x86_64-sun-solaris"]
+unsupported = ["x86_64-unknown-illumos"]
 bins = ["discord-rpc-helper"]
 
 [target.all]

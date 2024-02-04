@@ -1,7 +1,7 @@
 [info]
 id = "cargo-bitbake"
 git = "https://github.com/meta-rust/cargo-bitbake"
-unsupported = ["x86_64-sun-solaris"]
+unsupported = []
 bins = ["cargo-bitbake"]
 
 [target.all]

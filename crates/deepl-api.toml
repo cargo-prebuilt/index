@@ -1,7 +1,7 @@
 [info]
 id = "deepl-api"
 git = "https://github.com/mgruner/deepl-api-rs"
-unsupported = ["x86_64-unknown-illumos", "x86_64-sun-solaris"]
+unsupported = ["x86_64-unknown-illumos"]
 bins = ["deepl"]
 
 [target.all]

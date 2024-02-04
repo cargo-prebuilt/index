@@ -4,7 +4,6 @@ git = "https://github.com/kbknapp/cargo-outdated"
 unsupported = [
     "riscv64gc-unknown-linux-gnu",
     "x86_64-unknown-illumos",
-    "x86_64-sun-solaris"
 ]
 bins = ["cargo-outdated"]
 

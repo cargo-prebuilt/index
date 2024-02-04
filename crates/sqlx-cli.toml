@@ -1,9 +1,7 @@
 [info]
 id = "sqlx-cli"
 git = "https://github.com/launchbadge/sqlx"
-unsupported = [
-    "x86_64-sun-solaris",
-]
+unsupported = []
 bins = ["sqlx", "cargo-sqlx"]
 
 [target.all]

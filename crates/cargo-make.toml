@@ -1,5 +1,5 @@
 [info]
 id = "cargo-make"
 git = "https://github.com/sagiegurari/cargo-make"
-unsupported = ["x86_64-sun-solaris"]
+unsupported = []
 bins = ["cargo-make", "makers"]

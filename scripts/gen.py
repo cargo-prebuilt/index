@@ -20,7 +20,6 @@ t3_targets: list[str] = [
     "x86_64-unknown-freebsd",
     "x86_64-unknown-netbsd",
     "x86_64-unknown-illumos",
-    "x86_64-sun-solaris",
     "powerpc64-unknown-linux-gnu",
 ]
 

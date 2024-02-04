@@ -10,7 +10,6 @@ unsupported = [
     "aarch64-pc-windows-msvc",
     "x86_64-unknown-netbsd",
     "x86_64-unknown-illumos",
-    "x86_64-sun-solaris",
     "powerpc64-unknown-linux-gnu",
     "powerpc64le-unknown-linux-gnu",
 ]
