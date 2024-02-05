@@ -8,5 +8,11 @@ unsupported = [
 ]
 bins = ["rtx"]
 
-[target.all]
-features = "openssl"
+#[target.all]
+#features = "openssl"
+#
+#[target.apple]
+#features = "openssl"
+#
+#[target.windows]
+#features = "openssl"

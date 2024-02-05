@@ -5,5 +5,5 @@ unsupported = []
 bins = ["cargo-prebuilt"]
 
 [target.all]
-features = "--features default-native"
+features = "default-native"
 no-default-features = true
