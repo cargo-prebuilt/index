@@ -2,8 +2,8 @@
 id = "bandwhich"
 git = "https://github.com/imsnif/bandwhich"
 unsupported = [
-    "aarch64-pc-windows-msvc",
-    "x86_64-unknown-netbsd",
-    "x86_64-unknown-illumos",
+#    "aarch64-pc-windows-msvc",
+#    "x86_64-unknown-netbsd",
+#    "x86_64-unknown-illumos",
 ]
 bins = ["bandwhich"]
