@@ -4,5 +4,8 @@ git = "https://github.com/JanLikar/cargo-clone"
 unsupported = []
 bins = ["cargo-clone"]
 
-[target.all]
+[target.apple]
+features = "vendored-openssl"
+
+[target.windows]
 features = "vendored-openssl"
