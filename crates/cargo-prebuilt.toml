@@ -6,4 +6,4 @@ bins = ["cargo-prebuilt"]
 
 [target.all]
 features = "--feature default-native"
-no-default-features = false
+no-default-features = true
