@@ -9,4 +9,4 @@ unsupported = [
 bins = ["rtx"]
 
 [target.all]
-features = "openssl,openssl/vendored"
+features = "openssl"
