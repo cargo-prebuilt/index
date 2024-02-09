@@ -296,12 +296,13 @@ jobs:
           rustup update
           rustc --version
           rustup target add ${{ matrix.target }}
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
-        with:
-          pkgs: cargo-auditable
+# TODO: Add back cargo-auditable once I figure out how to stop MSVC warnings as errors.
+#      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
+#        with:
+#          pkgs: cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked --target ${{ matrix.target }} %%WINDOWS_FLAGS%%
+        run: cargo +stable build --verbose --release --locked --target ${{ matrix.target }} %%WINDOWS_FLAGS%%
       - name: Collect
         run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact
