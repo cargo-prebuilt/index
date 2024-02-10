@@ -161,7 +161,6 @@ jobs:
           --userns host --user $(id -u):$(id -g) \
           -v $HOME/.cargo/registry:/usr/local/cargo/registry \
           -v ./build:/project \
-          -v ./scripts/docker/entrypoint.sh:/entrypoint.sh:z,ro \
           ghcr.io/cargo-prebuilt/ink-cross:stable-${{ matrix.target }} \
           auditable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
@@ -252,7 +251,6 @@ jobs:
           --userns host --user $(id -u):$(id -g) \
           -v $HOME/.cargo/registry:/usr/local/cargo/registry \
           -v ./build:/project \
-          -v ./scripts/docker/entrypoint.sh:/entrypoint.sh:z,ro \
           ghcr.io/cargo-prebuilt/ink-cross:stable-${{ matrix.target }} \
           auditable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
