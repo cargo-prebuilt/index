@@ -1,0 +1,9 @@
+[info]
+id = "mise"
+git = "https://github.com/jdx/mise"
+unsupported = [
+    "x86_64-pc-windows-msvc",
+    "aarch64-pc-windows-msvc",
+    "x86_64-unknown-netbsd",
+]
+bins = ["mise"]
