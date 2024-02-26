@@ -430,13 +430,15 @@ jobs:
         if: ${{ %%IF%% }}
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.7.0
+        uses: ncipollo/release-action@v1
         if: ${{ %%IF%% }}
         with:
           tag: stable-index
-          overwrite: true
-          make_latest: true
-          file: ${{ env.crate }}
+          allowUpdates: true
+          makeLatest: true
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          artifacts: "${{ env.crate }}"
 
   banned-index:
     if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && (contains(needs.t1-cross.result, 'failure') || contains(needs.t1-apple-darwin.result, 'failure') || contains(needs.t2-cross.result, 'failure') || contains(needs.t2-pc-windows-msvc.result, 'failure')) }}
@@ -447,11 +449,14 @@ jobs:
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.7.0
+        uses: ncipollo/release-action@v1
         with:
           tag: banned-index
-          make_latest: false
-          file: ${{ env.crate }}
+          allowUpdates: true
+          makeLatest: false
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          artifacts: "${{ env.crate }}"
 
   track-index:
     if: ${{ %%IF%% && always() && !contains(needs.*.result, 'cancelled') && contains(needs.*.result, 'failure') }}
@@ -462,8 +467,11 @@ jobs:
       - name: Create index file
         run: echo "${{ env.version }}" > ${{ env.crate }}
       - name: Push to index
-        uses: svenstaro/upload-release-action@2.7.0
+        uses: ncipollo/release-action@v1
         with:
           tag: track-index
-          make_latest: false
-          file: ${{ env.crate }}
+          allowUpdates: true
+          makeLatest: false
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          artifacts: "${{ env.crate }}"
