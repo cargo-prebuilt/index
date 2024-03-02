@@ -1,0 +1,5 @@
+[info]
+id = "dufs"
+git = "https://github.com/sigoden/dufs"
+unsupported = []
+bins = ["dufs"]

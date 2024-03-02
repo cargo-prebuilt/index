@@ -104,6 +104,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [difftastic](https://github.com/wilfred/difftastic)
 - [discord-rpc-helper](https://github.com/kekonn/discord-rpc-helper)
 - [du-dust](https://github.com/bootandy/dust)
+- [dufs](https://github.com/sigoden/dufs)
 - [erdtree](https://github.com/solidiquis/erdtree)
 - [evcxr_jupyter](https://github.com/google/evcxr)
 - [exa](https://github.com/ogham/exa)
