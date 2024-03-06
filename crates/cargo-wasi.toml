@@ -2,11 +2,11 @@
 id = "cargo-wasi"
 git = "https://github.com/bytecodealliance/cargo-wasi"
 unsupported = [
-    "riscv64gc-unknown-linux-gnu",
-    "s390x-unknown-linux-gnu",
-    "aarch64-pc-windows-msvc",
-    "x86_64-unknown-illumos",
-    "powerpc64-unknown-linux-gnu",
-    "powerpc64le-unknown-linux-gnu",
+  "riscv64gc-unknown-linux-gnu",
+  "s390x-unknown-linux-gnu",
+  "aarch64-pc-windows-msvc",
+  "x86_64-unknown-illumos",
+  "powerpc64-unknown-linux-gnu",
+  "powerpc64le-unknown-linux-gnu",
 ]
 bins = ["cargo-wasi"]

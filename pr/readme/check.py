@@ -1,10 +1,10 @@
 import glob
-import tomllib
 import sys
+import tomllib
 
 
 def main():
-    with open("./README.md", "r") as file:
+    with open("./README.md") as file:
         readme: str = file.read()
 
     for filename in glob.glob("./crates/*.toml"):

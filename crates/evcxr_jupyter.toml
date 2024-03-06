@@ -1,8 +1,5 @@
 [info]
 id = "evcxr_jupyter"
 git = "https://github.com/google/evcxr"
-unsupported = [
-    "x86_64-unknown-netbsd",
-    "x86_64-unknown-illumos",
-]
+unsupported = ["x86_64-unknown-netbsd", "x86_64-unknown-illumos"]
 bins = ["evcxr_jupyter"]

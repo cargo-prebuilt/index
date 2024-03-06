@@ -1,7 +1,12 @@
 # Misc code to reduce duplicate blocks
 
+
 def gen_flags(crate_toml):
-    apple_flags = [None, False, ""]  # FEATURES(0), NO_DEFAULT_FEATURES(1), EXTRA_FLAGS(2)
+    apple_flags = [
+        None,
+        False,
+        "",
+    ]  # FEATURES(0), NO_DEFAULT_FEATURES(1), EXTRA_FLAGS(2)
     linux_flags = [None, False, ""]
     windows_flags = [None, False, ""]
 

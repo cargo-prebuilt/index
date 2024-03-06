@@ -2,12 +2,12 @@
 id = "wasmtime-cli"
 git = "https://github.com/bytecodealliance/wasmtime"
 unsupported = [
-    "armv7-unknown-linux-gnueabihf",
-    "armv7-unknown-linux-musleabihf",
-    "aarch64-pc-windows-msvc",
-    "x86_64-unknown-netbsd",
-    "x86_64-unknown-illumos",
-    "powerpc64-unknown-linux-gnu",
-    "powerpc64le-unknown-linux-gnu",
+  "armv7-unknown-linux-gnueabihf",
+  "armv7-unknown-linux-musleabihf",
+  "aarch64-pc-windows-msvc",
+  "x86_64-unknown-netbsd",
+  "x86_64-unknown-illumos",
+  "powerpc64-unknown-linux-gnu",
+  "powerpc64le-unknown-linux-gnu",
 ]
 bins = ["wasmtime"]
