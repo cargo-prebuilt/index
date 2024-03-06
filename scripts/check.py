@@ -4,8 +4,7 @@ import json
 import sys
 import tomllib
 import urllib.request
-from typing import Any, Optional
-
+from typing import Any
 
 stable_index: str = "/releases/download/stable-index/"
 banned_index: str = "/releases/download/banned-index/"
@@ -27,7 +26,7 @@ def get_index_url(crate: str) -> str:
 
 
 def get_newest_crate(versions: list[Any]) -> Any:
-    latest: Optional[Any] = None
+    latest: Any | None = None
     store = (-1, -1, -1)
     for v in versions:
         if "-" in v["vers"]:
@@ -49,7 +48,9 @@ def get_newest_crate(versions: list[Any]) -> Any:
     return latest
 
 
-def process(filename: str, pull_request: bool, allow: list[str], server_url: str, repo: str):
+def process(
+    filename: str, pull_request: bool, allow: list[str], server_url: str, repo: str
+):
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)
         crate: str = crate_toml["info"]["id"]
@@ -57,7 +58,9 @@ def process(filename: str, pull_request: bool, allow: list[str], server_url: str
     if (not pull_request) or (len(allow) == 0 or crate in allow):
         if not pull_request:
             try:
-                res = urllib.request.urlopen(f"{server_url}/{repo}{banned_index}{crate}")
+                res = urllib.request.urlopen(
+                    f"{server_url}/{repo}{banned_index}{crate}"
+                )
                 if res.status == 200:
                     return None
             except urllib.error.HTTPError:
@@ -66,7 +69,7 @@ def process(filename: str, pull_request: bool, allow: list[str], server_url: str
         version: str = ""
         try:
             res = urllib.request.urlopen(f"{server_url}/{repo}{stable_index}{crate}")
-            version = (res.read().decode("utf-8").strip())
+            version = res.read().decode("utf-8").strip()
         except urllib.error.HTTPError:
             pass
 
@@ -74,12 +77,12 @@ def process(filename: str, pull_request: bool, allow: list[str], server_url: str
         req = urllib.request.Request(
             get_index_url(crate),
             data=None,
-            headers={
-                "User-Agent": f"cargo-prebuilt_bot ({server_url}/{repo})"
-            }
+            headers={"User-Agent": f"cargo-prebuilt_bot ({server_url}/{repo})"},
         )
         res = urllib.request.urlopen(req)
-        crate_infos_raw: str = res.read().decode("utf-8") if res and res.status == 200 else sys.exit(3)
+        crate_infos_raw: str = (
+            res.read().decode("utf-8") if res and res.status == 200 else sys.exit(3)
+        )
         crate_infos_raw: list[str] = crate_infos_raw.strip().split("\n")
 
         crate_infos: list[Any] = []
@@ -92,7 +95,9 @@ def process(filename: str, pull_request: bool, allow: list[str], server_url: str
             return {
                 "crate": crate,
                 "version": latest_crate["vers"],
-                "dl": crates_io_cdn.replace("{CRATE}", crate).replace("{VERSION}", latest_crate["vers"]),
+                "dl": crates_io_cdn.replace("{CRATE}", crate).replace(
+                    "{VERSION}", latest_crate["vers"]
+                ),
                 "checksum": latest_crate["cksum"],
                 "file": filename,
             }
@@ -101,31 +106,29 @@ def process(filename: str, pull_request: bool, allow: list[str], server_url: str
 
 
 def main(pull_request: str, duplicate: str, server_url: str, repo: str):
-    pull_request: bool = True if pull_request.lower() == "true" else False
-    duplicate: bool = True if duplicate.lower() == "true" else False
-
     if not pull_request and duplicate:
         print("{}")
         return
 
     if pull_request:
-        with open("./pr/_allowlist", "r") as file:
+        with open("./pr/_allowlist") as file:
             allow: str = file.readline()
     else:
         allow: str = ""
     allow: list[str] = allow.split(",")
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
-        to_update_raw = executor.map(lambda f: process(f, pull_request, allow, server_url, repo), glob.glob("./crates/*.toml"))
+        to_update_raw = executor.map(
+            lambda f: process(f, pull_request, allow, server_url, repo),
+            glob.glob("./crates/*.toml"),
+        )
 
     to_update = []
     for i in to_update_raw:
         if i is not None:
             to_update.append(i)
 
-    x = {
-        "include": []
-    }
+    x = {"include": []}
     for c in to_update:
         x["include"].append(c)
 

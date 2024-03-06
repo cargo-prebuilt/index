@@ -1,20 +1,17 @@
-import tomllib
 import sys
+import tomllib
+
 import misc
 
 t2_targets: list[str] = [
     "riscv64gc-unknown-linux-gnu",  # Optional Support (64-bit)
     "s390x-unknown-linux-gnu",
     "powerpc64le-unknown-linux-gnu",
-
     "armv7-unknown-linux-gnueabihf",  # Optional Support (32-bit)
     "armv7-unknown-linux-musleabihf",
 ]
 
-win_targets: list[str] = [
-    "x86_64-pc-windows-msvc",
-    "aarch64-pc-windows-msvc"
-]
+win_targets: list[str] = ["x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc"]
 
 t3_targets: list[str] = [
     "x86_64-unknown-freebsd",
@@ -24,16 +21,22 @@ t3_targets: list[str] = [
 ]
 
 
-def main(pull_request: str, index: str, crate: str, version: str, dl: str, checksum: str, filename: str):
-    pull_request: bool = True if pull_request == "true" else False
-
+def main(
+    pull_request: str,
+    index: str,
+    crate: str,
+    version: str,
+    dl: str,
+    checksum: str,
+    filename: str,
+):
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)
         unsupported: str = crate_toml["info"]["unsupported"]
         git_url: str = crate_toml["info"]["git"]
         bins: str = ",".join(crate_toml["info"]["bins"])
 
-    with open("./stable.template.yml", "r") as file:
+    with open("./stable.template.yml") as file:
         action_template: str = file.read()
 
     action = action_template.replace("%%INDEX%%", index)

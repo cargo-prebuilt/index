@@ -1,12 +1,19 @@
+import datetime
 import glob
 import json
 import sys
 import tomllib
-import datetime
+
 import misc
 
 
-def main(filename: str, version: str, license_spdx: str, description: str, rustc_version_guess: str):
+def main(
+    filename: str,
+    version: str,
+    license_spdx: str,
+    description: str,
+    rustc_version_guess: str,
+):
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)
 
@@ -28,7 +35,9 @@ def main(filename: str, version: str, license_spdx: str, description: str, rustc
         "bins": crate_toml["info"]["bins"],
         "info": {
             "rustc_version_guess": rustc_version_guess[6:],
-            "index_publish_date": datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%d"),
+            "index_publish_date": datetime.datetime.now(datetime.UTC).strftime(
+                "%Y-%m-%d"
+            ),
             "features_apple": str(features["apple"][0]),
             "features_linux": str(features["linux"][0]),
             "features_windows": str(features["windows"][0]),
@@ -36,10 +45,7 @@ def main(filename: str, version: str, license_spdx: str, description: str, rustc
             "no_default_features_linux": str(features["linux"][1]),
             "no_default_features_windows": str(features["windows"][1]),
         },
-        "archive": {
-            "compression": "gz",
-            "ext": "tar.gz"
-        },
+        "archive": {"compression": "gz", "ext": "tar.gz"},
         "files": {
             "hash": "hashes.json",
             "license": "license.report",
@@ -56,16 +62,13 @@ def main(filename: str, version: str, license_spdx: str, description: str, rustc
 
     hashes = {  # hashes.json
         "hashes_version": "1",
-        "hashes": {}
+        "hashes": {},
     }
 
     # Fill hashes
     for t in targets:
-        with open(f"./target-{t}/{t}.hashes.json", "r") as file:
-            blob = {
-                "archive": {},
-                "bins": {}
-            }
+        with open(f"./target-{t}/{t}.hashes.json") as file:
+            blob = {"archive": {}, "bins": {}}
             hash_file = json.loads(file.read())
 
             for h in hash_file["archive"]:

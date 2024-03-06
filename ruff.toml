@@ -1,0 +1,20 @@
+target-version = "py312"
+
+[lint]
+select = [
+  "RUF", # ruff
+  "F",   # Pyflakes
+  "B",   # flake8-bugbear
+  "SIM", # flake8-simplify
+  "A",   # flake8-builtins 
+  "C4",  # flake8-comprehensions
+  "ERA", # eradicate
+  "UP",  # Pyupgrade
+  "I",   # isort
+  "PT",  # flake8-pytest-style
+  "N",   # pep8-naming
+  "E",   # pycodestyle error
+]
+
+[format]
+quote-style = "double"
