@@ -30,6 +30,8 @@ def main(
     checksum: str,
     filename: str,
 ):
+    pull_request: bool = True if pull_request == "true" else False
+
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)
         unsupported: str = crate_toml["info"]["unsupported"]

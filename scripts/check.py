@@ -106,6 +106,9 @@ def process(
 
 
 def main(pull_request: str, duplicate: str, server_url: str, repo: str):
+    pull_request: bool = True if pull_request.lower() == "true" else False
+    duplicate: bool = True if duplicate.lower() == "true" else False
+
     if not pull_request and duplicate:
         print("{}")
         return
