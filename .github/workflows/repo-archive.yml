@@ -22,7 +22,7 @@ jobs:
         working-directory: ./${{ matrix.type }}
         run: rm -rf *
       - name: Archive
-        uses: robinraju/release-downloader@v1.8
+        uses: robinraju/release-downloader@v1.9
         with:
           tag: "${{ matrix.type }}-index"
           fileName: "*"
