@@ -1,0 +1,5 @@
+[info]
+id = "cargo-wizard"
+git = "https://github.com/kobzol/cargo-wizard"
+unsupported = []
+bins = ["cargo-wizard"]
