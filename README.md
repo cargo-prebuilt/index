@@ -94,6 +94,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [cargo-update](https://github.com/nabijaczleweli/cargo-update)
 - [cargo-wasi](https://github.com/bytecodealliance/cargo-wasi)
 - [cargo-watch](https://github.com/watchexec/cargo-watch)
+- [cargo-wizard](https://github.com/kobzol/cargo-wizard)
 - [cargo-workspaces](https://github.com/pksunkara/cargo-workspaces)
 - [cargo-xwin](https://github.com/rust-cross/cargo-xwin)
 - [cargo-zigbuild](https://github.com/rust-cross/cargo-zigbuild)
