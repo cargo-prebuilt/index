@@ -6,6 +6,8 @@ on:
     paths: [ .github/workflows/pr-readme.yml, pr/readme/**, crates/**, README.md ]
   workflow_dispatch:
 
+permissions: { }
+
 env:
   python-version: "3.12"
 
