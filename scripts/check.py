@@ -115,7 +115,7 @@ def main(pull_request: str, duplicate: str, server_url: str, repo: str):
 
     if pull_request:
         with open("./pr/_allowlist") as file:
-            allow: str = file.readline().trim()
+            allow: str = file.readline().strip()
     else:
         allow: str = ""
     allow: list[str] = allow.split(",")
