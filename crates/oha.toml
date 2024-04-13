@@ -15,5 +15,5 @@ unsupported = [
 bins = ["oha"]
 
 [target.all]
-features = "rustls"
+features = "native-tls"
 no-default-features = true
