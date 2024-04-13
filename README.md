@@ -13,12 +13,14 @@ To create your own GitHub public index use the template [here](https://github.co
 ## Public Key
 
 The minisign public key for this index can be found in two formats:
+
 - base64: [cargo-prebuilt-index.pub.base64](keys/cargo-prebuilt-index.pub.base64)
 - asc: [cargo-prebuilt-index.pub](keys/cargo-prebuilt-index.pub)
 
 ## Platforms Supported (Targets)
 
 Tier 1: Crates must build on these platforms
+
 - x86_64-apple-darwin
 - aarch64-apple-darwin
 - x86_64-unknown-linux-gnu
@@ -27,6 +29,7 @@ Tier 1: Crates must build on these platforms
 - aarch64-unknown-linux-musl
 
 Tier 2: Crates optionally build for these platforms, but if one fails the entire build fails
+
 - x86_64-pc-windows-msvc
 - aarch64-pc-windows-msvc
 - riscv64gc-unknown-linux-gnu
@@ -36,6 +39,7 @@ Tier 2: Crates optionally build for these platforms, but if one fails the entire
 - armv7-unknown-linux-musleabihf
 
 Tier 3: Crates optionally build for these platforms, but the build will still publish if any fail
+
 - x86_64-unknown-freebsd
 - x86_64-unknown-netbsd
 - x86_64-unknown-illumos
@@ -154,8 +158,10 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [wthrr](https://github.com/tobealive/wthrr-the-weathercrab)
 - [wthrr](https://github.com/tobealive/wthrr-the-weathercrab)
 - [xsv](https://github.com/BurntSushi/xsv)
+- [yazi-fm](https://github.com/sxyazi/yazi)
 - [zellij](https://github.com/zellij-org/zellij)
 - [zet](https://github.com/yarrow/zet)
+- [zoxide](https://github.com/ajeetdsouza/zoxide)
 - [zp](https://github.com/bahdotsh/zp)
 
 ## "API"

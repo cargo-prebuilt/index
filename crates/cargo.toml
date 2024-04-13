@@ -1,8 +1,8 @@
 [info]
 id = "cargo"
 git = "https://github.com/rust-lang/cargo"
-unsupported = ["aarch64-pc-windows-msvc", "x86_64-unknown-illumos"]
+unsupported = ["x86_64-unknown-illumos"]
 bins = ["cargo"]
 
 [target.all]
-features = "vendored-openssl"
+features = "all-static"

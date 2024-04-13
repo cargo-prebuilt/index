@@ -1,0 +1,5 @@
+[info]
+id = "zoxide"
+git = "https://github.com/ajeetdsouza/zoxide"
+unsupported = []
+bins = ["zoxide"]

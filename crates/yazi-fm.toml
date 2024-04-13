@@ -1,0 +1,5 @@
+[info]
+id = "yazi-fm"
+git = "https://github.com/sxyazi/yazi"
+unsupported = ["x86_64-unknown-illumos"]
+bins = ["yazi"]
