@@ -4,8 +4,5 @@ image = "ghcr.io/cargo-prebuilt/cross-openssl:x86_64-unknown-freebsd"
 [target.x86_64-unknown-netbsd]
 image = "ghcr.io/cargo-prebuilt/cross-openssl:x86_64-unknown-netbsd"
 
-[target.x86_64-unknown-illumos]
-image = "ghcr.io/cargo-prebuilt/cross-openssl:x86_64-unknown-illumos"
-
 [target.powerpc64-unknown-linux-gnu]
 image = "ghcr.io/cargo-prebuilt/cross-openssl:powerpc64-unknown-linux-gnu"
