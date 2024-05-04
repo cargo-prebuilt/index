@@ -1,7 +1,7 @@
 [info]
 id = "cargo-outdated"
 git = "https://github.com/kbknapp/cargo-outdated"
-unsupported = ["riscv64gc-unknown-linux-gnu", "x86_64-unknown-illumos"]
+unsupported = ["riscv64gc-unknown-linux-gnu"]
 bins = ["cargo-outdated"]
 
 [target.all]

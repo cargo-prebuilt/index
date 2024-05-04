@@ -3,10 +3,10 @@ name: Check for updates
 on:
   push:
     branches: [ main ]
-    paths: [ .github/workflows/stable-check.yml, scripts/**, crates/**, Cross.toml, stable.template.yml ]
+    paths: [ .github/workflows/stable-check.yml, scripts/**, crates/**, stable.template.yml ]
   pull_request:
     branches: [ main ]
-    paths: [ .github/workflows/stable-check.yml, scripts/**, crates/**, Cross.toml, stable.template.yml, pr/_allowlist ]
+    paths: [ .github/workflows/stable-check.yml, scripts/**, crates/**, stable.template.yml, pr/_allowlist ]
   workflow_dispatch:
   schedule:
     - cron: '0 6,18 * * *'
@@ -72,7 +72,6 @@ jobs:
           mkdir -p "$TEMP_DIR/.github/workflows"
           cp '.github/workflows/stable-${{ matrix.crate }}.yml' "$TEMP_DIR/.github/workflows"
           
-          cp 'Cross.toml' $TEMP_DIR
           cp -r 'keys' 'scripts' $TEMP_DIR
           rm -rf $TEMP_DIR/scripts/__pycache__
 

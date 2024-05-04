@@ -42,7 +42,6 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 
 - x86_64-unknown-freebsd
 - x86_64-unknown-netbsd
-- x86_64-unknown-illumos
 - powerpc64-unknown-linux-gnu
 
 ## Crates
@@ -155,7 +154,6 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [whiz](https://github.com/zifeo/whiz)
 - [wiki-tui](https://github.com/Builditluc/wiki-tui)
 - [wit-bindgen-cli](https://github.com/bytecodealliance/wit-bindgen)
-- [wthrr](https://github.com/tobealive/wthrr-the-weathercrab)
 - [wthrr](https://github.com/tobealive/wthrr-the-weathercrab)
 - [xsv](https://github.com/BurntSushi/xsv)
 - [yazi-fm](https://github.com/sxyazi/yazi)
