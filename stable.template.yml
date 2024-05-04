@@ -136,8 +136,6 @@ jobs:
       fail-fast: false
       matrix:
         target: [ x86_64-unknown-linux-gnu, x86_64-unknown-linux-musl, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl ]
-    env:
-      CROSS_CONFIG: ../Cross.toml
     runs-on: ubuntu-latest
     needs: [ setup ]
     steps:
@@ -320,8 +318,6 @@ jobs:
       fail-fast: false
       matrix:
         target: [ %%T3_CROSS_TARGETS%% ]
-    env:
-      CROSS_CONFIG: ../Cross.toml
     runs-on: ubuntu-latest
     needs: [ setup ]
     steps:
@@ -342,16 +338,14 @@ jobs:
         with:
           workspaces: "./build -> target"
           prefix-key: "v0-rust-${{ matrix.target }}-${{ env.crate }}-${{ env.version }}"
-      - name: Update Rust
+      - name: Build with ink cross
         run: |
-         rustup update
-         rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
-        with:
-          pkgs: cross
-      - name: Build crate
-        working-directory: ./build
-        run: cross +stable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
+          docker run --rm \
+          --userns host --user $(id -u):$(id -g) \
+          -v $HOME/.cargo/registry:/usr/local/cargo/registry \
+          -v ./build:/project \
+          ghcr.io/cargo-prebuilt/ink-cross:stable-${{ matrix.target }} \
+          auditable build --verbose --release --locked --target ${{ matrix.target }} %%LINUX_FLAGS%%
       - name: Collect
         run: python ./scripts/collect.py ${{ matrix.target }} ./build/target/${{ matrix.target }}/release ${{ env.bins }}
       - name: Artifact

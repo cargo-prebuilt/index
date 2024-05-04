@@ -1,10 +1,7 @@
 [info]
 id = "exa"
 git = "https://github.com/ogham/exa"
-unsupported = [
-  "x86_64-pc-windows-msvc",
-  "aarch64-pc-windows-msvc",
-]
+unsupported = ["x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc"]
 bins = ["exa"]
 
 [target.all]
