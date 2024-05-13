@@ -1,1 +1,1 @@
-cargo-local-registry,cargo-make,cargo-modules,cargo-mpirun,cargo-ndk
+cargo-nextest,cargo-outdated,cargo-prebuilt,cargo-quickinstall,cargo-release

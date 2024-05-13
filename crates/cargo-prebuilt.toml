@@ -3,7 +3,3 @@ id = "cargo-prebuilt"
 git = "https://github.com/cargo-prebuilt/cargo-prebuilt"
 unsupported = []
 bins = ["cargo-prebuilt"]
-
-[target.all]
-features = "default-native"
-no-default-features = true
