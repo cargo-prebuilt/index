@@ -84,6 +84,7 @@ jobs:
           rustc --version
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
+          prebuilt-version: 0.7.0-rc.0
           pkgs: cargo-audit
       - name: Get license and desc
         id: get_toml
@@ -206,6 +207,7 @@ jobs:
           rustup target add ${{ matrix.target }}
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
+          prebuilt-version: 0.7.0-rc.0
           pkgs: cargo-auditable
       - name: Build crate
         working-directory: ./build
@@ -297,6 +299,7 @@ jobs:
           rustup target add ${{ matrix.target }}
       - uses: cargo-prebuilt/cargo-prebuilt-action@v3
         with:
+          prebuilt-version: 0.7.0-rc.0
           pkgs: cargo-auditable
       - name: Build crate
         working-directory: ./build
