@@ -1,1 +1,1 @@
-cargo-clone,cargo-deb,cargo-deny,cargo-depgraph,cargo-diet
+cargo-clone,cargo-edit,cargo-expand,cargo-generate,cargo-get

@@ -4,8 +4,5 @@ git = "https://github.com/cargo-generate/cargo-generate"
 unsupported = []
 bins = ["cargo-generate"]
 
-[target.apple]
-features = "vendored-openssl"
-
-[target.windows]
+[target.all]
 features = "vendored-openssl"

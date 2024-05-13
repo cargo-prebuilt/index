@@ -1,7 +1,7 @@
 [info]
 id = "cargo-edit"
 git = "https://github.com/killercup/cargo-edit"
-unsupported = ["aarch64-pc-windows-msvc"]
+unsupported = []
 bins = ["cargo-add", "cargo-rm", "cargo-set-version", "cargo-upgrade"]
 
 [target.all]
