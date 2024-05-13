@@ -3,6 +3,3 @@ id = "cargo-clone"
 git = "https://github.com/JanLikar/cargo-clone"
 unsupported = []
 bins = ["cargo-clone"]
-
-[target.all]
-features = "cargo/all-static"
