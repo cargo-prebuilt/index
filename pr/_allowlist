@@ -1,1 +1,1 @@
-cargo-clone,cargo-edit,cargo-expand,cargo-generate,cargo-get
+cargo-hack,cargo-info,cargo-intraconv,cargo-license,cargo-llvm-lines
