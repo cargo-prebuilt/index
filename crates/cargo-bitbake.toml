@@ -5,4 +5,4 @@ unsupported = []
 bins = ["cargo-bitbake"]
 
 [target.all]
-features = "cargo/all-static"
+features = "cargo/vendored-openssl"

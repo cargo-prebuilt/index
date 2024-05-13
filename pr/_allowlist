@@ -1,1 +1,1 @@
-cargo-binstall,cargo-bitbake,cargo-bloat,cargo-bom,cargo-build-deps
+cargo-bitbake,cargo-cache,cargo-careful,cargo-clone,cargo-deadlinks
