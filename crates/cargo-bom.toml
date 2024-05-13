@@ -1,8 +1,8 @@
 [info]
 id = "cargo-bom"
 git = "https://github.com/sensorfu/cargo-bom"
-unsupported = ["riscv64gc-unknown-linux-gnu"]
+unsupported = []
 bins = ["cargo-bom"]
 
 [target.all]
-features = "cargo/vendored-openssl"
+features = "cargo/all-static"
