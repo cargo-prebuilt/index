@@ -1,1 +1,1 @@
-cargo-hack,cargo-info,cargo-intraconv,cargo-license,cargo-llvm-lines
+cargo-local-registry,cargo-make,cargo-modules,cargo-mpirun,cargo-ndk
