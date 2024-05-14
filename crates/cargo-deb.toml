@@ -1,5 +1,5 @@
 [info]
 id = "cargo-deb"
 git = "https://github.com/kornelski/cargo-deb"
-unsupported = []
+unsupported = ["x86_64-unknown-freebsd", "x86_64-unknown-netbsd"]
 bins = ["cargo-deb"]

@@ -1,5 +1,5 @@
 [info]
 id = "cargo-semver-checks"
 git = "https://github.com/obi1kenobi/cargo-semver-checks"
-unsupported = ["x86_64-unknown-netbsd"]
+unsupported = []
 bins = ["cargo-semver-checks"]

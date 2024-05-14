@@ -5,4 +5,4 @@ unsupported = []
 bins = ["eza"]
 
 [target.all]
-features = "vendored-openssl"
+features = "vendored-openssl,vendored-libgit2"

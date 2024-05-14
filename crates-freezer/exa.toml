@@ -1,3 +1,5 @@
+# Unmaintained.
+# Use eza instead.
 [info]
 id = "exa"
 git = "https://github.com/ogham/exa"

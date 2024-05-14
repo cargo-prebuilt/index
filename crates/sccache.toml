@@ -1,14 +1,8 @@
 [info]
 id = "sccache"
 git = "https://github.com/mozilla/sccache"
-unsupported = [
-  "riscv64gc-unknown-linux-gnu",
-  "s390x-unknown-linux-gnu",
-  "aarch64-pc-windows-msvc",
-  "powerpc64-unknown-linux-gnu",
-  "powerpc64le-unknown-linux-gnu",
-]
+unsupported = ["riscv64gc-unknown-linux-gnu"]
 bins = ["sccache"]
 
 [target.all]
-features = "openssl/vendored"
+features = "vendored-openssl"
