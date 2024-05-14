@@ -9,8 +9,8 @@ features = "macos"
 
 # Does not work with musl, currently no way to distinguish
 # features between gnu and musl linux.
-[target.linux]
-features = "unix"
+# [target.linux]
+# features = "unix"
 
 [target.windows]
 features = "windows"
