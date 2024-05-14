@@ -1,7 +1,7 @@
 [info]
 id = "coreutils"
 git = "https://github.com/uutils/coreutils"
-unsupported = ["x86_64-unknown-netbsd"]
+unsupported = []
 bins = ["coreutils"]
 
 [target.apple]
@@ -9,8 +9,8 @@ features = "macos"
 
 # Does not work with musl, currently no way to distinguish
 # features between gnu and musl linux.
-#[target.linux]
-#features = "unix"
+[target.linux]
+features = "unix"
 
 [target.windows]
 features = "windows"
