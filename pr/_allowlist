@@ -1,1 +1,1 @@
-cargo-nextest,cargo-outdated,cargo-prebuilt,cargo-quickinstall,cargo-release
+cargo-semver-checks,cargo-show-asm,cargo-smart-release,cargo-sort,cargo-supply-chain
