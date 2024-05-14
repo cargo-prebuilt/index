@@ -4,6 +4,6 @@ git = "https://github.com/jdx/mise"
 unsupported = []
 bins = ["mise"]
 
-[target.all]
+[target.linux]
 features = "rustls"
 no-default-features = true
