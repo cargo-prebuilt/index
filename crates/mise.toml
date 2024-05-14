@@ -3,3 +3,7 @@ id = "mise"
 git = "https://github.com/jdx/mise"
 unsupported = []
 bins = ["mise"]
+
+[target.all]
+features = "rustls"
+no-default-features = true
