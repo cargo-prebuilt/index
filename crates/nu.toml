@@ -1,8 +1,8 @@
 [info]
 id = "nu"
 git = "https://github.com/nushell/nushell"
-unsupported = ["x86_64-unknown-freebsd", "x86_64-unknown-netbsd"]
+unsupported = []
 bins = ["nu"]
 
 [target.all]
-features = "mimalloc"
+features = "static-link-openssl"
