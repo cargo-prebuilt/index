@@ -3,7 +3,3 @@ id = "tauri-cli"
 git = "https://github.com/tauri-apps/tauri"
 unsupported = ["x86_64-unknown-freebsd", "x86_64-unknown-netbsd"]
 bins = ["cargo-tauri"]
-
-[target.all]
-features = "native-tls-vendored"
-no-default-features = true

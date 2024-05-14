@@ -1,3 +1,4 @@
+# Renamed to mise
 [info]
 id = "rtx-cli"
 git = "https://github.com/jdxcode/rtx"

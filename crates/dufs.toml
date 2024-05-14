@@ -1,5 +1,5 @@
 [info]
 id = "dufs"
 git = "https://github.com/sigoden/dufs"
-unsupported = []
+unsupported = ["x86_64-unknown-freebsd", "x86_64-unknown-netbsd"]
 bins = ["dufs"]

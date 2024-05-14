@@ -5,4 +5,5 @@ unsupported = []
 bins = ["sqlx", "cargo-sqlx"]
 
 [target.all]
-features = "openssl-vendored"
+features = "postgres,sqlite,mysql,completions,rustls"
+no-default-features = true

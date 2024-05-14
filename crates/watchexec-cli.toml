@@ -1,5 +1,5 @@
 [info]
 id = "watchexec-cli"
 git = "https://github.com/watchexec/watchexec"
-unsupported = ["s390x-unknown-linux-gnu"]
+unsupported = []
 bins = ["watchexec"]

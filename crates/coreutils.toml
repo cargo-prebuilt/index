@@ -1,7 +1,7 @@
 [info]
 id = "coreutils"
 git = "https://github.com/uutils/coreutils"
-unsupported = ["x86_64-unknown-netbsd"]
+unsupported = []
 bins = ["coreutils"]
 
 [target.apple]
