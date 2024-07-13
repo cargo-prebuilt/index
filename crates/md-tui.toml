@@ -1,0 +1,5 @@
+[info]
+id = "md-tui"
+git = "https://github.com/henriklovhaug/md-tui"
+unsupported = []
+bins = ["mdt"]
