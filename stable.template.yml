@@ -82,7 +82,7 @@ jobs:
         run: |
           rustup update
           rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v4
         with:
           prebuilt-verify: minisign
           pkgs: cargo-audit
@@ -205,7 +205,7 @@ jobs:
           rustup update
           rustc --version
           rustup target add ${{ matrix.target }}
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v4
         with:
           prebuilt-verify: minisign
           pkgs: cargo-auditable
@@ -297,7 +297,7 @@ jobs:
           rustup update
           rustc --version
           rustup target add ${{ matrix.target }}
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v3
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v4
         with:
           prebuilt-verify: minisign
           pkgs: cargo-auditable
