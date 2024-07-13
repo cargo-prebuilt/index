@@ -1,0 +1,5 @@
+[info]
+id = "cargo-component"
+git = "https://github.com/bytecodealliance/cargo-component"
+unsupported = []
+bins = ["cargo-component"]

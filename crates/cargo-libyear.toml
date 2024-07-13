@@ -1,0 +1,5 @@
+[info]
+id = "cargo-libyear"
+git = "https://github.com/HKalbasi/cargo-libyear"
+unsupported = []
+bins = ["cargo-libyear"]
