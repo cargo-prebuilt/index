@@ -1,1 +1,1 @@
-cargo-chef,md-tui
+md-tui,cargo-udeps,cargo-no-dev-deps

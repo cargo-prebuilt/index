@@ -1,0 +1,8 @@
+[info]
+id = "cargo-udeps"
+git = "https://github.com/est31/cargo-udeps"
+unsupported = []
+bins = ["cargo-udeps"]
+
+[target.all]
+features = "vendored-openssl,vendored-libgit2"
