@@ -127,6 +127,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [hexyl](https://github.com/sharkdp/hexyl)
 - [httm](https://github.com/kimono-koans/httm)
 - [hyperfine](https://github.com/sharkdp/hyperfine)
+- [inlyne](https://github.com/Inlyne-Project/inlyne)
 - [irust](https://github.com/sigmaSd/IRust)
 - [jql](https://github.com/yamafaktory/jql)
 - [just](https://github.com/casey/just)
