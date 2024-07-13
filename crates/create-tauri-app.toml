@@ -1,0 +1,5 @@
+[info]
+id = "create-tauri-app"
+git = "https://github.com/tauri-apps/create-tauri-app"
+unsupported = []
+bins = ["cargo-create-tauri-app"]
