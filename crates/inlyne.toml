@@ -1,0 +1,9 @@
+[info]
+id = "inlyne"
+git = "https://github.com/Inlyne-Project/inlyne"
+unsupported = []
+bins = ["inlyne"]
+
+[target.all]
+features = "x11"
+no-default-features = true
