@@ -130,6 +130,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: reports
+          retention-days: 1
           path: "*.report"
 
   t1-cross:
@@ -171,6 +172,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: target-${{ matrix.target }}
+          retention-days: 1
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.hashes.json
@@ -218,6 +220,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: target-${{ matrix.target }}
+          retention-days: 1
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.hashes.json
@@ -262,6 +265,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: target-${{ matrix.target }}
+          retention-days: 1
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.hashes.json
@@ -310,6 +314,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: target-${{ matrix.target }}
+          retention-days: 1
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.hashes.json
@@ -354,6 +359,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: target-${{ matrix.target }}
+          retention-days: 1
           path: |
             ${{ matrix.target }}.tar.gz
             ${{ matrix.target }}.hashes.json
@@ -408,6 +414,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: final
+          retention-days: 1
           path: |
             info.json
             hashes.json
