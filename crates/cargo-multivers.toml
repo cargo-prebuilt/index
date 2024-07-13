@@ -1,0 +1,5 @@
+[info]
+id = "cargo-multivers"
+git = "https://github.com/ronnychevalier/cargo-multivers"
+unsupported = []
+bins = ["cargo-multivers"]

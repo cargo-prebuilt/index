@@ -1,0 +1,5 @@
+[info]
+id = "cargo-chef"
+git = "https://github.com/LukeMathWalker/cargo-chef"
+unsupported = []
+bins = ["cargo-chef"]
