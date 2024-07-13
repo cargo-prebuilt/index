@@ -29,7 +29,7 @@ def main(
     checksum: str,
     filename: str,
 ):
-    pull_request: bool = True if pull_request == "true" else False
+    pull_request: bool = pull_request == "true"
 
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)
