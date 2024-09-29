@@ -3,6 +3,3 @@ id = "cargo-bom"
 git = "https://github.com/sensorfu/cargo-bom"
 unsupported = []
 bins = ["cargo-bom"]
-
-[target.all]
-features = "cargo/all-static"
