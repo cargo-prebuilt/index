@@ -1,0 +1,10 @@
+[info]
+id = "cicada"
+git = "https://github.com/mitnk/cicada"
+unsupported = [
+    "armv7-unknown-linux-musleabihf",
+    "x86_64-pc-windows-msvc",
+    "aarch64-pc-windows-msvc",
+    "x86_64-unknown-freebsd",
+]
+bins = ["cicada"]

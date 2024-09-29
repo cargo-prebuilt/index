@@ -1,0 +1,5 @@
+[info]
+id = "cargo-zng"
+git = "https://github.com/zng-ui/zng"
+unsupported = ["x86_64-unknown-netbsd"]
+bins = ["cargo-zng"]

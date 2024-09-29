@@ -1,0 +1,5 @@
+[info]
+id = "cargo-readme"
+git = "https://github.com/webern/cargo-readme"
+unsupported = []
+bins = ["cargo-readme"]
