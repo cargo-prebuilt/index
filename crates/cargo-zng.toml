@@ -1,0 +1,5 @@
+[info]
+id = "cargo-zng"
+git = "https://github.com/zng-ui/zng"
+unsupported = []
+bins = ["cargo-zng"]

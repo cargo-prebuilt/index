@@ -1,0 +1,8 @@
+[info]
+id = "cargo-temp"
+git = "https://github.com/yozhgoor/cargo-temp"
+unsupported = []
+bins = ["cargo-temp"]
+
+[target.all]
+features = "generate"

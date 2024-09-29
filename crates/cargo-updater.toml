@@ -1,0 +1,5 @@
+[info]
+id = "cargo-updater"
+git = "https://github.com/pombadev/cargo-updater"
+unsupported = []
+bins = ["cargo-updater"]

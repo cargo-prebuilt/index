@@ -1,0 +1,5 @@
+[info]
+id = "felix"
+git = "https://github.com/kyoheiu/felix"
+unsupported = []
+bins = ["fx"]

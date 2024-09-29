@@ -1,0 +1,5 @@
+[info]
+id = "cicada"
+git = "https://github.com/mitnk/cicada"
+unsupported = []
+bins = ["cicada"]
