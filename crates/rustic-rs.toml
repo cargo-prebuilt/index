@@ -1,0 +1,5 @@
+[info]
+id = "rustic-rs"
+git = "https://github.com/rustic-rs/rustic"
+unsupported = []
+bins = ["rustic"]
