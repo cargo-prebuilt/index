@@ -158,7 +158,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [spacedisplay](https://github.com/funbiscuit/spacedisplay-rs)
 - [sqlx-cli](https://github.com/launchbadge/sqlx)
 - [tauri-cli](https://github.com/tauri-apps/tauri)
-- [trunk](https://github.com/thedodd/trunk)
+- [trunk](https://github.com/trunk-rs/trunk)
 - [typos-cli](https://github.com/crate-ci/typos)
 - [volo-cli](https://github.com/cloudwego/volo)
 - [wasm-pack](https://github.com/rustwasm/wasm-pack)
