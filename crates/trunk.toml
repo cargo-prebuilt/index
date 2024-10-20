@@ -1,5 +1,9 @@
 [info]
 id = "trunk"
-git = "https://github.com/thedodd/trunk"
+git = "https://github.com/trunk-rs/trunk"
 unsupported = []
 bins = ["trunk"]
+
+[target.all]
+features = "vendored"
+no-default-features = true

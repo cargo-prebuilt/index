@@ -2,10 +2,10 @@
 id = "cargo-updater"
 git = "https://github.com/pombadev/cargo-updater"
 unsupported = [
-    "riscv64gc-unknown-linux-gnu",
-    "s390x-unknown-linux-gnu",
-    "powerpc64le-unknown-linux-gnu",
-    "aarch64-pc-windows-msvc",
-    "powerpc64-unknown-linux-gnu",
+  "riscv64gc-unknown-linux-gnu",
+  "s390x-unknown-linux-gnu",
+  "powerpc64le-unknown-linux-gnu",
+  "aarch64-pc-windows-msvc",
+  "powerpc64-unknown-linux-gnu",
 ]
 bins = ["cargo-updater"]
