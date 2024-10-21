@@ -1,0 +1,5 @@
+[info]
+id = "cargo-public-api"
+git = "https://github.com/cargo-public-api/cargo-public-api"
+unsupported = []
+bins = ["cargo-public-api"]
