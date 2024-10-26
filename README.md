@@ -86,6 +86,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [cargo-local-registry](https://github.com/dhovart/cargo-local-registry)
 - [cargo-make](https://github.com/sagiegurari/cargo-make)
 - [cargo-modules](https://github.com/regexident/cargo-modules)
+- [cargo-msrv](https://github.com/foresterre/cargo-msrv)
 - [cargo-mpirun](https://github.com/AndrewGaspar/cargo-mpirun)
 - [cargo-multivers](https://github.com/ronnychevalier/cargo-multivers)
 - [cargo-ndk](https://github.com/bbqsrc/cargo-ndk)
