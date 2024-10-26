@@ -1,0 +1,5 @@
+[info]
+id = "cargo-msrv"
+git = "https://github.com/foresterre/cargo-msrv"
+unsupported = []
+bins = ["cargo-msrv"]
