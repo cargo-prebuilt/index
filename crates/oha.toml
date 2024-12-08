@@ -3,7 +3,3 @@ id = "oha"
 git = "https://github.com/hatoo/oha"
 unsupported = []
 bins = ["oha"]
-
-[target.all]
-features = "native-tls"
-no-default-features = true

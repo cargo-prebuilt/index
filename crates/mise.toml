@@ -5,5 +5,5 @@ unsupported = []
 bins = ["mise"]
 
 [target.all]
-features = "rustls"
+features = "rustls,vfox/vendored-lua"
 no-default-features = true
