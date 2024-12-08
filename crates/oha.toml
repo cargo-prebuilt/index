@@ -1,0 +1,5 @@
+[info]
+id = "oha"
+git = "https://github.com/hatoo/oha"
+unsupported = []
+bins = ["oha"]
