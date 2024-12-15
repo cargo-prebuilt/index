@@ -17,7 +17,7 @@ env:
   BINS: __BINS__
   FILE: __FILE__
   CARGO_TERM_COLOR: always
-  python-version: "3.12"
+  python-version: "3.13"
 
 jobs:
   setup:
