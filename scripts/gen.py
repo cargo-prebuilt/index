@@ -20,6 +20,13 @@ t3_targets: list[str] = [
 ]
 
 
+def replace(template: str, flag: str, value: str) -> str:
+    if "\n" in value:
+        print("Found newline for " + flag + " flag.")
+        sys.exit(1)
+    return template.replace(flag, value)
+
+
 def main(
     pull_request: str,
     index: str,
@@ -40,15 +47,15 @@ def main(
     with open("./stable.template.yml") as file:
         action_template: str = file.read()
 
-    action = action_template.replace("%%INDEX%%", index)
-    action = action.replace("%%CRATE%%", crate)
-    action = action.replace("%%VERSION%%", version)
-    action = action.replace("%%DOWNLOAD%%", dl)
-    action = action.replace("%%CHECKSUM%%", checksum)
-    action = action.replace("%%GIT%%", git_url)
-    action = action.replace("%%BINS%%", bins)
-    action = action.replace("%%FILE%%", filename)
-    action = action.replace("%%IF%%", str(not pull_request).lower())
+    action = replace(action_template, "__INDEX__", index)
+    action = replace(action, "__CRATE__", crate)
+    action = replace(action, "__VERSION__", version)
+    action = replace(action, "__DOWNLOAD__", dl)
+    action = replace(action, "__CHECKSUM__", checksum)
+    action = replace(action, "__GIT__", git_url)
+    action = replace(action, "__BINS__", bins)
+    action = replace(action, "__FILE__", filename)
+    action = replace(action, "__IF__", str(not pull_request).lower())
 
     # Flags
     flags = misc.gen_flags(crate_toml)
@@ -78,9 +85,9 @@ def main(
     final_windows_flags += windows_flags[2]
 
     # Write Flags
-    action = action.replace("%%APPLE_FLAGS%%", final_apple_flags)
-    action = action.replace("%%LINUX_FLAGS%%", final_linux_flags)
-    action = action.replace("%%WINDOWS_FLAGS%%", final_windows_flags)
+    action = replace(action, "__APPLE_FLAGS__", final_apple_flags)
+    action = replace(action, "__LINUX_FLAGS__", final_linux_flags)
+    action = replace(action, "__WINDOWS_FLAGS__", final_windows_flags)
 
     # T2
     # Cross
@@ -91,11 +98,11 @@ def main(
                 targets += ","
             targets += possible
     if len(targets) != 0:
-        action = action.replace("%%T2_CROSS_HAS_TARGETS%%", "true")
-        action = action.replace("%%T2_CROSS_TARGETS%%", targets)
+        action = replace(action, "__T2_CROSS_HAS_TARGETS__", "true")
+        action = replace(action, "__T2_CROSS_TARGETS__", targets)
     else:
-        action = action.replace("%%T2_CROSS_HAS_TARGETS%%", "false")
-        action = action.replace("%%T2_CROSS_TARGETS%%", "err_no_targets")
+        action = replace(action, "__T2_CROSS_HAS_TARGETS__", "false")
+        action = replace(action, "__T2_CROSS_TARGETS__", "err_no_targets")
     # Windows
     targets = ""
     for possible in win_targets:
@@ -104,11 +111,11 @@ def main(
                 targets += ","
             targets += possible
     if len(targets) != 0:
-        action = action.replace("%%T2_WIN_HAS_TARGETS%%", "true")
-        action = action.replace("%%T2_WIN_TARGETS%%", targets)
+        action = replace(action, "__T2_WIN_HAS_TARGETS__", "true")
+        action = replace(action, "__T2_WIN_TARGETS__", targets)
     else:
-        action = action.replace("%%T2_WIN_HAS_TARGETS%%", "false")
-        action = action.replace("%%T2_WIN_TARGETS%%", "err_no_targets")
+        action = replace(action, "__T2_WIN_HAS_TARGETS__", "false")
+        action = replace(action, "__T2_WIN_TARGETS__", "err_no_targets")
 
     # T3
     # Cross
@@ -119,11 +126,11 @@ def main(
                 targets += ","
             targets += possible
     if len(targets) != 0:
-        action = action.replace("%%T3_CROSS_HAS_TARGETS%%", "true")
-        action = action.replace("%%T3_CROSS_TARGETS%%", targets)
+        action = replace(action, "__T3_CROSS_HAS_TARGETS__", "true")
+        action = replace(action, "__T3_CROSS_TARGETS__", targets)
     else:
-        action = action.replace("%%T3_CROSS_HAS_TARGETS%%", "false")
-        action = action.replace("%%T3_CROSS_TARGETS%%", "err_no_targets")
+        action = replace(action, "__T3_CROSS_HAS_TARGETS__", "false")
+        action = replace(action, "__T3_CROSS_TARGETS__", "err_no_targets")
 
     with open("./.github/workflows/stable-" + crate + ".yml", "w") as file:
         file.write(action)

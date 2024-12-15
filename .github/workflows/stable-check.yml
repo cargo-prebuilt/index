@@ -11,8 +11,7 @@ on:
   schedule:
     - cron: '0 6 * * *'
 
-permissions:
-  contents: write
+permissions: { }
 
 env:
   python-version: "3.12"
@@ -24,6 +23,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
@@ -37,7 +38,10 @@ jobs:
           concurrent_skipping: always
       - name: Check for updates
         id: check
-        run: echo "crates=$(python ./scripts/check.py '${{ github.event_name == 'pull_request' }}' '${{ steps.skip.outputs.should_skip }}' '${{ github.server_url }}' '${{ github.repository }}')" >> $GITHUB_OUTPUT
+        env:
+          IS_PULL_REQUEST: ${{ github.event_name == 'pull_request' }}
+          SHOULD_SKIP: ${{ steps.skip.outputs.should_skip }}
+        run: echo "crates=$(python ./scripts/check.py "${IS_PULL_REQUEST}" "${SHOULD_SKIP}" "${GITHUB_SERVER_URL}" "${GITHUB_REPOSITORY}")" >> "${GITHUB_OUTPUT}"
 
   dispatch:
     if: ${{ needs.check.outputs.crates != '{}' }}
@@ -46,50 +50,66 @@ jobs:
       matrix: ${{ fromJson(needs.check.outputs.crates) }}
     runs-on: ubuntu-latest
     needs: [ check ]
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
       - name: Generate workflow
-        run: python ./scripts/gen.py ${{ github.event_name == 'pull_request' }} '${{ github.server_url }}/${{ github.repository }}' '${{ matrix.crate }}' '${{ matrix.version }}' '${{ matrix.dl }}' '${{ matrix.checksum }}' '${{ matrix.file }}'
+        env:
+          IS_PULL_REQUEST: ${{ github.event_name == 'pull_request' }}
+          MATRIX_CRATE: ${{ matrix.crate }}
+          MATRIX_VERSION: ${{ matrix.version }}
+          MATRIX_DL: ${{ matrix.dl }}
+          MATRIX_CHECKSUM: ${{ matrix.checksum }}
+          MATRIX_FILE: ${{ matrix.file }}
+        run: python ./scripts/gen.py "${IS_PULL_REQUEST}" "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}" "${MATRIX_CRATE}" "${MATRIX_VERSION}" "${MATRIX_DL}" "${MATRIX_CHECKSUM}" "${MATRIX_FILE}"
       - name: Print generated workflow file
-        run: cat .github/workflows/stable-${{ matrix.crate }}.yml
+        env:
+          MATRIX_CRATE: ${{ matrix.crate }}
+        run: cat "./.github/workflows/stable-${MATRIX_CRATE}.yml"
       - name: Wait
         if: ${{ github.event_name != 'pull_request' }}
         run: sleep 15m
       - name: Run Generated Workflow
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
+          MATRIX_CRATE: ${{ matrix.crate }}
+          MATRIX_VERSION: ${{ matrix.version }}
+          MATRIX_FILE: ${{ matrix.file }}
         run: |
           set -euxo pipefail
 
           TEMP_DIR="$(mktemp -d)"
 
           # Move files
-          mkdir -p "$TEMP_DIR/crates"
-          cp '${{ matrix.file }}' "$TEMP_DIR/crates"
-          mkdir -p "$TEMP_DIR/.github/workflows"
-          cp '.github/workflows/stable-${{ matrix.crate }}.yml' "$TEMP_DIR/.github/workflows"
-          
-          cp -r 'keys' 'scripts' $TEMP_DIR
-          rm -rf $TEMP_DIR/scripts/__pycache__
+          mkdir -p "${TEMP_DIR}/crates"
+          cp "${MATRIX_FILE}" "${TEMP_DIR}/crates"
+          mkdir -p "${TEMP_DIR}/.github/workflows"
+          cp "./.github/workflows/stable-${MATRIX_CRATE}.yml" "${TEMP_DIR}/.github/workflows"
+
+          cp -r 'keys' 'scripts' "${TEMP_DIR}"
+          rm -rf "${TEMP_DIR}/scripts/__pycache__"
 
           # Commit and Push
-          pushd $TEMP_DIR
+          pushd "${TEMP_DIR}"
 
           git init
           git config user.name 'github-actions'
           git config user.email 'github-actions@noreply.github.com'
-          git remote add origin "https://${{ github.actor }}:$GITHUB_TOKEN@github.com/${{ github.repository }}.git"
+          git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git checkout -b tmp
           git add -f .
-          git commit -m "Publish crate ${{ matrix.crate }} ${{ matrix.version }} from #${{ github.run_number }}"
+          git commit -m "Publish crate ${MATRIX_CRATE} ${MATRIX_VERSION} from #${GITHUB_RUN_NUMBER}"
           git push --force origin tmp:trigger/stable
 
           # Cleanup
           popd
-          rm -rf $TEMP_DIR
+          rm -rf "${TEMP_DIR}"
 
   wait:
     if: ${{ github.event_name != 'pull_request' }}
@@ -97,6 +117,8 @@ jobs:
     needs: [ dispatch ]
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - run: sleep 15m
 
   archive:
@@ -107,6 +129,8 @@ jobs:
         type: [ stable ]
     runs-on: ubuntu-latest
     needs: [ wait ]
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -115,15 +139,17 @@ jobs:
           fetch-depth: 0
       - name: Clean
         working-directory: ./${{ matrix.type }}
-        run: rm -rf *
+        run: rm -rf ./*
       - name: Archive
-        uses: robinraju/release-downloader@v1.9
+        uses: robinraju/release-downloader@v1.11
         with:
           tag: "${{ matrix.type }}-index"
           fileName: "*"
           out-file-path: "./${{ matrix.type }}"
       - name: Commit and Push
         shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euxo pipefail
 
@@ -131,4 +157,4 @@ jobs:
           git config --local user.email 'github-actions[bot]@users.noreply.github.com'
 
           git commit -a --allow-empty -m "chore: autopublish $(date --utc)"
-          git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:archive --follow-tags
+          git push "https://${GITHUB_ACTOR}:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:archive --follow-tags
