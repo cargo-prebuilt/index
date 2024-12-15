@@ -17,7 +17,7 @@ def main(
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)
 
-    description = description.replace("%%SINGLE_QUOTE%%", "'")
+    description = description.replace("__SINGLE_QUOTE__", "'")
 
     features = misc.gen_flags(crate_toml)
 
