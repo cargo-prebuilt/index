@@ -1,0 +1,5 @@
+[info]
+id = "cargo-show-asm"
+git = "https://github.com/pacak/cargo-show-asm"
+unsupported = []
+bins = ["cargo-asm"]
