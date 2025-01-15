@@ -173,7 +173,6 @@ jobs:
         run: |
           docker run --rm \
           --userns host --user "$(id -u):$(id -g)" \
-          -v "$HOME/.cargo/registry:/usr/local/cargo/registry" \
           -v ./build:/project \
           "ghcr.io/cargo-prebuilt/ink-cross:stable-${TARGET}" \
           auditable build --verbose --release --locked --target "${TARGET}" __LINUX_FLAGS__
@@ -274,7 +273,6 @@ jobs:
         run: |
           docker run --rm \
           --userns host --user "$(id -u):$(id -g)" \
-          -v "$HOME/.cargo/registry:/usr/local/cargo/registry" \
           -v ./build:/project \
           "ghcr.io/cargo-prebuilt/ink-cross:stable-${TARGET}" \
           auditable build --verbose --release --locked --target "${TARGET}" __LINUX_FLAGS__
@@ -376,7 +374,6 @@ jobs:
         run: |
           docker run --rm \
           --userns host --user "$(id -u):$(id -g)" \
-          -v "$HOME/.cargo/registry:/usr/local/cargo/registry" \
           -v ./build:/project \
           "ghcr.io/cargo-prebuilt/ink-cross:stable-${TARGET}" \
           auditable build --verbose --release --locked --target "${TARGET}" __LINUX_FLAGS__
