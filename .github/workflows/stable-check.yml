@@ -11,6 +11,10 @@ on:
   schedule:
     - cron: '0 6 * * *'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions: { }
 
 env:
@@ -28,20 +32,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.python-version }}
-      - name: Skip Duplicate Actions
-        if: ${{ github.event_name != 'pull_request' }}
-        uses: fkirc/skip-duplicate-actions@v5
-        id: skip
-        with:
-          skip_after_successful_duplicate: false
-          do_not_skip: '["pull_request"]'
-          concurrent_skipping: always
       - name: Check for updates
         id: check
         env:
           IS_PULL_REQUEST: ${{ github.event_name == 'pull_request' }}
-          SHOULD_SKIP: ${{ steps.skip.outputs.should_skip }}
-        run: echo "crates=$(python ./scripts/check.py "${IS_PULL_REQUEST}" "${SHOULD_SKIP}" "${GITHUB_SERVER_URL}" "${GITHUB_REPOSITORY}")" >> "${GITHUB_OUTPUT}"
+        run: echo "crates=$(python ./scripts/check.py "${IS_PULL_REQUEST}" "${GITHUB_SERVER_URL}" "${GITHUB_REPOSITORY}")" >> "${GITHUB_OUTPUT}"
 
   dispatch:
     if: ${{ needs.check.outputs.crates != '{}' }}
