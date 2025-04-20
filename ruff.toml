@@ -1,4 +1,4 @@
-target-version = "py312"
+target-version = "py313"
 
 [lint]
 select = [
@@ -6,7 +6,7 @@ select = [
   "F",   # Pyflakes
   "B",   # flake8-bugbear
   "SIM", # flake8-simplify
-  "A",   # flake8-builtins 
+  "A",   # flake8-builtins
   "C4",  # flake8-comprehensions
   "ERA", # eradicate
   "UP",  # Pyupgrade

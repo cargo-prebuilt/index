@@ -28,7 +28,7 @@ def replace(template: str, flag: str, value: str) -> str:
 
 
 def main(
-    pull_request: str,
+    pull_request_str: str,
     index: str,
     crate: str,
     version: str,
@@ -36,7 +36,7 @@ def main(
     checksum: str,
     filename: str,
 ):
-    pull_request: bool = pull_request == "true"
+    pull_request: bool = pull_request_str.lower() == "true"
 
     with open(filename, "rb") as file:
         crate_toml = tomllib.load(file)

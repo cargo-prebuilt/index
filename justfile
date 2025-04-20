@@ -7,3 +7,4 @@ lint:
     ruff format
     taplo fmt
     ruff check
+    actionlint

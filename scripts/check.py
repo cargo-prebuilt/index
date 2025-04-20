@@ -3,6 +3,7 @@ import glob
 import json
 import sys
 import tomllib
+import urllib.error
 import urllib.request
 from typing import Any
 
@@ -13,7 +14,7 @@ crates_io_cdn: str = "https://static.crates.io/crates/{CRATE}/{CRATE}-{VERSION}.
 
 
 def get_index_url(crate: str) -> str:
-    crate: str = crate.lower()
+    crate = crate.lower()
     length: int = len(crate)
     url: str = crates_io_index
     if 1 <= length <= 2:
@@ -80,10 +81,11 @@ def process(
             headers={"User-Agent": f"cargo-prebuilt_bot ({server_url}/{repo})"},
         )
         res = urllib.request.urlopen(req)
-        crate_infos_raw: str = (
-            res.read().decode("utf-8") if res and res.status == 200 else sys.exit(3)
+        crate_infos_raw: list[str] = (
+            (res.read().decode("utf-8") if res and res.status == 200 else sys.exit(3))
+            .strip()
+            .split("\n")
         )
-        crate_infos_raw: list[str] = crate_infos_raw.strip().split("\n")
 
         crate_infos: list[Any] = []
         for c in crate_infos_raw:
@@ -105,20 +107,15 @@ def process(
         return None
 
 
-def main(pull_request: str, duplicate: str, server_url: str, repo: str):
-    pull_request: bool = pull_request.lower() == "true"
-    duplicate: bool = duplicate.lower() == "true"
-
-    if not pull_request and duplicate:
-        print("{}")
-        return
+def main(pull_request_str: str, server_url: str, repo: str):
+    pull_request: bool = pull_request_str.lower() == "true"
 
     if pull_request:
         with open("./pr/_allowlist") as file:
-            allow: str = file.readline().strip()
+            allow_str: str = file.readline().strip()
     else:
-        allow: str = ""
-    allow: list[str] = allow.split(",")
+        allow_str: str = ""
+    allow: list[str] = allow_str.split(",")
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as executor:
         to_update_raw = executor.map(
@@ -143,4 +140,4 @@ def main(pull_request: str, duplicate: str, server_url: str, repo: str):
 
 if __name__ == "__main__":
     argv = sys.argv
-    main(argv[1], argv[2], argv[3], argv[4])
+    main(argv[1], argv[2], argv[3])
