@@ -26,10 +26,10 @@ jobs:
       crates: ${{ steps.check.outputs.crates }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Check for updates
@@ -48,10 +48,10 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Generate workflow
@@ -111,7 +111,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ dispatch ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
       - run: sleep 15m
@@ -127,7 +127,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           ref: archive
           persist-credentials: false
@@ -136,7 +136,7 @@ jobs:
         working-directory: ./${{ matrix.type }}
         run: rm -rf ./*
       - name: Archive
-        uses: robinraju/release-downloader@v1.11
+        uses: robinraju/release-downloader@daf26c55d821e836577a15f77d86ddc078948b05
         with:
           tag: "${{ matrix.type }}-index"
           fileName: "*"
