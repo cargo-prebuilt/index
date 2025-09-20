@@ -1,5 +1,5 @@
 [info]
 id = "cargo-release"
 git = "https://github.com/crate-ci/cargo-release"
-unsupported = []
+unsupported = ["riscv64gc-unknown-linux-musl"]
 bins = ["cargo-release"]

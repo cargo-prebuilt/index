@@ -2,6 +2,7 @@
 id = "zellij"
 git = "https://github.com/zellij-org/zellij"
 unsupported = [
+  "riscv64gc-unknown-linux-musl",
   "s390x-unknown-linux-gnu",
   "powerpc64le-unknown-linux-gnu",
   "armv7-unknown-linux-gnueabihf",

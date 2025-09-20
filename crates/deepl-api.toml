@@ -1,7 +1,7 @@
 [info]
 id = "deepl-api"
 git = "https://github.com/mgruner/deepl-api-rs"
-unsupported = []
+unsupported = ["riscv64gc-unknown-linux-musl"]
 bins = ["deepl"]
 
 [target.all]

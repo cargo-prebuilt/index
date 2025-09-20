@@ -1,5 +1,5 @@
 [info]
 id = "ripgrep"
 git = "https://github.com/BurntSushi/ripgrep"
-unsupported = []
+unsupported = ["riscv64gc-unknown-linux-musl"]
 bins = ["rg"]

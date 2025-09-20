@@ -1,5 +1,5 @@
 [info]
 id = "whiz"
 git = "https://github.com/zifeo/whiz"
-unsupported = []
+unsupported = ["riscv64gc-unknown-linux-musl"]
 bins = ["whiz"]

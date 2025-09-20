@@ -1,7 +1,7 @@
 [info]
 id = "sccache"
 git = "https://github.com/mozilla/sccache"
-unsupported = ["riscv64gc-unknown-linux-gnu"]
+unsupported = ["riscv64gc-unknown-linux-gnu", "riscv64gc-unknown-linux-musl"]
 bins = ["sccache"]
 
 [target.all]

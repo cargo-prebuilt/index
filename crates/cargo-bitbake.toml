@@ -1,7 +1,7 @@
 [info]
 id = "cargo-bitbake"
 git = "https://github.com/meta-rust/cargo-bitbake"
-unsupported = []
+unsupported = ["riscv64gc-unknown-linux-musl"]
 bins = ["cargo-bitbake"]
 
 [target.all]
