@@ -5,6 +5,7 @@ import misc
 
 t2_targets: list[str] = [
     "riscv64gc-unknown-linux-gnu",  # Optional Support (64-bit)
+    "riscv64gc-unknown-linux-musl", # TODO: ink-crater test!
     "s390x-unknown-linux-gnu",
     "powerpc64le-unknown-linux-gnu",
     "armv7-unknown-linux-gnueabihf",  # Optional Support (32-bit)
