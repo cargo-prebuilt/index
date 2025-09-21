@@ -33,6 +33,7 @@ Tier 2: Crates optionally build for these platforms, but if one fails the entire
 - x86_64-pc-windows-msvc
 - aarch64-pc-windows-msvc
 - riscv64gc-unknown-linux-gnu
+- riscv64gc-unknown-linux-musl
 - s390x-unknown-linux-gnu
 - powerpc64le-unknown-linux-gnu
 - armv7-unknown-linux-gnueabihf

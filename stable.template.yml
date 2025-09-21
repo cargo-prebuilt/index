@@ -23,7 +23,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
       - name: Cache
@@ -61,10 +61,10 @@ jobs:
       crate-description: ${{ steps.get_toml.outputs.description }}
     needs: [ setup ]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get deps and crates from cache
@@ -85,7 +85,7 @@ jobs:
         run: |
           rustup update
           rustc --version
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v4
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v5
         with:
           prebuilt-verify: minisign
           pkgs: cargo-audit
@@ -150,10 +150,10 @@ jobs:
     env:
       TARGET: ${{ matrix.target }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
@@ -197,10 +197,10 @@ jobs:
     env:
       TARGET: ${{ matrix.target }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
@@ -221,7 +221,7 @@ jobs:
           rustup update
           rustc --version
           rustup target add "${TARGET}"
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v4
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v5
         with:
           prebuilt-verify: minisign
           pkgs: cargo-auditable
@@ -250,10 +250,10 @@ jobs:
     env:
       TARGET: ${{ matrix.target }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
@@ -298,10 +298,10 @@ jobs:
     env:
       TARGET: ${{ matrix.target }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
@@ -322,7 +322,7 @@ jobs:
           rustup update
           rustc --version
           rustup target add "${Env:TARGET}"
-      - uses: cargo-prebuilt/cargo-prebuilt-action@v4
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v5
         with:
           prebuilt-verify: minisign
           pkgs: cargo-auditable
@@ -351,10 +351,10 @@ jobs:
     env:
       TARGET: ${{ matrix.target }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
@@ -395,17 +395,17 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Rust Version Guess
         run: |
           rustup update
           echo "RUSTC_VERSION=$(rustc --version)" >> "${GITHUB_ENV}"
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
       - name: DBG - List Structure
         run: ls -R
       - name: Merge hashes
@@ -484,7 +484,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
       - name: Create index file
@@ -506,7 +506,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           persist-credentials: false
       - name: Create index file

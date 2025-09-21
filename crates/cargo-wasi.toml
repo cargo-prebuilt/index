@@ -3,6 +3,7 @@ id = "cargo-wasi"
 git = "https://github.com/bytecodealliance/cargo-wasi"
 unsupported = [
   "riscv64gc-unknown-linux-gnu",
+  "riscv64gc-unknown-linux-musl",
   "s390x-unknown-linux-gnu",
   "powerpc64le-unknown-linux-gnu",
   "aarch64-pc-windows-msvc",

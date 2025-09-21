@@ -4,5 +4,6 @@
 *.cache
 *.tmp
 index/
+.ropeproject/
 __pycache__
 .ruff_cache/

@@ -1,5 +1,5 @@
 [info]
 id = "gitui"
 git = "https://github.com/extrawurst/gitui"
-unsupported = []
+unsupported = ["riscv64gc-unknown-linux-musl"]
 bins = ["gitui"]
