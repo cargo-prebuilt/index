@@ -1,5 +1,5 @@
 [info]
 id = "zet"
 git = "https://github.com/yarrow/zet"
-unsupported = ["riscv64gc-unknown-linux-musl"]
+unsupported = []
 bins = ["zet"]
