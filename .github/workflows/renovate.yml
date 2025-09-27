@@ -2,8 +2,8 @@ name: Renovate Bot
 
 on:
   push:
-    branches: [ main ]
-    paths: [ .github/workflows/renovate.yml, .github/renovate.json ]
+    branches: [main]
+    paths: [.github/workflows/renovate.yml, .github/renovate.json]
   workflow_dispatch:
     inputs:
       dryRun:
@@ -41,12 +41,12 @@ jobs:
       - name: Self-hosted Renovate
         uses: renovatebot/github-action@9ba84f1ade243f8c2ce5b223df61cf23dc094584 # v43.0.13
         env:
-            RENOVATE_AUTODISCOVER: true
-            RENOVATE_AUTODISCOVER_FILTER: ${{ github.repository }}
-            RENOVATE_DRY_RUN: ${{ inputs.dryRun }}
-            RENOVATE_PLATFORM: github
-            RENOVATE_PLATFORM_COMMIT: true
-            RENOVATE_GIT_AUTHOR: ${{ secrets.RENOVATE_BOT_GIT_AUTHOR }}
+          RENOVATE_AUTODISCOVER: true
+          RENOVATE_AUTODISCOVER_FILTER: ${{ github.repository }}
+          RENOVATE_DRY_RUN: ${{ inputs.dryRun }}
+          RENOVATE_PLATFORM: github
+          RENOVATE_PLATFORM_COMMIT: true
+          RENOVATE_GIT_AUTHOR: ${{ secrets.RENOVATE_BOT_GIT_AUTHOR }}
         with:
           configurationFile: .github/renovate.json
           token: ${{ steps.app-token.outputs.token }}

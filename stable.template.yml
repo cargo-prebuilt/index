@@ -44,15 +44,13 @@ jobs:
           echo "${CHECKSUM} ${CRATE}-${VERSION}.crate" | sha256sum -c
           tar -xf "${CRATE}-${VERSION}.crate"
           mv "${CRATE}-${VERSION}"/* ./build
-      - name: Update Rust
+      - uses: dtolnay/rust-toolchain@stable
+        id: toolchain
         if: ${{ !steps.cache.outputs.cache-hit }}
-        run: |
-          rustup update
-          rustc --version
       - name: Generated lockfile if needed
         if: ${{ !steps.cache.outputs.cache-hit }}
         working-directory: ./build
-        run: test -f Cargo.lock || cargo +stable generate-lockfile --verbose
+        run: test -f Cargo.lock || cargo +${{ steps.toolchain.outputs.name }} generate-lockfile --verbose
 
   reports:
     runs-on: ubuntu-latest
@@ -81,10 +79,8 @@ jobs:
           path: |
             ~/.cargo/advisory-db
           key: stable-advisory-db
-      - name: Update Rust
-        run: |
-          rustup update
-          rustc --version
+      - uses: dtolnay/rust-toolchain@stable
+        id: toolchain
       - uses: cargo-prebuilt/cargo-prebuilt-action@v5
         with:
           prebuilt-verify: minisign
@@ -112,11 +108,11 @@ jobs:
       - name: Generate deps report
         working-directory: ./build
         run: |
-          echo "Generated on: $(date --utc)" > ../deps.report && cargo +stable tree --verbose --locked -e normal,build >> ../deps.report
+          echo "Generated on: $(date --utc)" > ../deps.report && cargo +${{ steps.toolchain.outputs.name }} tree --verbose --locked -e normal,build >> ../deps.report
       - name: Generate audit report
         working-directory: ./build
         run: |
-          echo "Generated on: $(date --utc)" > ../audit.report && cargo audit >> ../audit.report || true
+          echo "Generated on: $(date --utc)" > ../audit.report && cargo +${{ steps.toolchain.outputs.name }} audit >> ../audit.report || true
       - name: Output reports
         run: |
           {
@@ -216,18 +212,18 @@ jobs:
         with:
           workspaces: "./build -> target"
           prefix-key: "v0-rust-${{ matrix.target }}-${{ env.CRATE }}-${{ env.VERSION }}"
-      - name: Update Rust and Add Target
-        run: |
-          rustup update
-          rustc --version
-          rustup target add "${TARGET}"
+      - uses: dtolnay/rust-toolchain@stable
+        id: toolchain
+        with:
+          targets: ${{ matrix.target }}
+          components: rust-src
       - uses: cargo-prebuilt/cargo-prebuilt-action@v5
         with:
           prebuilt-verify: minisign
           pkgs: cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked --target "${TARGET}" __APPLE_FLAGS__
+        run: cargo +${{ steps.toolchain.outputs.name }} auditable build --verbose --release --locked --target "${TARGET}" __APPLE_FLAGS__
       - name: Collect
         run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
       - name: Artifact
@@ -317,18 +313,18 @@ jobs:
         with:
           workspaces: "./build -> target"
           prefix-key: "v0-rust-${{ matrix.target }}-${{ env.CRATE }}-${{ env.VERSION }}"
-      - name: Update Rust and Add Target
-        run: |
-          rustup update
-          rustc --version
-          rustup target add "${Env:TARGET}"
+      - uses: dtolnay/rust-toolchain@stable
+        id: toolchain
+        with:
+          targets: ${{ matrix.target }}
+          components: rust-src
       - uses: cargo-prebuilt/cargo-prebuilt-action@v5
         with:
           prebuilt-verify: minisign
           pkgs: cargo-auditable
       - name: Build crate
         working-directory: ./build
-        run: cargo +stable auditable build --verbose --release --locked --target "${Env:TARGET}" __WINDOWS_FLAGS__
+        run: cargo +${{ steps.toolchain.outputs.name }} auditable build --verbose --release --locked --target "${Env:TARGET}" __WINDOWS_FLAGS__
       - name: Collect
         run: python ./scripts/collect.py "${Env:TARGET}" "./build/target/${Env:TARGET}/release" "${Env:BINS}"
       - name: Artifact
