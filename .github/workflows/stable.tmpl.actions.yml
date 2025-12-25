@@ -10,14 +10,14 @@ jobs:
   hold:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: actions/setup-python@v6
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
       - uses: Swatinem/rust-cache@v2
       - uses: dtolnay/rust-toolchain@stable
       - uses: cargo-prebuilt/cargo-prebuilt-action@v5
-      - uses: actions/upload-artifact@v4
-      - uses: actions/download-artifact@v5
+      - uses: actions/upload-artifact@v6
+      - uses: actions/download-artifact@v7
       - uses: ncipollo/release-action@v1

@@ -134,6 +134,7 @@ Tier 3: Crates optionally build for these platforms, but the build will still pu
 - [gitui](https://github.com/extrawurst/gitui)
 - [grcov](https://github.com/mozilla/grcov)
 - [hexyl](https://github.com/sharkdp/hexyl)
+- [hickory-dns](https://github.com/hickory-dns/hickory-dns)
 - [httm](https://github.com/kimono-koans/httm)
 - [hyperfine](https://github.com/sharkdp/hyperfine)
 - [inlyne](https://github.com/Inlyne-Project/inlyne)

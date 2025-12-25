@@ -23,11 +23,11 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - name: Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         id: cache
         with:
           path: |
@@ -59,14 +59,14 @@ jobs:
       crate-description: ${{ steps.get_toml.outputs.description }}
     needs: [ setup ]
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get deps and crates from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             build
@@ -74,7 +74,7 @@ jobs:
           enableCrossOsArchive: true
           fail-on-cache-miss: true
       - name: Cache Advisory DB
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             ~/.cargo/advisory-db
@@ -130,7 +130,7 @@ jobs:
             echo "\`\`\`"
           } >> "${GITHUB_STEP_SUMMARY}"
       - name: Store reports
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: reports
           retention-days: 1
@@ -146,14 +146,14 @@ jobs:
     env:
       TARGET: ${{ matrix.target }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             build
@@ -175,7 +175,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
       - name: Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: target-${{ matrix.target }}
           retention-days: 1
@@ -193,14 +193,14 @@ jobs:
     env:
       TARGET: ${{ matrix.target }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             build
@@ -227,7 +227,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
       - name: Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: target-${{ matrix.target }}
           retention-days: 1
@@ -246,14 +246,14 @@ jobs:
     env:
       TARGET: ${{ matrix.target }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             build
@@ -275,7 +275,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
       - name: Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: target-${{ matrix.target }}
           retention-days: 1
@@ -294,14 +294,14 @@ jobs:
     env:
       TARGET: ${{ matrix.target }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             build
@@ -328,7 +328,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py "${Env:TARGET}" "./build/target/${Env:TARGET}/release" "${Env:BINS}"
       - name: Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: target-${{ matrix.target }}
           retention-days: 1
@@ -347,14 +347,14 @@ jobs:
     env:
       TARGET: ${{ matrix.target }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: actions/setup-python@v6
         with:
           python-version: ${{ env.python-version }}
       - name: Get crate from cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: |
             build
@@ -376,7 +376,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
       - name: Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: target-${{ matrix.target }}
           retention-days: 1
@@ -391,7 +391,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - uses: actions/setup-python@v6
@@ -401,7 +401,7 @@ jobs:
         run: |
           rustup update
           echo "RUSTC_VERSION=$(rustc --version)" >> "${GITHUB_ENV}"
-      - uses: actions/download-artifact@v5
+      - uses: actions/download-artifact@v7
       - name: DBG - List Structure
         run: ls -R
       - name: Merge hashes
@@ -438,7 +438,7 @@ jobs:
           rm -f ~/.minisign_secret.key
       - name: Artifact
         if: ${{ !__IF__ }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: final
           retention-days: 1
@@ -480,7 +480,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - name: Create index file
@@ -502,7 +502,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           persist-credentials: false
       - name: Create index file
