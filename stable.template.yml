@@ -479,7 +479,7 @@ jobs:
       - name: TEST - limit
         run: gh api /rate_limit
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   banned-index:
     if: ${{ __IF__ && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && (contains(needs.t1-cross.result, 'failure') || contains(needs.t1-apple-darwin.result, 'failure') || contains(needs.t2-cross.result, 'failure') || contains(needs.t2-pc-windows-msvc.result, 'failure')) }}
