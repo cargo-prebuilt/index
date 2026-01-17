@@ -69,7 +69,7 @@ jobs:
         run: cat "./.github/workflows/stable-${MATRIX_CRATE}.yml"
       - name: Wait
         if: ${{ github.event_name != 'pull_request' }}
-        run: sleep 1m
+        run: sleep 15s
       - name: Run Generated Workflow
         env:
           GITHUB_TOKEN: ${{ secrets.WORKFLOW_TOKEN }}
@@ -106,16 +106,6 @@ jobs:
           popd
           rm -rf "${TEMP_DIR}"
 
-  wait:
-    if: ${{ github.event_name != 'pull_request' }}
-    runs-on: ubuntu-latest
-    needs: [ dispatch ]
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          persist-credentials: false
-      - run: sleep 15m
-
   archive:
     if: ${{ github.event_name != 'pull_request' }}
     strategy:
@@ -123,7 +113,7 @@ jobs:
       matrix:
         type: [ stable ]
     runs-on: ubuntu-latest
-    needs: [ wait ]
+    needs: [ dispatch ]
     permissions:
       contents: write
     steps:
