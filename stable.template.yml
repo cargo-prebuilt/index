@@ -112,11 +112,11 @@ jobs:
       - name: Generate deps report
         working-directory: ./build
         run: |
-          echo "Generated on: $(date --utc)" > ../deps.report && cargo +${{ steps.toolchain.outputs.name }} tree --verbose --locked -e normal,build >> ../deps.report
+          echo "Generated on: $(date --utc)" > ../deps.report && cargo +${{ steps.toolchain.outputs.name }} tree --verbose --color=never --format='{p} "{l}"' --locked -e normal,build >> ../deps.report
       - name: Generate audit report
         working-directory: ./build
         run: |
-          echo "Generated on: $(date --utc)" > ../audit.report && cargo +${{ steps.toolchain.outputs.name }} audit >> ../audit.report || true
+          echo "Generated on: $(date --utc)" > ../audit.report && cargo +${{ steps.toolchain.outputs.name }} audit --color=never >> ../audit.report || true
       - name: Output reports
         run: |
           {
