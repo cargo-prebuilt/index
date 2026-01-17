@@ -1,7 +1,10 @@
+# Remove all releases of a specific crate
+
 # gh -R cargo-prebuilt/index release list -L 3000 > all-releases.txt
 # gh api /rate_limit
 
 import subprocess
+
 
 def main():
     tags = []
@@ -16,9 +19,12 @@ def main():
     for tag in tags:
         if "rtx-cli" in tag:
             print("Del: " + tag)
-            out = subprocess.run(["gh", "-R", "cargo-prebuilt/index", "release", "delete", "-y", tag])
-            print(out.stdout)
-            if out.returncode != 0:
-              exit(1)
+
+            # Uncomment below when ready!
+            # out = subprocess.run(["gh", "-R", "cargo-prebuilt/index", "release", "delete", "-y", tag])
+            # print(out.stdout)
+            # if out.returncode != 0:
+            #  exit(1)
+
 
 main()
