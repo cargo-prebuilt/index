@@ -51,6 +51,10 @@ jobs:
         if: ${{ !steps.cache.outputs.cache-hit }}
         working-directory: ./build
         run: test -f Cargo.lock || cargo +${{ steps.toolchain.outputs.name }} generate-lockfile --verbose
+      - name: TEST - limit
+        run: gh api /rate_limit
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   reports:
     runs-on: ubuntu-latest
@@ -472,6 +476,10 @@ jobs:
           omitBodyDuringUpdate: true
           omitNameDuringUpdate: true
           artifacts: "${{ env.CRATE }}"
+      - name: TEST - limit
+        run: gh api /rate_limit
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }
 
   banned-index:
     if: ${{ __IF__ && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && (contains(needs.t1-cross.result, 'failure') || contains(needs.t1-apple-darwin.result, 'failure') || contains(needs.t2-cross.result, 'failure') || contains(needs.t2-pc-windows-msvc.result, 'failure')) }}
