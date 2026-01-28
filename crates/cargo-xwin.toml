@@ -1,0 +1,5 @@
+[info]
+id = "cargo-xwin"
+git = "https://github.com/rust-cross/cargo-xwin"
+unsupported = []
+bins = ["cargo-xwin"]

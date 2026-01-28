@@ -1,0 +1,526 @@
+name: cargo-xwin stable build
+
+on:
+  push:
+    branches: [ trigger/stable ]
+  workflow_dispatch:
+
+permissions: { }
+
+env:
+  INDEX: https://github.com/cargo-prebuilt/index/releases/download/stable-index/
+  CRATE: cargo-xwin
+  VERSION: 0.21.3
+  DL: https://static.crates.io/crates/cargo-xwin/cargo-xwin-0.21.3.crate
+  CHECKSUM: ee2b5625129e929caa381893503d32616cbc80e5eacfaae4dd68686f315dceea
+  GIT: https://github.com/rust-cross/cargo-xwin
+  BINS: cargo-xwin
+  FILE: ./crates/cargo-xwin.toml
+  CARGO_TERM_COLOR: always
+  python-version: "3.13"
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Cache
+        uses: actions/cache@v5
+        id: cache
+        with:
+          path: |
+            build
+          key: ${{ env.CRATE }}-${{ env.VERSION }}-stable-crate
+          enableCrossOsArchive: true
+      - name: Create Folder
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        run: mkdir -p ./build
+      - name: Download crate and check hash
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        run: |
+          wget "${DL}"
+          echo "${CHECKSUM} ${CRATE}-${VERSION}.crate" | sha256sum -c
+          tar -xf "${CRATE}-${VERSION}.crate"
+          mv "${CRATE}-${VERSION}"/* ./build
+      - uses: dtolnay/rust-toolchain@stable
+        id: toolchain
+        if: ${{ !steps.cache.outputs.cache-hit }}
+      - name: Generated lockfile if needed
+        if: ${{ !steps.cache.outputs.cache-hit }}
+        working-directory: ./build
+        run: test -f Cargo.lock || cargo +${{ steps.toolchain.outputs.name }} generate-lockfile --verbose
+      - name: TEST - limit
+        run: gh api /rate_limit
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  reports:
+    runs-on: ubuntu-latest
+    outputs:
+      crate-license: ${{ steps.get_toml.outputs.license }}
+      crate-description: ${{ steps.get_toml.outputs.description }}
+    needs: [ setup ]
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.python-version }}
+      - name: Get deps and crates from cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            build
+          key: ${{ env.CRATE }}-${{ env.VERSION }}-stable-crate
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+      - name: Cache Advisory DB
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.cargo/advisory-db
+          key: stable-advisory-db
+      - uses: dtolnay/rust-toolchain@stable
+        id: toolchain
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v5
+        with:
+          prebuilt-verify: minisign
+          pkgs: cargo-audit
+      - name: Get license and desc
+        id: get_toml
+        working-directory: ./build
+        run: |
+          echo "license=$(python ../scripts/crate-info.py 'license')" >> "${GITHUB_OUTPUT}"
+          {
+            echo 'description<<EOF'
+            python ../scripts/crate-info.py 'description'
+            echo EOF
+          } >> "${GITHUB_OUTPUT}"
+      - name: Generate license report
+        working-directory: ./build
+        env:
+          LICENSE: ${{ steps.get_toml.outputs.license }}
+        run: |
+          echo "Generated on: $(date --utc)" > ../license.report && echo "Crates.io license metadata: ${LICENSE}" >> ../license.report
+          echo "Found license texts:" >> ../license.report
+          tail -n +1 ./*LICENSE* >> ../license.report || true
+          tail -n +1 ./*license* >> ../license.report || true
+          tail -n +1 ./*License* >> ../license.report || true
+      - name: Generate deps report
+        working-directory: ./build
+        run: |
+          echo "Generated on: $(date --utc)" > ../deps.report && cargo +${{ steps.toolchain.outputs.name }} tree --verbose --color=never --format='{p} "{l}"' --locked -e normal,build >> ../deps.report
+      - name: Generate audit report
+        working-directory: ./build
+        run: |
+          echo "Generated on: $(date --utc)" > ../audit.report && cargo +${{ steps.toolchain.outputs.name }} audit --color=never >> ../audit.report || true
+      - name: Output reports
+        run: |
+          {
+            echo "### License:"
+            echo "\`\`\`"
+            cat license.report
+            echo "\`\`\`"
+            echo "### Deps:"
+            echo "\`\`\`"
+            cat deps.report
+            echo "\`\`\`"
+            echo "### Audit:"
+            echo "\`\`\`"
+            cat audit.report
+            echo "\`\`\`"
+          } >> "${GITHUB_STEP_SUMMARY}"
+      - name: Store reports
+        uses: actions/upload-artifact@v6
+        with:
+          name: reports
+          retention-days: 1
+          path: "*.report"
+
+  t1-cross:
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ x86_64-unknown-linux-gnu, x86_64-unknown-linux-musl, aarch64-unknown-linux-gnu, aarch64-unknown-linux-musl ]
+    runs-on: ubuntu-latest
+    needs: [ setup ]
+    env:
+      TARGET: ${{ matrix.target }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.python-version }}
+      - name: Get crate from cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            build
+          key: ${{ env.CRATE }}-${{ env.VERSION }}-stable-crate
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+      - uses: Swatinem/rust-cache@v2
+        if: ${{ !true }}
+        with:
+          workspaces: "./build -> target"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.CRATE }}-${{ env.VERSION }}"
+      - name: Build with ink cross
+        run: |
+          docker run --rm \
+          --userns host --user "$(id -u):$(id -g)" \
+          -v ./build:/project \
+          "ghcr.io/cargo-prebuilt/ink-cross:stable-${TARGET}" \
+          auditable build --verbose --release --locked --target "${TARGET}" 
+      - name: Collect
+        run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
+      - name: Artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: target-${{ matrix.target }}
+          retention-days: 1
+          path: |
+            ${{ matrix.target }}.tar.gz
+            ${{ matrix.target }}.hashes.json
+
+  t1-apple-darwin:
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ x86_64-apple-darwin, aarch64-apple-darwin ]
+    runs-on: macos-latest
+    needs: [ setup ]
+    env:
+      TARGET: ${{ matrix.target }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.python-version }}
+      - name: Get crate from cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            build
+          key: ${{ env.CRATE }}-${{ env.VERSION }}-stable-crate
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+      - uses: Swatinem/rust-cache@v2
+        if: ${{ !true }}
+        with:
+          workspaces: "./build -> target"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.CRATE }}-${{ env.VERSION }}"
+      - uses: dtolnay/rust-toolchain@stable
+        id: toolchain
+        with:
+          targets: ${{ matrix.target }}
+          components: rust-src
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v5
+        with:
+          prebuilt-verify: minisign
+          pkgs: cargo-auditable
+      - name: Build crate
+        working-directory: ./build
+        run: cargo +${{ steps.toolchain.outputs.name }} auditable build --verbose --release --locked --target "${TARGET}" 
+      - name: Collect
+        run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
+      - name: Artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: target-${{ matrix.target }}
+          retention-days: 1
+          path: |
+            ${{ matrix.target }}.tar.gz
+            ${{ matrix.target }}.hashes.json
+
+  t2-cross:
+    if: true
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ riscv64gc-unknown-linux-gnu,riscv64gc-unknown-linux-musl,s390x-unknown-linux-gnu,powerpc64le-unknown-linux-gnu,armv7-unknown-linux-gnueabihf,armv7-unknown-linux-musleabihf ]
+    runs-on: ubuntu-latest
+    needs: [ setup ]
+    env:
+      TARGET: ${{ matrix.target }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.python-version }}
+      - name: Get crate from cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            build
+          key: ${{ env.CRATE }}-${{ env.VERSION }}-stable-crate
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+      - uses: Swatinem/rust-cache@v2
+        if: ${{ !true }}
+        with:
+          workspaces: "./build -> target"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.CRATE }}-${{ env.VERSION }}"
+      - name: Build with ink cross
+        run: |
+          docker run --rm \
+          --userns host --user "$(id -u):$(id -g)" \
+          -v ./build:/project \
+          "ghcr.io/cargo-prebuilt/ink-cross:stable-${TARGET}" \
+          auditable build --verbose --release --locked --target "${TARGET}" 
+      - name: Collect
+        run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
+      - name: Artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: target-${{ matrix.target }}
+          retention-days: 1
+          path: |
+            ${{ matrix.target }}.tar.gz
+            ${{ matrix.target }}.hashes.json
+
+  t2-pc-windows-msvc:
+    if: true
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ x86_64-pc-windows-msvc,aarch64-pc-windows-msvc ]
+    runs-on: windows-latest
+    needs: [ setup ]
+    env:
+      TARGET: ${{ matrix.target }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.python-version }}
+      - name: Get crate from cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            build
+          key: ${{ env.CRATE }}-${{ env.VERSION }}-stable-crate
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+      - uses: Swatinem/rust-cache@v2
+        if: ${{ !true }}
+        with:
+          workspaces: "./build -> target"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.CRATE }}-${{ env.VERSION }}"
+      - uses: dtolnay/rust-toolchain@stable
+        id: toolchain
+        with:
+          targets: ${{ matrix.target }}
+          components: rust-src
+      - uses: cargo-prebuilt/cargo-prebuilt-action@v5
+        with:
+          prebuilt-verify: minisign
+          pkgs: cargo-auditable
+      - name: Build crate
+        working-directory: ./build
+        run: cargo +${{ steps.toolchain.outputs.name }} auditable build --verbose --release --locked --target "${Env:TARGET}" 
+      - name: Collect
+        run: python ./scripts/collect.py "${Env:TARGET}" "./build/target/${Env:TARGET}/release" "${Env:BINS}"
+      - name: Artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: target-${{ matrix.target }}
+          retention-days: 1
+          path: |
+            ${{ matrix.target }}.tar.gz
+            ${{ matrix.target }}.hashes.json
+
+  t3-cross:
+    if: true
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [ x86_64-unknown-freebsd,x86_64-unknown-netbsd,powerpc64-unknown-linux-gnu ]
+    runs-on: ubuntu-latest
+    needs: [ setup ]
+    env:
+      TARGET: ${{ matrix.target }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.python-version }}
+      - name: Get crate from cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            build
+          key: ${{ env.CRATE }}-${{ env.VERSION }}-stable-crate
+          enableCrossOsArchive: true
+          fail-on-cache-miss: true
+      - uses: Swatinem/rust-cache@v2
+        if: ${{ !true }}
+        with:
+          workspaces: "./build -> target"
+          prefix-key: "v0-rust-${{ matrix.target }}-${{ env.CRATE }}-${{ env.VERSION }}"
+      - name: Build with ink cross
+        run: |
+          docker run --rm \
+          --userns host --user "$(id -u):$(id -g)" \
+          -v ./build:/project \
+          "ghcr.io/cargo-prebuilt/ink-cross:stable-${TARGET}" \
+          auditable build --verbose --release --locked --target "${TARGET}" 
+      - name: Collect
+        run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
+      - name: Artifact
+        uses: actions/upload-artifact@v6
+        with:
+          name: target-${{ matrix.target }}
+          retention-days: 1
+          path: |
+            ${{ matrix.target }}.tar.gz
+            ${{ matrix.target }}.hashes.json
+
+  push-index:
+    if: ${{ always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && !contains(needs.t1-cross.result, 'failure') && !contains(needs.t1-apple-darwin.result, 'failure') && !contains(needs.t2-cross.result, 'failure') && !contains(needs.t2-pc-windows-msvc.result, 'failure') }}
+    runs-on: ubuntu-latest
+    needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ env.python-version }}
+      - name: Rust Version Guess
+        run: |
+          rustup update
+          echo "RUSTC_VERSION=$(rustc --version)" >> "${GITHUB_ENV}"
+      - uses: actions/download-artifact@v7
+      - name: DBG - List Structure
+        run: ls -R
+      - name: Merge hashes
+        shell: bash
+        run: |
+          set -euxo pipefail
+          echo -n "" > hashes.sha256
+          for D in ./target-*; do
+            if [ -d "${D}" ]; then
+              echo "${D}"
+              pushd "${D}"
+              echo "$(cat *.hashes.json | jq --raw-output '.archive[] | select(.type | test("sha256")) | .hash') " *.tar.gz >> ../hashes.sha256
+              popd
+            fi
+          done
+      - name: Create info.json and hashes.json
+        env:
+          CRATE_LICENSE: ${{ needs.reports.outputs.crate-license }}
+          CRATE_DESC: ${{ needs.reports.outputs.crate-description }}
+        run: python ./scripts/info.py "${FILE}" "${VERSION}" "${CRATE_LICENSE}" "${CRATE_DESC}" "${RUSTC_VERSION}"
+      - name: Sign info.json and hashes.json
+        if: ${{ true }}
+        env:
+          SIGNING_KEY: ${{ secrets.MINISIGN_SIGNING_KEY }}
+        run: |
+          set -euxo pipefail
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          brew install minisign
+          echo -n "${SIGNING_KEY}" | base64 --decode > ~/.minisign_secret.key
+          minisign -S -s ~/.minisign_secret.key -m info.json
+          minisign -S -s ~/.minisign_secret.key -m hashes.json
+          minisign -V -p ./keys/cargo-prebuilt-index.pub -m info.json
+          minisign -V -p ./keys/cargo-prebuilt-index.pub -m hashes.json
+          rm -f ~/.minisign_secret.key
+      - name: Artifact
+        if: ${{ !true }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: final
+          retention-days: 1
+          path: |
+            info.json
+            hashes.json
+            hashes.sha256
+            reports/*.report
+            target-*/*.tar.gz
+            target-*/*.hashes.json
+      - name: Create and push artifacts to release
+        uses: ncipollo/release-action@v1
+        if: ${{ true }}
+        with:
+          tag: ${{ env.CRATE }}-${{ env.VERSION }}
+          name: ${{ env.CRATE }}-${{ env.VERSION }}
+          allowUpdates: true
+          prerelease: true
+          artifacts: "reports/*.report,target-*/*.tar.gz,hashes.sha256,*.minisig,hashes.json,info.json"
+          body: ""
+      - name: Create index file
+        if: ${{ true }}
+        run: echo "${VERSION}" > "${CRATE}"
+      - name: Push to index
+        uses: ncipollo/release-action@v1
+        if: ${{ true }}
+        with:
+          tag: stable-index
+          allowUpdates: true
+          makeLatest: true
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          artifacts: "${{ env.CRATE }}"
+      - name: TEST - limit
+        run: gh api /rate_limit
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  banned-index:
+    if: ${{ true && always() && !contains(needs.*.result, 'cancelled') && !contains(needs.setup.result, 'failure') && !contains(needs.reports.result, 'failure') && (contains(needs.t1-cross.result, 'failure') || contains(needs.t1-apple-darwin.result, 'failure') || contains(needs.t2-cross.result, 'failure') || contains(needs.t2-pc-windows-msvc.result, 'failure')) }}
+    runs-on: ubuntu-latest
+    needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Create index file
+        run: echo "${VERSION}" > "${CRATE}"
+      - name: Push to index
+        uses: ncipollo/release-action@v1
+        with:
+          tag: banned-index
+          allowUpdates: true
+          makeLatest: false
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          artifacts: "${{ env.CRATE }}"
+
+  track-index:
+    if: ${{ true && always() && !contains(needs.*.result, 'cancelled') && contains(needs.*.result, 'failure') }}
+    runs-on: ubuntu-latest
+    needs: [ setup, reports, t1-cross, t1-apple-darwin, t2-cross, t2-pc-windows-msvc, t3-cross ]
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+      - name: Create index file
+        run: echo "${VERSION}" > "${CRATE}"
+      - name: Push to index
+        uses: ncipollo/release-action@v1
+        with:
+          tag: track-index
+          allowUpdates: true
+          makeLatest: false
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          artifacts: "${{ env.CRATE }}"
