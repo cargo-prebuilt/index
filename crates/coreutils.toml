@@ -1,14 +1,16 @@
 [info]
 id = "coreutils"
 git = "https://github.com/uutils/coreutils"
-unsupported = []
+unsupported = [
+    "powerpc64le-unknown-linux-gnu"
+]
 bins = ["coreutils"]
 
 [target.apple]
 features = "unix"
 
 [target.linux]
-features = "unix"
+features = "feat_os_unix_musl"
 
 [target.windows]
 features = "windows"
