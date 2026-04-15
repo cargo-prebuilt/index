@@ -134,7 +134,7 @@ jobs:
             echo "\`\`\`"
           } >> "${GITHUB_STEP_SUMMARY}"
       - name: Store reports
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: reports
           retention-days: 1
@@ -179,7 +179,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
       - name: Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: target-${{ matrix.target }}
           retention-days: 1
@@ -231,7 +231,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
       - name: Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: target-${{ matrix.target }}
           retention-days: 1
@@ -279,7 +279,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
       - name: Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: target-${{ matrix.target }}
           retention-days: 1
@@ -332,7 +332,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py "${Env:TARGET}" "./build/target/${Env:TARGET}/release" "${Env:BINS}"
       - name: Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: target-${{ matrix.target }}
           retention-days: 1
@@ -380,7 +380,7 @@ jobs:
       - name: Collect
         run: python ./scripts/collect.py "${TARGET}" "./build/target/${TARGET}/release" "${BINS}"
       - name: Artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: target-${{ matrix.target }}
           retention-days: 1
@@ -405,7 +405,7 @@ jobs:
         run: |
           rustup update
           echo "RUSTC_VERSION=$(rustc --version)" >> "${GITHUB_ENV}"
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
       - name: DBG - List Structure
         run: ls -R
       - name: Merge hashes
@@ -442,7 +442,7 @@ jobs:
           rm -f ~/.minisign_secret.key
       - name: Artifact
         if: ${{ !__IF__ }}
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: final
           retention-days: 1
