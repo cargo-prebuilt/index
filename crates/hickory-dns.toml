@@ -1,0 +1,8 @@
+[info]
+id = "hickory-dns"
+git = "https://github.com/hickory-dns/hickory-dns"
+unsupported = []
+bins = ["hickory-dns"]
+
+[target.all]
+features = "tls-aws-lc-rs,https-aws-lc-rs,quic-aws-lc-rs,dnssec-aws-lc-rs"
