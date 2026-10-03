@@ -1,0 +1,5 @@
+[info]
+id = "md-tui"
+git = "https://github.com/henriklovhaug/md-tui"
+unsupported = ["x86_64-pc-windows-msvc", "aarch64-pc-windows-msvc"]
+bins = ["mdt"]
