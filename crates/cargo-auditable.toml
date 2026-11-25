@@ -1,0 +1,5 @@
+[info]
+id = "cargo-auditable"
+git = "https://github.com/rust-secure-code/cargo-auditable"
+unsupported = []
+bins = ["cargo-auditable"]
